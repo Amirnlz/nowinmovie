@@ -40,5 +40,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # Plugins defined by this project
+nowinmovie-android-application-plugin = {id = "nowinmovie.android.application-plugin"}
 nowinmovie-android-application-compose = {id = "nowinmovie.android.application.compose"}
 

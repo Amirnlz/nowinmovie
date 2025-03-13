@@ -40,5 +40,9 @@ gradlePlugin {
             id = libs.plugins.nowinmovie.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+        register("androidApplication") {
+            id = libs.plugins.nowinmovie.android.application.plugin.get().pluginId
+            implementationClass = "AndroidApplicationConventionPlugin"
+        }
     }
 }
