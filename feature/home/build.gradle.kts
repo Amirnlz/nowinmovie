@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-    namespace = "com.amirnlz.feature.feed"
+    namespace = "com.amirnlz.feature.home"
 }
