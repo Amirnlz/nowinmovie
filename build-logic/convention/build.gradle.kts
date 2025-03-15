@@ -38,15 +38,38 @@ tasks {
 }
 
 gradlePlugin {
-    // register the convention plugin
     plugins {
         register("androidApplicationCompose") {
             id = libs.plugins.nowinmovie.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
         register("androidApplication") {
-            id = libs.plugins.nowinmovie.android.application.plugin.get().pluginId
+            id = libs.plugins.nowinmovie.android.application.asProvider().get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = libs.plugins.nowinmovie.android.library.compose.get().pluginId
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("androidLibrary") {
+            id = libs.plugins.nowinmovie.android.library.asProvider().get().pluginId
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidFeature") {
+            id = libs.plugins.nowinmovie.android.feature.get().pluginId
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
+        register("hilt") {
+            id = libs.plugins.nowinmovie.hilt.get().pluginId
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("androidRoom") {
+            id = libs.plugins.nowinmovie.android.room.get().pluginId
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("androidFirebase") {
+            id = libs.plugins.nowinmovie.android.application.firebase.get().pluginId
+            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
     }
 }

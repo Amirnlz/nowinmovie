@@ -21,6 +21,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     versionCode = Config.android.versionCode
                     versionName = Config.android.versionName
                     namespace = Config.android.applicationId
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
                 testOptions.animationsDisabled = true
             }
