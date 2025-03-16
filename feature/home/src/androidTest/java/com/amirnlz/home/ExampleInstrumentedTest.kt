@@ -1,4 +1,4 @@
-package com.amirnlz.feed
+package com.amirnlz.home
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
