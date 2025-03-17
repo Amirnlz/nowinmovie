@@ -4,7 +4,7 @@ import com.amirnlz.core.domain.movie.repository.MovieRepository
 
 class ToggleFavoriteMovieUseCase(private val repository: MovieRepository) {
 
-    suspend operator fun invoke(movieId: Int): Result<Unit> {
+    suspend operator fun invoke(movieId: Long): Result<Unit> {
         return repository.toggleFavoriteMovie(movieId)
     }
 }

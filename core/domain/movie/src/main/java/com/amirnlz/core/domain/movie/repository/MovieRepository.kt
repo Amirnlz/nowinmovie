@@ -1,10 +1,11 @@
 package com.amirnlz.core.domain.movie.repository
 
-import com.amirnlz.core.domain.movie.model.Movie
+import com.amirnlz.core.domain.movie.model.MovieDetails
+import com.amirnlz.core.domain.movie.model.MovieList
 
 interface MovieRepository {
-    suspend fun getPopularMovies(): Result<List<Movie>>
-    suspend fun getMovieDetails(movieId: Int): Result<Movie>
-    suspend fun getFavoriteMovies(): Result<List<Movie>>
-    suspend fun toggleFavoriteMovie(movieId: Int): Result<Unit>
+    suspend fun getPopularMovies(): Result<MovieList>
+    suspend fun getMovieDetails(movieId: Long): Result<MovieDetails>
+    suspend fun getFavoriteMovies(): Result<MovieList>
+    suspend fun toggleFavoriteMovie(movieId: Long): Result<Unit>
 }
