@@ -1,6 +1,7 @@
-import com.android.build.api.dsl.ApplicationExtension
 import com.amirnlz.nowinmovie.Config
+import com.amirnlz.nowinmovie.configureFlavors
 import com.amirnlz.nowinmovie.configureKotlinAndroid
+import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -24,6 +25,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
                 testOptions.animationsDisabled = true
+                configureFlavors(this)
             }
         }
     }

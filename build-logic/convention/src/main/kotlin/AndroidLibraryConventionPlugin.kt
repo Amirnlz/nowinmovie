@@ -1,4 +1,5 @@
 import com.amirnlz.nowinmovie.androidGradle
+import com.amirnlz.nowinmovie.configureFlavors
 import com.amirnlz.nowinmovie.configureKotlinAndroid
 import com.amirnlz.nowinmovie.disableUnnecessaryAndroidTests
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
@@ -19,7 +20,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             androidGradle {
                 configureKotlinAndroid(this)
-//                config flavors
+                configureFlavors(this)
             }
         }
     }

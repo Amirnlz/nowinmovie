@@ -12,7 +12,6 @@ object Config {
         applicationId = "com.amirnlz.nowinmovie",
         versionCode = 1,
         versionName = "1.0.0",
-        nameSpace = "com.amirnlz.nowinmovie",
         dimension = "app",
     )
     val jvm = JvmConfig(
@@ -30,7 +29,6 @@ data class AndroidConfig(
     val applicationId: String,
     val versionCode: Int,
     val versionName: String,
-    val nameSpace: String,
     val dimension: String,
 )
 
