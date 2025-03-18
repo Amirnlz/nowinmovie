@@ -6,8 +6,10 @@ import com.amirnlz.core.data.movie.mapper.mapToMovieList
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.domain.movie.repository.MovieRepository
+import javax.inject.Inject
 
-class MovieRepositoryImpl(private val remoteDataSource: MovieRemoteDataSource) : MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val remoteDataSource: MovieRemoteDataSource) :
+    MovieRepository {
     override suspend fun getPopularMovies(): Result<MovieList> {
         return remoteDataSource.getPopularMovies()
             .map { it.mapToMovieList() }
