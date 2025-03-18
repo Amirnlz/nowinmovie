@@ -1,11 +1,12 @@
 package com.amirnlz.core.domain.movie.usecase
 
-import com.amirnlz.core.domain.movie.model.Movie
+import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.domain.movie.repository.MovieRepository
+import javax.inject.Inject
 
-class GetPopularMoviesUseCase(private val repository: MovieRepository) {
+class GetPopularMoviesUseCase @Inject constructor(private val repository: MovieRepository) {
 
-    suspend operator fun invoke(): Result<List<Movie>> {
+    suspend operator fun invoke(): Result<MovieList> {
         return repository.getPopularMovies()
     }
 }

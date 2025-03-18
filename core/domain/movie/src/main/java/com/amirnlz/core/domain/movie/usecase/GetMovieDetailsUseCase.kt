@@ -2,8 +2,9 @@ package com.amirnlz.core.domain.movie.usecase
 
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.repository.MovieRepository
+import javax.inject.Inject
 
-class GetMovieDetailsUseCase(private val repository: MovieRepository) {
+class GetMovieDetailsUseCase @Inject constructor(private val repository: MovieRepository) {
 
     suspend operator fun invoke(movieId: Long): Result<MovieDetails> {
         return repository.getMovieDetails(movieId)
