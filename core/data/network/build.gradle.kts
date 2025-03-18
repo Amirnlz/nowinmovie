@@ -1,16 +1,13 @@
 plugins {
     alias(libs.plugins.nowinmovie.android.library)
+    alias(libs.plugins.nowinmovie.hilt)
 }
 
 android {
     namespace = "com.amirnlz.core.data.network"
 
     defaultConfig {
-        buildConfigField("String", "BASE_URL", "https://api.themoviedb.org")
-    }
-
-    buildFeatures {
-        buildConfig = true
+        buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org\";")
     }
 }
 
