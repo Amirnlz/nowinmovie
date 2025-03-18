@@ -1,9 +1,10 @@
 import com.amirnlz.core.data.movie.api.MovieApiService
 import com.amirnlz.core.data.movie.dto.MovieDetailsDto
 import com.amirnlz.core.data.movie.dto.MovieListDto
-import com.amirnlz.core.data.network.ErrorHandler
+import com.amirnlz.core.data.network.error.ErrorHandler
+import javax.inject.Inject
 
-class MovieRemoteDataSource(private val movieApiService: MovieApiService) {
+class MovieRemoteDataSource @Inject constructor(private val movieApiService: MovieApiService) {
 
     suspend fun getPopularMovies(apiKey: String = ""): Result<MovieListDto> {
         return try {

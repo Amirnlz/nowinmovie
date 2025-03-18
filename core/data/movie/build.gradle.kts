@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.nowinmovie.android.library)
+    alias(libs.plugins.nowinmovie.hilt)
 }
 
 android {
