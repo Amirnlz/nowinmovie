@@ -1,4 +1,4 @@
-package com.amirnlz.core.data.network
+package com.amirnlz.core.data.network.error
 
 sealed class NetworkError(override val message: String? = null) : Throwable(message) {
     data object NoInternet : NetworkError("No internet connection")

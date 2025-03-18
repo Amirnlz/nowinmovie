@@ -1,4 +1,4 @@
-package com.amirnlz.core.data.network
+package com.amirnlz.core.data.network.error
 
 import retrofit2.HttpException
 import java.net.SocketTimeoutException

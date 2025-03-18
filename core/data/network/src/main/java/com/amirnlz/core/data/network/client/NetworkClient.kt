@@ -1,5 +1,6 @@
-package com.amirnlz.core.data.network
+package com.amirnlz.core.data.network.client
 
+import com.amirnlz.core.data.network.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

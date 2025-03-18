@@ -1,4 +1,4 @@
-package com.amirnlz.core.data.network
+package com.amirnlz.core.data.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
