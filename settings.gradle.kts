@@ -33,6 +33,6 @@ private fun subprojects(path: String) =
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(subprojects("feature"))
+include(subprojects("core"))
 include(subprojects("core/data"))
 include(subprojects("core/domain"))
-include(":core:navigation")

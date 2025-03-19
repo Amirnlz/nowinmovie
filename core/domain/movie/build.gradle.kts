@@ -7,7 +7,3 @@ plugins {
 android {
     namespace = "com.amirnlz.core.domain.movie"
 }
-
-dependencies {
-
-}
