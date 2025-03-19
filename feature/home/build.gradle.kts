@@ -7,3 +7,8 @@ plugins {
 android {
     namespace = "com.amirnlz.feature.home"
 }
+
+dependencies {
+    implementation(projects.core.domain.movie)
+    implementation(projects.core.navigation)
+}
