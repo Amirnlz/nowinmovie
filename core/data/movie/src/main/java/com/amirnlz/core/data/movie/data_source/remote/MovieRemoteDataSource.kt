@@ -1,7 +1,9 @@
-import com.amirnlz.core.data.movie.api.MovieApiService
-import com.amirnlz.core.data.movie.dto.MovieDetailsDto
-import com.amirnlz.core.data.movie.dto.MovieListDto
-import com.amirnlz.core.data.network.error.ErrorHandler
+package com.amirnlz.core.data.movie.data_source.remote
+
+import com.amirnlz.core.network.api.MovieApiService
+import com.amirnlz.core.network.dto.MovieDetailsDto
+import com.amirnlz.core.network.dto.MovieListDto
+import com.amirnlz.core.network.error.ErrorHandler
 import javax.inject.Inject
 
 class MovieRemoteDataSource @Inject constructor(private val movieApiService: MovieApiService) {

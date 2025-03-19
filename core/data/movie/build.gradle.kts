@@ -8,8 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(projects.core.data.network)
+    implementation(projects.core.network)
     implementation(projects.core.domain.movie)
 }

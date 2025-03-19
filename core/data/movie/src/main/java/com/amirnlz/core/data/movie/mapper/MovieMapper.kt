@@ -1,15 +1,15 @@
 package com.amirnlz.core.data.movie.mapper
 
-import com.amirnlz.core.data.movie.dto.GenreDto
-import com.amirnlz.core.data.movie.dto.MovieDetailsDto
-import com.amirnlz.core.data.movie.dto.MovieDto
-import com.amirnlz.core.data.movie.dto.MovieListDto
-import com.amirnlz.core.data.movie.dto.SpokenLanguageDto
 import com.amirnlz.core.domain.movie.model.Genre
 import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.domain.movie.model.SpokenLanguage
+import com.amirnlz.core.network.dto.GenreDto
+import com.amirnlz.core.network.dto.MovieDetailsDto
+import com.amirnlz.core.network.dto.MovieDto
+import com.amirnlz.core.network.dto.MovieListDto
+import com.amirnlz.core.network.dto.SpokenLanguageDto
 
 
 fun MovieListDto.mapToMovieList(): MovieList {
