@@ -1,9 +1,8 @@
 plugins {
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.nowinmovie.android.application.compose)
     alias(libs.plugins.nowinmovie.android.application)
     alias(libs.plugins.nowinmovie.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -12,6 +11,7 @@ android {
 
 dependencies {
     implementation(projects.core.navigation)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

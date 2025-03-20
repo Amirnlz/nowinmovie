@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.amirnlz.core.navigation.AppRoutes
-import com.amirnlz.feature.home.navigation.homeSection
+import com.amirnlz.feature.home.navigation.homeScreen
 
 @Composable
 fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
@@ -13,7 +13,7 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
         navController = navController,
         startDestination = AppRoutes.HomeRoute, modifier = modifier
     ) {
-        homeSection(
+        homeScreen(
             onMovieClicked = {},
             onSeriesClicked = {},
         )
