@@ -20,12 +20,14 @@ internal fun Project.configureKotlinAndroid(
 ) {
     commonExtension.apply {
         compileSdk = Config.android.compileSdk
-        namespace = Config.android.nameSpace
 
         defaultConfig {
             minSdk = Config.android.minSdk
         }
 
+        buildFeatures {
+            buildConfig = true
+        }
         compileOptions {
             sourceCompatibility = Config.jvm.javaVersion
             targetCompatibility = Config.jvm.javaVersion

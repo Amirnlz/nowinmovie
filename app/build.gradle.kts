@@ -1,23 +1,18 @@
 plugins {
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.nowinmovie.android.application.compose)
     alias(libs.plugins.nowinmovie.android.application)
+    alias(libs.plugins.nowinmovie.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+    namespace = "com.amirnlz.nowinmovie"
 }
 
 dependencies {
+    implementation(projects.core.navigation)
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 }

@@ -22,4 +22,17 @@ dependencyResolutionManagement {
 
 rootProject.name = "nowinmovie"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+private fun subprojects(path: String) =
+    file(path)
+        .listFiles()
+        .filter {
+            it.isDirectory && it.listFiles().any { file -> file.name == "build.gradle.kts" }
+        }.map {
+            "${path.replace('/', ':')}:${it.name}"
+        }
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+include(subprojects("feature"))
+include(subprojects("core"))
+include(subprojects("core/data"))
+include(subprojects("core/domain"))
