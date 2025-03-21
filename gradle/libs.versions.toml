@@ -40,6 +40,8 @@ room = "2.6.1"
 hilt = "2.55"
 hiltNavigationCompose = "1.2.0"
 
+coil = "3.1.0"
+
 
 [libraries]
 # AndroidX Core
@@ -100,6 +102,12 @@ androidx-lifecycle-runtimeTesting = { group = "androidx.lifecycle", name = "life
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+# Coil
+coil-kt = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+coil-kt-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-kt-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
 
 
 # Build Logic Dependencies
