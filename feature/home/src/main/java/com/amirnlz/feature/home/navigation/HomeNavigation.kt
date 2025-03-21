@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.amirnlz.core.navigation.AppRoutes
-import com.amirnlz.feature.home.HomeScreen
+import com.amirnlz.feature.home.HomeRoute
 
 
 fun NavController.navigateToHome(navOptions: NavOptions) =
@@ -17,7 +17,7 @@ fun NavGraphBuilder.homeScreen(
     onSeriesClicked: (Long) -> Unit,
 ) {
     composable<AppRoutes.HomeRoute> {
-        HomeScreen(
+        HomeRoute(
             onMovieClicked = onMovieClicked,
             onSeriesClicked = onSeriesClicked,
         )
