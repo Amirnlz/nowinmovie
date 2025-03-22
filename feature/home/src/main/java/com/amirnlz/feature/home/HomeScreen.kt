@@ -63,7 +63,11 @@ internal fun HomeScreen(
     onSeriesClicked: (Long) -> Unit,
     uiState: MovieListUiState
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         when (uiState) {
             is MovieListUiState.Data -> MovieListItems(
                 movieList = uiState.movies,

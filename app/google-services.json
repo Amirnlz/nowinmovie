@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "335973178963",
+    "project_id": "nowinmovie-f0032",
+    "storage_bucket": "nowinmovie-f0032.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335973178963:android:81237bb5c43dbc632bf0a6",
+        "android_client_info": {
+          "package_name": "com.amirnlz.nowinmovie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz2pdsaRkxtOLmFn-j-Jm8WZi-y_dNgAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335973178963:android:383498ff962f6f8e2bf0a6",
+        "android_client_info": {
+          "package_name": "com.amirnlz.nowinmovie.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz2pdsaRkxtOLmFn-j-Jm8WZi-y_dNgAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

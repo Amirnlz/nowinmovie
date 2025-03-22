@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.nowinmovie.android.application.compose)
     alias(libs.plugins.nowinmovie.android.application)
+    alias(libs.plugins.nowinmovie.android.application.firebase)
     alias(libs.plugins.nowinmovie.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
