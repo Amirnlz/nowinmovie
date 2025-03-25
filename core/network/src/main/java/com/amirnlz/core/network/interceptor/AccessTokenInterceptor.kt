@@ -2,14 +2,15 @@ package com.amirnlz.core.network.interceptor
 
 
 import com.amirnlz.core.network.Authenticated
+import com.amirnlz.core.secure_storage.AppSecureStorage
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
-import javax.inject.Singleton
+import javax.inject.Inject
 
-@Singleton
-class AccessTokenInterceptor(
-    private val accessToken: String = ""  //TODO: Refactor later and add TokenProvider
+class AccessTokenInterceptor @Inject constructor(
+    private val secureStorage: AppSecureStorage
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -21,6 +22,9 @@ class AccessTokenInterceptor(
             invocation?.method()?.getAnnotation(Authenticated::class.java) != null
 
         if (needsAuthentication) {
+            // Retrieve the access token synchronously
+            val accessToken = runBlocking { secureStorage.getAccessToken() }
+
             if (!accessToken.isNullOrBlank()) {
                 val newRequest = request.newBuilder()
                     .header(
@@ -31,8 +35,9 @@ class AccessTokenInterceptor(
                 return chain.proceed(newRequest)
             } else {
                 // Handle the case where authentication is required but no token is available
-                // You might throw an exception or return an error response
-                throw IllegalStateException("Access token required but not available.")
+                // This could involve throwing an exception, returning an error response,
+                // or redirecting the user to the login screen.
+                throw IllegalStateException("Access token required for this request but is not available.")
             }
         }
 

@@ -3,6 +3,7 @@ package com.amirnlz.core.network.di
 import com.amirnlz.core.network.BaseUrl
 import com.amirnlz.core.network.BuildConfig
 import com.amirnlz.core.network.interceptor.AccessTokenInterceptor
+import com.amirnlz.core.secure_storage.AppSecureStorage
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -30,8 +31,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAccessTokenProvider(): AccessTokenInterceptor {
-        return AccessTokenInterceptor()
+    fun provideAccessTokenProvider(
+        appSecureStorage: AppSecureStorage
+    ): AccessTokenInterceptor {
+        return AccessTokenInterceptor(appSecureStorage)
     }
 
 
