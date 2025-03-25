@@ -42,6 +42,8 @@ hiltNavigationCompose = "1.2.0"
 
 coil = "3.1.0"
 
+securityCrypto = "1.1.0-alpha06"
+
 
 [libraries]
 # AndroidX Core
@@ -76,6 +78,9 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+
+# Security
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 
 # Firebase
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
@@ -121,6 +126,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+
 
 [bundles]
 compose = [
