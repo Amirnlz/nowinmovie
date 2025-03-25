@@ -25,12 +25,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AuthScreenRoute(modifier: Modifier = Modifier, onNavigateToHome: () -> Unit) {
-    val viewModel: AuthViewModel = viewModel()
+fun AuthScreenRoute(
+    modifier: Modifier = Modifier,
+    viewModel: AuthViewModel = hiltViewModel(),
+    onNavigateToHome: () -> Unit
+) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
 
