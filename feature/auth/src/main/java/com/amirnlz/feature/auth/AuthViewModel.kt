@@ -3,6 +3,7 @@ package com.amirnlz.feature.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amirnlz.core.domain.auth.AuthenticateApiKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor() : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val authenticateApiKeyUseCase: AuthenticateApiKeyUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(AuthState())
     val state: StateFlow<AuthState> = _state
@@ -35,26 +38,19 @@ class AuthViewModel @Inject constructor() : ViewModel() {
 
     private fun authenticateToken(token: String) {
         _state.update { it.copy(isLoading = true, errorMessage = null) }
-        // Simulate API call to validate the token
         viewModelScope.launch {
-            // Replace this with your actual TMDB token validation logic
-            val isValid = checkTmdbTokenValidity(token)
-            _state.update { it.copy(isLoading = false) }
-            if (isValid) {
-                _state.update { it.copy(isAuthenticated = true) }
+
+
+            authenticateApiKeyUseCase(token).onSuccess {
+                _state.update { it.copy(isLoading = false) }
+                _state.update { it.copy(isAuthenticated = true, token = "") }
                 _effect.send(AuthEffect.NavigateToHome)
-            } else {
-                _effect.send(AuthEffect.ShowError("Invalid TMDB Token"))
+
+            }.onFailure {
+                _state.update { it.copy(isLoading = false, token = "") }
+                _effect.send(AuthEffect.ShowError(it.message ?: "Invalid ApiKey."))
+
             }
         }
-    }
-
-    // Simulate checking TMDB token validity (replace with actual API call)
-    private suspend fun checkTmdbTokenValidity(token: String): Boolean {
-        // In a real application, you would make an API call to TMDB
-        // to validate the token. For this example, we'll just check
-        // if the token is not empty and has a certain length.
-        kotlinx.coroutines.delay(1000) // Simulate network delay
-        return token.isNotEmpty() && token.length > 10 // Example validation
     }
 }

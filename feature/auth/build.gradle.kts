@@ -9,6 +9,6 @@ android {
 
 dependencies {
     implementation(projects.core.navigation)
-
+    implementation(projects.core.domain.auth)
 
 }
