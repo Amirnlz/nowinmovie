@@ -21,3 +21,23 @@ interface HomeContract {
     }
 
 }
+
+internal fun HomeContract.MovieType.toIntent(): HomeContract.HomeIntent {
+    return when (this) {
+        HomeContract.MovieType.Trending -> HomeContract.HomeIntent.TrendingMovies
+        HomeContract.MovieType.Popular -> HomeContract.HomeIntent.PopularMovies
+        HomeContract.MovieType.TopRated -> HomeContract.HomeIntent.TopRatedMovies
+        HomeContract.MovieType.Upcoming -> HomeContract.HomeIntent.UpcomingMovies
+        HomeContract.MovieType.Favorite -> HomeContract.HomeIntent.FavoriteMovies
+    }
+}
+
+internal fun HomeContract.HomeIntent.toMovieType(): HomeContract.MovieType {
+    return when (this) {
+        HomeContract.HomeIntent.TrendingMovies -> HomeContract.MovieType.Trending
+        HomeContract.HomeIntent.PopularMovies -> HomeContract.MovieType.Popular
+        HomeContract.HomeIntent.TopRatedMovies -> HomeContract.MovieType.TopRated
+        HomeContract.HomeIntent.UpcomingMovies -> HomeContract.MovieType.Upcoming
+        HomeContract.HomeIntent.FavoriteMovies -> HomeContract.MovieType.Favorite
+    }
+}
