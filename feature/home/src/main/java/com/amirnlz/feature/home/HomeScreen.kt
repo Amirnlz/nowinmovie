@@ -85,7 +85,10 @@ internal fun HomeScreen(
             is HomeContract.HomeUiState.Error -> ErrorComponent(
                 message = uiState.error.message ?: "Error", onRetry = { onTabChanged(movieType) })
 
-            is HomeContract.HomeUiState.Success -> MovieComponent(movieList = uiState.movies)
+            is HomeContract.HomeUiState.Success -> MovieComponent(
+                movieList = uiState.movies,
+                onMovieClicked = { onMovieClicked(it) }
+            )
         }
     }
 }
