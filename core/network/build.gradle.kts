@@ -12,6 +12,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.secureStorage)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)

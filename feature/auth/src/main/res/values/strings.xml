@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TMDB App</string>
+    <string name="auth_title">Authenticate with TMDB</string>
+    <string name="tmdb_token">TMDB Token</string>
+    <string name="submit">Submit</string>
+    <string name="authenticating">Authenticating...</string>
+    <string name="invalid_token">Invalid TMDB Token</string>
+</resources>

@@ -5,13 +5,16 @@ import kotlinx.serialization.Serializable
 
 sealed interface AppRoutes {
     @Serializable
+    data object SplashRoute
+
+    @Serializable
+    data object AuthRoute
+
+    @Serializable
     data object HomeRoute
 
     @Serializable
     data class MovieDetailsRoute(val movieId: Long)
-
-    @Serializable
-    data class SeriesDetailsRoute(val seriesId: Long)
 
     @Serializable
     data object BookmarksRoute
