@@ -1,6 +1,8 @@
 package com.amirnlz.nowinmovie.di
 
+import com.amirnlz.core.data.auth.data_source.AuthRepositoryImpl
 import com.amirnlz.core.data.movie.repository.MovieRepositoryImpl
+import com.amirnlz.core.domain.auth.AuthRepository
 import com.amirnlz.core.domain.movie.repository.MovieRepository
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,8 @@ abstract class BindsRepo {
     @Binds
     @Singleton
     abstract fun provideMovieRepository(movieRepositoryImpl: MovieRepositoryImpl): MovieRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 }
