@@ -1,5 +1,6 @@
 package com.amirnlz.core.network.di
 
+import com.amirnlz.core.network.api.AuthApiService
 import com.amirnlz.core.network.api.MovieApiService
 import dagger.Module
 import dagger.Provides
@@ -16,5 +17,11 @@ object NetworkApiModule {
     @Singleton
     fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
     }
 }
