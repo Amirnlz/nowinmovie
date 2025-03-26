@@ -42,7 +42,6 @@ import com.amirnlz.core.ui.ImageNetwork
 fun HomeRoute(
     modifier: Modifier = Modifier,
     onMovieClicked: (Long) -> Unit,
-    onSeriesClicked: (Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.popularMovies.collectAsStateWithLifecycle()
@@ -50,7 +49,6 @@ fun HomeRoute(
     HomeScreen(
         modifier = modifier,
         onMovieClicked = onMovieClicked,
-        onSeriesClicked = onSeriesClicked,
         uiState = uiState
     )
 
@@ -60,7 +58,6 @@ fun HomeRoute(
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     onMovieClicked: (Long) -> Unit,
-    onSeriesClicked: (Long) -> Unit,
     uiState: MovieListUiState
 ) {
     Column(

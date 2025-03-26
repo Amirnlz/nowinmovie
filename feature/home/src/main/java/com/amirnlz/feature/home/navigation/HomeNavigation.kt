@@ -14,12 +14,10 @@ fun NavController.navigateToHome(navOptions: NavOptions) =
 
 fun NavGraphBuilder.homeScreen(
     onMovieClicked: (Long) -> Unit,
-    onSeriesClicked: (Long) -> Unit,
 ) {
     composable<AppRoutes.HomeRoute> {
         HomeRoute(
             onMovieClicked = onMovieClicked,
-            onSeriesClicked = onSeriesClicked,
         )
     }
 }
