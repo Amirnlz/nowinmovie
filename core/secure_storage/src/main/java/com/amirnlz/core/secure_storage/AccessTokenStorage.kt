@@ -35,6 +35,14 @@ class AccessTokenStorage @Inject constructor(@ApplicationContext context: Contex
         }
     }
 
+    override suspend fun hasToken(): Boolean {
+        return try {
+            getAccessToken() != null
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getAccessToken(): String? {
         return withContext(Dispatchers.IO) {
             try {
