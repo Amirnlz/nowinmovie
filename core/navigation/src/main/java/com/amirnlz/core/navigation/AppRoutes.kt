@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 
 sealed interface AppRoutes {
     @Serializable
+    data object SplashRoute
+
+    @Serializable
     data object AuthRoute
 
     @Serializable
