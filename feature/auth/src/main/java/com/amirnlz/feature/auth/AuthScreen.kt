@@ -40,8 +40,7 @@ fun AuthScreenRoute(
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is AuthEffect.NavigateToHome -> onNavigateToHome
-
+                is AuthEffect.NavigateToHome -> onNavigateToHome()
                 is AuthEffect.ShowError -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }

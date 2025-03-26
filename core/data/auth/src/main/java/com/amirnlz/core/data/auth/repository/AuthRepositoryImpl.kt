@@ -1,5 +1,7 @@
-package com.amirnlz.core.data.auth.data_source
+package com.amirnlz.core.data.auth.repository
 
+import com.amirnlz.core.data.auth.data_source.AuthLocalDataSource
+import com.amirnlz.core.data.auth.data_source.AuthRemoteDataSource
 import com.amirnlz.core.domain.auth.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,9 +16,9 @@ class AuthRepositoryImpl @Inject constructor(
             try {
                 val response = authRemoteDataSource.authenticateApiKey(apiKey)
                 authLocalDataSource.saveApiKey(apiKey)
-                return@withContext Result.success(response.statusMessage)
+                Result.success(response.statusMessage)
             } catch (e: Exception) {
-                return@withContext Result.failure(e)
+                Result.failure(e)
             }
         }
 

@@ -14,7 +14,7 @@ fun NavController.navigateToAuth(navOptions: NavOptions) =
 fun NavGraphBuilder.authScreen(onNavigateToHome: () -> Unit) {
     composable<AppRoutes.AuthRoute> {
         AuthScreenRoute(
-            onNavigateToHome = onNavigateToHome,
+            onNavigateToHome = { onNavigateToHome() }
         )
     }
 }
