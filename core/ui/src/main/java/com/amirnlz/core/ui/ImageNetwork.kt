@@ -20,6 +20,7 @@ fun ImageNetwork(
     imageSize: ImageSize = ImageSize.W500,
     imagePath: String,
     contentScale: ContentScale = ContentScale.Crop,
+    contentDescription: String? = null,
 ) {
     val context = LocalContext.current
     val imageUrl = remember(imageSize, imagePath) {
@@ -38,12 +39,12 @@ fun ImageNetwork(
 
     AsyncImage(
         model = requestBuilder.build(),
-        contentDescription = "",
+        contentDescription = contentDescription,
         contentScale = contentScale,
         modifier = modifier,
         placeholder = ColorPainter(Color.LightGray),
         error = ColorPainter(Color.Red),
-        )
+    )
 }
 
 

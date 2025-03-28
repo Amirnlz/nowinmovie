@@ -10,6 +10,8 @@ import com.amirnlz.feature.auth.navigation.authScreen
 import com.amirnlz.feature.auth.navigation.navigateToAuth
 import com.amirnlz.feature.home.navigation.homeScreen
 import com.amirnlz.feature.home.navigation.navigateToHome
+import com.amirnlz.feature.movie_details.navigation.movieDetailsScreen
+import com.amirnlz.feature.movie_details.navigation.navigateToMovieDetails
 import com.amirnlz.feature.splash.navigation.splashScreen
 
 @Composable
@@ -38,7 +40,8 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
             },
         )
         homeScreen(
-            onMovieClicked = {},
+            onMovieClicked = { navController.navigateToMovieDetails(it) },
         )
+        movieDetailsScreen()
     }
 }

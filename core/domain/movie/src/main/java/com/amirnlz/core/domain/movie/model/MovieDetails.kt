@@ -9,15 +9,15 @@ data class MovieDetails(
     val genres: List<Genre>,
     val homepage: String,
     val id: Long,
-    val imdbID: Any? = null,
+    val imdbID: String?,
     val originCountry: List<String>,
     val originalLanguage: String,
     val originalTitle: String,
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val productionCompanies: List<Any?>,
-    val productionCountries: List<Any?>,
+    val productionCompanies: List<ProductionCompany>?,
+    val productionCountries: List<ProductionCountry>?,
     val releaseDate: String,
     val revenue: Long,
     val runtime: Long,
@@ -26,19 +26,29 @@ data class MovieDetails(
     val tagline: String,
     val title: String,
     val video: Boolean,
-    val voteAverage: Long,
+    val voteAverage: Double,
     val voteCount: Long
 )
-
 
 data class Genre(
     val id: Long,
     val name: String
 )
 
-data class SpokenLanguage(
-    val englishName: String,
-    val iso639_1: String,
+data class ProductionCompany(
+    val id: Long,
+    val logoPath: String,
+    val name: String,
+    val originCountry: String
+)
+
+data class ProductionCountry(
+    val iso3166_1: String?,
     val name: String
 )
 
+data class SpokenLanguage(
+    val englishName: String,
+    val iso639_1: String?,
+    val name: String
+)
