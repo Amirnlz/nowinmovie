@@ -13,22 +13,44 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val remoteDataSource: MovieRemoteDataSource
 ) : MovieRepository {
-    override suspend fun getPopularMovies(): Result<MovieList> = withContext(Dispatchers.IO) {
-        try {
-            val response = remoteDataSource.getPopularMovies()
-            return@withContext Result.success(response.mapToMovieList())
-        } catch (e: Exception) {
-            return@withContext Result.failure(e)
+    override suspend fun getTrendingMovies(): Result<MovieList> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = remoteDataSource.getTrendingMovies()
+                Result.success(response.mapToMovieList())
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
         }
     }
 
-    override suspend fun getMovieDetails(movieId: Long): Result<MovieDetails> {
+    override suspend fun getPopularMovies(): Result<MovieList> = withContext(Dispatchers.IO) {
+        try {
+            val response = remoteDataSource.getPopularMovies()
+            Result.success(response.mapToMovieList())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getTopRatedMovies(): Result<MovieList> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = remoteDataSource.getMovieDetails(movieId = movieId)
-                return@withContext Result.success(response.mapToMovieDetails())
+                val response = remoteDataSource.getTopRatedMovies()
+                Result.success(response.mapToMovieList())
             } catch (e: Exception) {
-                return@withContext Result.failure(e)
+                Result.failure(e)
+            }
+        }
+    }
+
+    override suspend fun getUpcomingMovies(): Result<MovieList> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = remoteDataSource.getUpcomingMovies()
+                Result.success(response.mapToMovieList())
+            } catch (e: Exception) {
+                Result.failure(e)
             }
         }
     }
@@ -36,10 +58,22 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getFavoriteMovies(): Result<MovieList> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = remoteDataSource.getFavoriteMovies(accountId = 1)
-                return@withContext Result.success(response.mapToMovieList())
+                val response =
+                    remoteDataSource.getFavoriteMovies(accountId = 11177714) //TODO: make it specific for user :))
+                Result.success(response.mapToMovieList())
             } catch (e: Exception) {
-                return@withContext Result.failure(e)
+                Result.failure(e)
+            }
+        }
+    }
+
+    override suspend fun getMovieDetails(movieId: Long): Result<MovieDetails> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = remoteDataSource.getMovieDetails(movieId = movieId)
+                Result.success(response.mapToMovieDetails())
+            } catch (e: Exception) {
+                Result.failure(e)
             }
         }
     }
@@ -51,9 +85,9 @@ class MovieRepositoryImpl @Inject constructor(
                     accountId = 1,
                     movieId = movieId
                 )
-                return@withContext Result.success(response)
+                Result.success(response)
             } catch (e: Exception) {
-                return@withContext Result.failure(e)
+                Result.failure(e)
             }
         }
     }

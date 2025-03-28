@@ -7,15 +7,51 @@ import javax.inject.Inject
 
 class MovieRemoteDataSource @Inject constructor(private val movieApiService: MovieApiService) {
 
-    suspend fun getPopularMovies(apiKey: String = ""): MovieListDto {
+    suspend fun getPopularMovies(page: Int = 1): MovieListDto {
         try {
-            return movieApiService.getPopularMovies()
+            return movieApiService.getPopularMovies(page = page)
         } catch (e: Exception) {
             throw e
         }
     }
 
-    suspend fun getMovieDetails(movieId: Long, apiKey: String = ""): MovieDetailsDto {
+    suspend fun getTrendingMovies(page: Int = 1): MovieListDto {
+        return try {
+            movieApiService.getTrendingMovies(page = page)
+        } catch (e: Exception) {
+            throw e
+
+        }
+    }
+
+    suspend fun getUpcomingMovies(page: Int = 1): MovieListDto {
+        return try {
+            movieApiService.getUpcomingMovies(page = page)
+        } catch (e: Exception) {
+            throw e
+
+        }
+    }
+
+    suspend fun getTopRatedMovies(page: Int = 1): MovieListDto {
+        return try {
+            movieApiService.getTopRatedMovies(page = page)
+        } catch (e: Exception) {
+            throw e
+
+        }
+    }
+
+    suspend fun getFavoriteMovies(accountId: Long, page: Int = 1): MovieListDto {
+        return try {
+            movieApiService.getFavoriteMovies(accountId = accountId, page = page)
+        } catch (e: Exception) {
+            throw e
+
+        }
+    }
+
+    suspend fun getMovieDetails(movieId: Long): MovieDetailsDto {
         return try {
             movieApiService.getMovieDetails(movieId = movieId)
         } catch (e: Exception) {
@@ -23,14 +59,6 @@ class MovieRemoteDataSource @Inject constructor(private val movieApiService: Mov
         }
     }
 
-    suspend fun getFavoriteMovies(accountId: Long): MovieListDto {
-        return try {
-            movieApiService.getFavoriteMovies(accountId)
-        } catch (e: Exception) {
-            throw e
-
-        }
-    }
 
     suspend fun addFavoriteMovie(accountId: Long, movieId: Long): Unit {
         return try {
