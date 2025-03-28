@@ -29,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -78,7 +78,7 @@ internal fun HomeScreen(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        HomeMovieTypeTabs(selectedMovieType = movieType) { onTabChanged(it) }
+        HomeMovieTypeTabs(initialMovieType = movieType) { onTabChanged(it) }
         Spacer(Modifier.height(16.dp))
         when (uiState) {
             HomeUiState.Loading -> LoadingComponent()
@@ -96,16 +96,10 @@ internal fun HomeScreen(
 @Composable
 private fun HomeMovieTypeTabs(
     modifier: Modifier = Modifier,
-    selectedMovieType: MovieType,
-    onTabSelected: (MovieType) -> Unit,
+    initialMovieType: MovieType,
+    onTabChanged: (MovieType) -> Unit,
 ) {
-    var selectedIndex by remember {
-        mutableIntStateOf(
-            MovieType.entries.indexOf(
-                selectedMovieType
-            )
-        )
-    }
+    var selectedMovieType by remember { mutableStateOf(initialMovieType) }
     val scrollState = rememberScrollState()
     val list = MovieType.entries.map { it.name }
 
@@ -116,7 +110,7 @@ private fun HomeMovieTypeTabs(
         horizontalArrangement = Arrangement.Start
     ) {
         list.forEachIndexed { index, movieType ->
-            val isSelected = index == selectedIndex
+            val isSelected = index == selectedMovieType.ordinal
             val animatedColor by animateColorAsState(
                 targetValue = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
                 else MaterialTheme.colorScheme.outline,
@@ -132,7 +126,8 @@ private fun HomeMovieTypeTabs(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
                         onClick = {
-                            selectedIndex = index
+                            selectedMovieType = MovieType.entries[index]
+                            onTabChanged(selectedMovieType)
                         }
                     )
             )
