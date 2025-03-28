@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 object Config {
     val android = AndroidConfig(
-        minSdk = 23,
+        minSdk = 26,
         targetSdk = 35,
         compileSdk = 35,
         applicationId = "com.amirnlz.nowinmovie",
