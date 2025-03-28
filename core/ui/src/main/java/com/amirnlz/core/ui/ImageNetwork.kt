@@ -3,6 +3,8 @@ package com.amirnlz.core.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil3.compose.AsyncImage
@@ -27,7 +29,7 @@ fun ImageNetwork(
     val requestBuilder = remember(context, imageUrl) {
         ImageRequest.Builder(context)
             .data(imageUrl)
-            .crossfade(true)
+            .crossfade(300)
             .diskCachePolicy(CachePolicy.ENABLED)
             .memoryCacheKey(imageUrl)
             .diskCacheKey(imageUrl)
@@ -39,7 +41,8 @@ fun ImageNetwork(
         contentDescription = "",
         contentScale = contentScale,
         modifier = modifier,
-
+        placeholder = ColorPainter(Color.LightGray),
+        error = ColorPainter(Color.Red),
         )
 }
 
