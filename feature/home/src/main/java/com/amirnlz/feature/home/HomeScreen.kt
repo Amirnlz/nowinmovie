@@ -67,9 +67,9 @@ fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    movieType: HomeContract.MovieType,
-    onTabChanged: (HomeContract.MovieType) -> Unit,
-    uiState: HomeContract.HomeUiState,
+    movieType: MovieType,
+    onTabChanged: (MovieType) -> Unit,
+    uiState: HomeUiState,
     onMovieClicked: (Long) -> Unit,
 ) {
     Column(
@@ -81,11 +81,11 @@ internal fun HomeScreen(
         HomeMovieTypeTabs(selectedMovieType = movieType) { onTabChanged(it) }
         Spacer(Modifier.height(16.dp))
         when (uiState) {
-            HomeContract.HomeUiState.Loading -> LoadingComponent()
-            is HomeContract.HomeUiState.Error -> ErrorComponent(
+            HomeUiState.Loading -> LoadingComponent()
+            is HomeUiState.Error -> ErrorComponent(
                 message = uiState.error.message ?: "Error", onRetry = { onTabChanged(movieType) })
 
-            is HomeContract.HomeUiState.Success -> MovieComponent(
+            is HomeUiState.Success -> MovieComponent(
                 movieList = uiState.movies,
                 onMovieClicked = { onMovieClicked(it) }
             )
@@ -96,18 +96,18 @@ internal fun HomeScreen(
 @Composable
 private fun HomeMovieTypeTabs(
     modifier: Modifier = Modifier,
-    selectedMovieType: HomeContract.MovieType,
-    onTabSelected: (HomeContract.MovieType) -> Unit,
+    selectedMovieType: MovieType,
+    onTabSelected: (MovieType) -> Unit,
 ) {
     var selectedIndex by remember {
         mutableIntStateOf(
-            HomeContract.MovieType.entries.indexOf(
+            MovieType.entries.indexOf(
                 selectedMovieType
             )
         )
     }
     val scrollState = rememberScrollState()
-    val list = HomeContract.MovieType.entries.map { it.name }
+    val list = MovieType.entries.map { it.name }
 
     Row(
         modifier = modifier

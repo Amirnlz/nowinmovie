@@ -27,37 +27,37 @@ class HomeViewModel @Inject constructor(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
 ) : ViewModel() {
     private var _state =
-        MutableStateFlow<HomeContract.HomeUiState>(HomeContract.HomeUiState.Loading)
+        MutableStateFlow<HomeUiState>(HomeUiState.Loading)
 
-    val state: StateFlow<HomeContract.HomeUiState> = _state.stateIn(
+    val state: StateFlow<HomeUiState> = _state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(2_000L),
-        initialValue = HomeContract.HomeUiState.Loading,
+        initialValue = HomeUiState.Loading,
     )
-    private var _movieTypeState = MutableStateFlow(HomeContract.MovieType.Trending)
+    private var _movieTypeState = MutableStateFlow(MovieType.Trending)
     val movieTypeState = _movieTypeState.asStateFlow()
 
-    fun onIntent(intent: HomeContract.HomeIntent) {
+    fun onIntent(intent: HomeIntent) {
         _movieTypeState.update { intent.toMovieType() }
         intent.execute(this)
     }
 
 
-    private fun HomeContract.HomeIntent.execute(viewModel: HomeViewModel) {
+    private fun HomeIntent.execute(viewModel: HomeViewModel) {
         when (this) {
-            HomeContract.HomeIntent.FavoriteMovies ->
+            HomeIntent.FavoriteMovies ->
                 viewModel.getMovies { viewModel.getFavoriteMoviesUseCase() }
 
-            HomeContract.HomeIntent.PopularMovies ->
+            HomeIntent.PopularMovies ->
                 viewModel.getMovies { viewModel.getPopularMoviesUseCase() }
 
-            HomeContract.HomeIntent.TopRatedMovies ->
+            HomeIntent.TopRatedMovies ->
                 viewModel.getMovies { viewModel.getTopRatedMoviesUseCase() }
 
-            HomeContract.HomeIntent.TrendingMovies ->
+            HomeIntent.TrendingMovies ->
                 viewModel.getMovies { viewModel.getTrendingMoviesUseCase() }
 
-            HomeContract.HomeIntent.UpcomingMovies ->
+            HomeIntent.UpcomingMovies ->
                 viewModel.getMovies { viewModel.getUpcomingMoviesUseCase() }
         }
     }
@@ -65,11 +65,11 @@ class HomeViewModel @Inject constructor(
 
     private fun getMovies(useCase: suspend () -> Result<MovieList>) {
         viewModelScope.launch {
-            _state.update { HomeContract.HomeUiState.Loading }
+            _state.update { HomeUiState.Loading }
             useCase().onSuccess { movies ->
-                _state.update { HomeContract.HomeUiState.Success(movies) }
+                _state.update { HomeUiState.Success(movies) }
             }.onFailure { throwable ->
-                _state.update { HomeContract.HomeUiState.Error(throwable) }
+                _state.update { HomeUiState.Error(throwable) }
             }
         }
     }
