@@ -1,5 +1,7 @@
 package com.amirnlz.core.domain.movie.model
 
+import java.time.LocalDate
+
 data class Movie(
     val adult: Boolean,
     val backdropPath: String? = null,
@@ -10,7 +12,7 @@ data class Movie(
     val overview: String,
     val popularity: Double? = null,
     val posterPath: String? = null,
-    val releaseDate: String? = null,
+    val releaseDate: LocalDate? = null,
     val title: String? = null,
     val video: Boolean? = null,
     val voteAverage: Double? = null,

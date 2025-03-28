@@ -10,6 +10,8 @@ import com.amirnlz.core.network.dto.MovieDetailsDto
 import com.amirnlz.core.network.dto.MovieDto
 import com.amirnlz.core.network.dto.MovieListDto
 import com.amirnlz.core.network.dto.SpokenLanguageDto
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 fun MovieListDto.mapToMovieList(): MovieList {
@@ -33,7 +35,7 @@ fun MovieDto.mapToMovie(): Movie {
         overview,
         popularity,
         posterPath,
-        releaseDate,
+        releaseDate?.toLocalDate(),
         title,
         video,
         voteAverage,
@@ -82,4 +84,14 @@ fun SpokenLanguageDto.mapToSpokenLanguage(): SpokenLanguage {
     return SpokenLanguage(
         englishName, iso639_1, name
     )
+}
+
+private fun String.toLocalDate(pattern: String = "yyyy-MM-dd"): LocalDate? {
+    return try {
+        val formatter = DateTimeFormatter.ofPattern(pattern)
+        LocalDate.parse(this, formatter)
+    } catch (e: Exception) {
+        println("Error parsing date string: $e")
+        null
+    }
 }
