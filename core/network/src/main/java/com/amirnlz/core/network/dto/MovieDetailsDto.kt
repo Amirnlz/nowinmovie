@@ -38,7 +38,7 @@ data class GenreDto(
 
 data class ProductionCompanyDto(
     val id: Long,
-    val logoPath: String,
+    val logoPath: String?,
     val name: String,
     val originCountry: String
 )

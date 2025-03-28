@@ -42,6 +42,8 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
         homeScreen(
             onMovieClicked = { navController.navigateToMovieDetails(it) },
         )
-        movieDetailsScreen()
+        movieDetailsScreen(
+            onBackButtonPressed = { navController.popBackStack() }
+        )
     }
 }

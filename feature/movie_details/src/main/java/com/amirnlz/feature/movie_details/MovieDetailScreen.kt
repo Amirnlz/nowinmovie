@@ -10,17 +10,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,7 +46,8 @@ import com.amirnlz.feature.movie_detail.R
 fun MovieDetailRoute(
     modifier: Modifier = Modifier,
     movieId: Long,
-    viewModel: MovieDetailViewModel = hiltViewModel()
+    viewModel: MovieDetailViewModel = hiltViewModel(),
+    onBackButtonPressed: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -43,16 +55,21 @@ fun MovieDetailRoute(
         viewModel.onIntent(MovieDetailIntent.GetMovieDetails(movieId))
     }
 
-    MovieDetailScreen(modifier = modifier, uiState = uiState, onRetry = {
-        viewModel.onIntent(MovieDetailIntent.GetMovieDetails(movieId))
-    })
+    MovieDetailScreen(
+        modifier = modifier, uiState = uiState,
+        onRetry = {
+            viewModel.onIntent(MovieDetailIntent.GetMovieDetails(movieId))
+        },
+        onBackButtonPressed = onBackButtonPressed
+    )
 }
 
 @Composable
 internal fun MovieDetailScreen(
     modifier: Modifier = Modifier,
     uiState: MovieDetailUiState,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onBackButtonPressed: () -> Unit,
 ) {
 
     when (uiState) {
@@ -60,118 +77,164 @@ internal fun MovieDetailScreen(
             message = uiState.error.message ?: "Error",
             onRetry = onRetry,
         )
+
         MovieDetailUiState.Loading -> LoadingComponent()
-        is MovieDetailUiState.Success -> MovieDetailsContent(modifier, uiState.movieDetails)
+        is MovieDetailUiState.Success -> MovieDetailsContent(
+            modifier,
+            uiState.movieDetails,
+            onBackButtonPressed
+        )
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieDetailsContent(modifier: Modifier = Modifier, movieDetails: MovieDetails) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp)
-    ) {
-        // Header Section: Backdrop and Poster
-        MovieHeader(
-            backdropPath = movieDetails.backdropPath,
-            posterPath = movieDetails.posterPath,
-            title = movieDetails.title
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Overview Section
-        Text(
-            text = movieDetails.overview,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Details Section
-        MovieDetailsRow(
-            label = stringResource(R.string.release_date),
-            value = movieDetails.releaseDate
-        )
-        MovieDetailsRow(
-            label = stringResource(R.string.runtime),
-            value = "${movieDetails.runtime} min"
-        )
-        MovieDetailsRow(label = stringResource(R.string.status), value = movieDetails.status)
-        MovieDetailsRow(
-            label = stringResource(R.string.vote_average),
-            value = "${movieDetails.voteAverage / 10.0}"
-        ) // Assuming voteAverage is out of 100
-        MovieDetailsRow(
-            label = stringResource(R.string.vote_count),
-            value = movieDetails.voteCount.toString()
-        )
-        MovieDetailsRow(label = stringResource(R.string.budget), value = "${movieDetails.budget}")
-        MovieDetailsRow(label = stringResource(R.string.revenue), value = "${movieDetails.revenue}")
-
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Genres
-        if (movieDetails.genres.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.genres),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Row {
-                movieDetails.genres.forEach { genre ->
+private fun MovieDetailsContent(
+    modifier: Modifier = Modifier,
+    movieDetails: MovieDetails,
+    onBackButtonPressed: () -> Unit,
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CenterAlignedTopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = {
                     Text(
-                        text = genre.name,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(end = 8.dp)
+                        text = movieDetails.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackButtonPressed) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
+                    }
+                },
+            )
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(paddingValues) // Apply padding from Scaffold
+                    .padding(16.dp) // Add your content padding
+            ) {
+                // Header Section: Backdrop and Poster
+                MovieHeader(
+                    backdropPath = movieDetails.backdropPath,
+                    posterPath = movieDetails.posterPath,
+                    title = movieDetails.title
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Overview Section
+                Text(
+                    text = movieDetails.overview,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Details Section
+                MovieDetailsRow(
+                    label = stringResource(R.string.release_date),
+                    value = movieDetails.releaseDate
+                )
+                MovieDetailsRow(
+                    label = stringResource(R.string.runtime),
+                    value = "${movieDetails.runtime} min"
+                )
+                MovieDetailsRow(
+                    label = stringResource(R.string.status),
+                    value = movieDetails.status
+                )
+                MovieDetailsRow(
+                    label = stringResource(R.string.vote_average),
+                    value = "${movieDetails.voteAverage / 10.0}"
+                ) // Assuming voteAverage is out of 100
+                MovieDetailsRow(
+                    label = stringResource(R.string.vote_count),
+                    value = movieDetails.voteCount.toString()
+                )
+                MovieDetailsRow(
+                    label = stringResource(R.string.budget),
+                    value = "${movieDetails.budget}"
+                )
+                MovieDetailsRow(
+                    label = stringResource(R.string.revenue),
+                    value = "${movieDetails.revenue}"
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Genres
+                if (movieDetails.genres.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.genres),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row {
+                        movieDetails.genres.forEach { genre ->
+                            Text(
+                                text = genre.name,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                // Spoken Languages
+                if (movieDetails.spokenLanguages.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.spoken_languages),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Column {
+                        movieDetails.spokenLanguages.forEach { language ->
+                            Text(
+                                text = language.englishName,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                // Tagline
+                if (movieDetails.tagline.isNotBlank()) {
+                    Text(
+                        text = stringResource(R.string.tagline),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = movieDetails.tagline,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider()
-            Spacer(modifier = Modifier.height(16.dp))
         }
-
-        // Spoken Languages
-        if (movieDetails.spokenLanguages.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.spoken_languages),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Column {
-                movieDetails.spokenLanguages.forEach { language ->
-                    Text(
-                        text = language.englishName,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider()
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
-        // Tagline
-        if (movieDetails.tagline.isNotBlank()) {
-            Text(
-                text = stringResource(R.string.tagline),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = movieDetails.tagline,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-    }
+    )
 }
 
 @Composable

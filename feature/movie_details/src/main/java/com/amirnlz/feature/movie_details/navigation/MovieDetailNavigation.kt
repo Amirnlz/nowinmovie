@@ -13,11 +13,14 @@ fun NavController.navigateToMovieDetails(movieId: Long, navOptions: NavOptions? 
 }
 
 
-fun NavGraphBuilder.movieDetailsScreen() {
+fun NavGraphBuilder.movieDetailsScreen(
+    onBackButtonPressed: () -> Unit,
+) {
     composable<AppRoutes.MovieDetailsRoute> { navBackStackEntry ->
         val movieDetailsRoute: AppRoutes.MovieDetailsRoute = navBackStackEntry.toRoute()
         MovieDetailRoute(
-            movieId = movieDetailsRoute.movieId
+            movieId = movieDetailsRoute.movieId,
+            onBackButtonPressed = onBackButtonPressed
         )
     }
 }

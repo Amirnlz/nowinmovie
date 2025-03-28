@@ -12,4 +12,5 @@
     <string name="tagline">Tagline</string>
     <string name="backdrop_image_description">Backdrop image for %s</string>
     <string name="poster_image_description">Poster image for %s</string>
+    <string name="back">Back Icon</string>
 </resources>
