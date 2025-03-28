@@ -1,29 +1,33 @@
 package com.amirnlz.feature.home
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.ui.ImageNetwork
@@ -47,39 +51,88 @@ internal fun MovieComponent(
     }
 }
 
+
 @Composable
 private fun MovieItem(
     modifier: Modifier = Modifier,
     movie: Movie,
     onMovieClicked: (Long) -> Unit,
 ) {
-    Column(
-        horizontalAlignment = Alignment.Start,
-        modifier = modifier.clickable { onMovieClicked(movie.id) }
+    Card(
+        onClick = { onMovieClicked(movie.id) },
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(14.dp),
     ) {
-        ImageNetwork(
-            imagePath = movie.posterPath ?: "",
-            contentScale = ContentScale.Crop,
+        Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .height(240.dp)
                 .fillMaxWidth()
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(2.dp)
+                .padding(6.dp)
         ) {
-            Icon(
-                Icons.Filled.Star,
-                contentDescription = "Rating Star",
-                tint = Color.Yellow
+            ImageNetwork(
+                imagePath = movie.posterPath ?: "",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+                    .clip(RoundedCornerShape(12.dp))
             )
-            Text(
-                text = String.format("%.1f", movie.voteAverage),
-                color = Color.Yellow,
-                fontSize = 12.sp
-            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = movie.title ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    movie.releaseDate?.let { date ->
+                        Text(
+                            text = date.year.toString(),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                            )
+                        )
+                    }
+                }
+                StarRating(rating = movie.voteAverage ?: 0.0)
+            }
         }
-        Text(movie.title ?: "")
     }
 }
+
+@Composable
+fun StarRating(
+    rating: Double,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Star,
+            contentDescription = "Full star",
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(16.dp)
+        )
+
+        Text(
+            rating.let { String.format("%.1f", it) },
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        )
+    }
+}
+
