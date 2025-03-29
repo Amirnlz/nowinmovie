@@ -1,5 +1,7 @@
 package com.amirnlz.core.domain.movie.model
 
+import java.time.LocalDate
+
 
 data class MovieDetails(
     val adult: Boolean,
@@ -18,7 +20,7 @@ data class MovieDetails(
     val posterPath: String,
     val productionCompanies: List<ProductionCompany>?,
     val productionCountries: List<ProductionCountry>?,
-    val releaseDate: String,
+    val releaseDate: LocalDate,
     val revenue: Long,
     val runtime: Long,
     val spokenLanguages: List<SpokenLanguage>,
@@ -52,3 +54,9 @@ data class SpokenLanguage(
     val iso639_1: String?,
     val name: String
 )
+
+fun Long.toMovieTime(): String {
+    val hours = this.floorDiv(60)
+    val minutes = this % 60
+    return "${hours}h ${minutes}m"
+}

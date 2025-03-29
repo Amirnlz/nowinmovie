@@ -65,7 +65,7 @@ fun MovieDetailsDto.mapToMovieDetails(): MovieDetails {
         posterPath,
         productionCompanies?.map { it.mapToProductionCompanies() },
         productionCountries?.map { it.mapToProductionCountries() },
-        releaseDate,
+        releaseDate?.toLocalDate() ?: LocalDate.now(),
         revenue,
         runtime,
         spokenLanguages.map { it.mapToSpokenLanguage() },
