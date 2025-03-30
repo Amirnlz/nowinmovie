@@ -33,7 +33,7 @@ private val LightColorScheme = lightColorScheme(
     surface = Neutral10,
     onSurface = Neutral90,
     surfaceVariant = surfaceVariantLightColor,
-    onSurfaceVariant = onSecondaryContainerLightColor,
+    onSurfaceVariant = onSurfaceVariantLightColor,
     inverseSurface = Neutral90,
     inverseOnSurface = Neutral10,
     outline = outlineLightColor,
@@ -68,7 +68,7 @@ private val DarkColorScheme = darkColorScheme(
     inverseSurface = Neutral90Dark,
     inverseOnSurface = Neutral10Dark,
     outline = outlineDarkColor,
-    outlineVariant = onSurfaceVariantDarkColor,
+    outlineVariant = outlineVariantDarkColor,
     error = Error40,
     onError = Neutral10Dark,
     errorContainer = errorContainerDarkColor,
@@ -81,7 +81,7 @@ private val DarkColorScheme = darkColorScheme(
 fun NowinmovieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -25,22 +24,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieCast
 import com.amirnlz.core.domain.movie.model.MovieCredits
 import com.amirnlz.core.ui.ImageNetwork
+import com.amirnlz.feature.movie_detail.R
 
 @Composable
 internal fun MovieCreditsComponent(modifier: Modifier = Modifier, movieCredits: MovieCredits) {
     var selectedIndex by remember { mutableIntStateOf(0) }
-    val list = listOf("Cast", "Director & crew")
+    val list = listOf(stringResource(R.string.cast), stringResource(R.string.director_crew))
 
     Column(
         modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .padding(NowinmovieTheme.dimens.screenPadding)
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small)
     ) {
         TabsComponent(selectedIndex = selectedIndex, list = list) { selectedIndex = it }
         Crossfade(
@@ -68,18 +70,18 @@ private fun TabsComponent(
         selectedTabIndex = selectedIndex,
         containerColor = colorScheme.surfaceVariant,
         modifier = modifier
-            .clip(RoundedCornerShape(10.dp)),
+            .clip(MaterialTheme.shapes.medium),
         indicator = { Box {} }
     ) {
         list.forEachIndexed { index, title ->
             val isSelected = index == selectedIndex
             val backgroundColor by animateColorAsState(
-                targetValue = if (isSelected) colorScheme.secondaryContainer
-                else colorScheme.background,
+                targetValue = if (isSelected) colorScheme.background
+                else colorScheme.surfaceVariant,
                 animationSpec = tween(durationMillis = 300)
             )
             val textColor by animateColorAsState(
-                targetValue = if (isSelected) colorScheme.onSecondaryContainer
+                targetValue = if (isSelected) colorScheme.onSurfaceVariant
                 else colorScheme.onSurface,
                 animationSpec = tween(durationMillis = 300)
             )
@@ -88,10 +90,13 @@ private fun TabsComponent(
                 selected = isSelected,
                 onClick = { onClick(index) },
                 modifier = Modifier
-                    .padding(6.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .padding(NowinmovieTheme.spacing.small)
+                    .clip(MaterialTheme.shapes.medium)
                     .background(backgroundColor)
-                    .padding(vertical = 10.dp, horizontal = 8.dp),
+                    .padding(
+                        vertical = NowinmovieTheme.dimens.paddingExtraMedium,
+                        horizontal = NowinmovieTheme.dimens.paddingSmall,
+                    ),
             ) {
                 Text(
                     text = title,
@@ -106,11 +111,11 @@ private fun TabsComponent(
 @Composable
 private fun CastComponent(casts: List<MovieCast>) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
     ) {
         items(casts) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.extraSmall),
                 modifier = Modifier.width(100.dp)
             ) {
                 ImageNetwork(
@@ -119,7 +124,7 @@ private fun CastComponent(casts: List<MovieCast>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(100.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(MaterialTheme.shapes.small)
                 )
                 Text(
                     text = it.name,

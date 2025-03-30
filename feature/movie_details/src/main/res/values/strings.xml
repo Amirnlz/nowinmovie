@@ -13,4 +13,11 @@
     <string name="backdrop_image_description">Backdrop image for %s</string>
     <string name="poster_image_description">Poster image for %s</string>
     <string name="back">Back Icon</string>
+    <string name="cast">Cast</string>
+    <string name="director_crew"><![CDATA[Director & crew]]></string>
+    <string name="production_companies">Production Companies</string>
+    <string name="production_countries">Production Countries</string>
+    <string name="production_languages">Production Languages</string>
+    <string name="overview">Overview</string>
+    <string name="rating_star">Rating Star</string>
 </resources>
