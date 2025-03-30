@@ -37,6 +37,12 @@ class HomeViewModel @Inject constructor(
     private var _movieTypeState = MutableStateFlow(MovieType.Trending)
     val movieTypeState = _movieTypeState.asStateFlow()
 
+    init {
+        if (_state.value !is HomeUiState.Success) {
+            onIntent(_movieTypeState.value.toIntent())
+        }
+    }
+
     fun onIntent(intent: HomeIntent) {
         _movieTypeState.update { intent.toMovieType() }
         intent.execute(this)

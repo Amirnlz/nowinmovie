@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,10 +36,6 @@ fun HomeRoute(
 ) {
     val uiState by viewModel.state.collectAsState()
     val movieType by viewModel.movieTypeState.collectAsState()
-
-    LaunchedEffect(true) {
-        viewModel.onIntent(movieType.toIntent())
-    }
 
     HomeScreen(
         modifier = modifier,
