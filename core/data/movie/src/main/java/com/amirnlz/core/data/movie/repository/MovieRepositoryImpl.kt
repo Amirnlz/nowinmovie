@@ -1,8 +1,10 @@
 package com.amirnlz.core.data.movie.repository
 
 import com.amirnlz.core.data.movie.data_source.remote.MovieRemoteDataSource
+import com.amirnlz.core.data.movie.mapper.mapToMovieCredits
 import com.amirnlz.core.data.movie.mapper.mapToMovieDetails
 import com.amirnlz.core.data.movie.mapper.mapToMovieList
+import com.amirnlz.core.domain.movie.model.MovieCredits
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.domain.movie.repository.MovieRepository
@@ -72,6 +74,17 @@ class MovieRepositoryImpl @Inject constructor(
             try {
                 val response = remoteDataSource.getMovieDetails(movieId = movieId)
                 Result.success(response.mapToMovieDetails())
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    override suspend fun getMovieCredits(movieId: Long): Result<MovieCredits> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = remoteDataSource.getMovieCredits(movieId = movieId)
+                Result.success(response.mapToMovieCredits())
             } catch (e: Exception) {
                 Result.failure(e)
             }

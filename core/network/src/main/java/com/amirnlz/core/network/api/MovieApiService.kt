@@ -1,6 +1,7 @@
 package com.amirnlz.core.network.api
 
 import com.amirnlz.core.network.Authenticated
+import com.amirnlz.core.network.dto.MovieCreditsDto
 import com.amirnlz.core.network.dto.MovieDetailsDto
 import com.amirnlz.core.network.dto.MovieListDto
 import retrofit2.http.GET
@@ -47,6 +48,13 @@ interface MovieApiService {
         @Path("movie_id")
         movieId: Long,
     ): MovieDetailsDto
+
+    @GET("/3/movie/{movie_id}/credits")
+    @Authenticated
+    suspend fun getMovieCredits(
+        @Path("movie_id")
+        movieId: Long,
+    ): MovieCreditsDto
 
     @POST("/3/account/{account_id}/favorite")
     @Authenticated

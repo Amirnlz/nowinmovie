@@ -1,6 +1,7 @@
 package com.amirnlz.core.data.movie.data_source.remote
 
 import com.amirnlz.core.network.api.MovieApiService
+import com.amirnlz.core.network.dto.MovieCreditsDto
 import com.amirnlz.core.network.dto.MovieDetailsDto
 import com.amirnlz.core.network.dto.MovieListDto
 import javax.inject.Inject
@@ -54,6 +55,14 @@ class MovieRemoteDataSource @Inject constructor(private val movieApiService: Mov
     suspend fun getMovieDetails(movieId: Long): MovieDetailsDto {
         return try {
             movieApiService.getMovieDetails(movieId = movieId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    suspend fun getMovieCredits(movieId: Long): MovieCreditsDto {
+        return try {
+            movieApiService.getMovieCredits(movieId = movieId)
         } catch (e: Exception) {
             throw e
         }

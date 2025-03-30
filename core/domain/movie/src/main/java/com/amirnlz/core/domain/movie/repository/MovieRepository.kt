@@ -1,5 +1,6 @@
 package com.amirnlz.core.domain.movie.repository
 
+import com.amirnlz.core.domain.movie.model.MovieCredits
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.MovieList
 
@@ -10,5 +11,6 @@ interface MovieRepository {
     suspend fun getUpcomingMovies(): Result<MovieList>
     suspend fun getFavoriteMovies(): Result<MovieList>
     suspend fun getMovieDetails(movieId: Long): Result<MovieDetails>
+    suspend fun getMovieCredits(movieId: Long): Result<MovieCredits>
     suspend fun toggleFavoriteMovie(movieId: Long): Result<Unit>
 }

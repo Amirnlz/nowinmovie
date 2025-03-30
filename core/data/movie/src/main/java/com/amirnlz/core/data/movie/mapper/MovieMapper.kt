@@ -25,7 +25,6 @@ fun MovieListDto.mapToMovieList(): MovieList {
         totalPages = totalPages,
         results = results.map { it.mapToMovie() }
     )
-
 }
 
 fun MovieDto.mapToMovie(): Movie {
