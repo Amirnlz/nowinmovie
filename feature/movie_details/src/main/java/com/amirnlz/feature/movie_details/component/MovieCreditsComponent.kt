@@ -39,9 +39,7 @@ internal fun MovieCreditsComponent(modifier: Modifier = Modifier, movieCredits: 
     val list = listOf(stringResource(R.string.cast), stringResource(R.string.director_crew))
 
     Column(
-        modifier = modifier
-            .padding(NowinmovieTheme.dimens.screenPadding)
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small)
     ) {
         TabsComponent(selectedIndex = selectedIndex, list = list) { selectedIndex = it }

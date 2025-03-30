@@ -9,18 +9,23 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.ui.ErrorComponent
 import com.amirnlz.core.ui.LoadingComponent
 import com.amirnlz.feature.movie_detail.R
@@ -55,6 +60,7 @@ fun MovieDetailRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MovieDetailScreen(
     modifier: Modifier = Modifier,
@@ -63,48 +69,15 @@ internal fun MovieDetailScreen(
     onRetry: () -> Unit,
     onBackButtonPressed: () -> Unit,
 ) {
-
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
-        modifier = modifier.fillMaxSize(),
-        content = { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                ) {
-//                Movie Details
-                    when (movieDetails) {
-                        is MovieDetailsUiState.Error -> ErrorComponent(
-                            message = movieDetails.error.message ?: "Error",
-                            onRetry = onRetry,
-                        )
-
-                        MovieDetailsUiState.Loading -> LoadingComponent()
-                        is MovieDetailsUiState.Success -> MovieDetailsComponent(
-                            movieDetails = movieDetails.data
-                        )
-                    }
-//                Movie Credits
-                    when (movieCredits) {
-                        is MovieCreditsUiState.Error -> ErrorComponent(
-                            message = movieCredits.error.message ?: "Error",
-                            onRetry = onRetry,
-                        )
-
-                        MovieCreditsUiState.Loading -> LoadingComponent()
-                        is MovieCreditsUiState.Success -> MovieCreditsComponent(
-                            movieCredits = movieCredits.data
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier.align(Alignment.TopStart)
-                ) {
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                navigationIcon = {
                     IconButton(
                         onClick = onBackButtonPressed,
                     ) {
@@ -114,9 +87,42 @@ internal fun MovieDetailScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
+                }, title = { Box {} })
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(horizontal = NowinmovieTheme.dimens.paddingExtraMedium)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+//                Movie Details
+                when (movieDetails) {
+                    is MovieDetailsUiState.Error -> ErrorComponent(
+                        message = movieDetails.error.message ?: "Error",
+                        onRetry = onRetry,
+                    )
+
+                    MovieDetailsUiState.Loading -> LoadingComponent()
+                    is MovieDetailsUiState.Success -> MovieDetailsComponent(
+                        movieDetails = movieDetails.data
+                    )
+                }
+//                Movie Credits
+                when (movieCredits) {
+                    is MovieCreditsUiState.Error -> ErrorComponent(
+                        message = movieCredits.error.message ?: "Error",
+                        onRetry = onRetry,
+                    )
+
+                    MovieCreditsUiState.Loading -> LoadingComponent()
+                    is MovieCreditsUiState.Success -> MovieCreditsComponent(
+                        movieCredits = movieCredits.data
+                    )
                 }
             }
-
         }
     )
 }
