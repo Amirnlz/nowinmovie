@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
 
     val state: StateFlow<HomeUiState> = _state.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(2_000L),
+        started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = HomeUiState.Loading,
     )
     private var _movieTypeState = MutableStateFlow(MovieType.Trending)
