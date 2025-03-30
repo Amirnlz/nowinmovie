@@ -1,5 +1,7 @@
 package com.amirnlz.core.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,29 +24,37 @@ fun ImageNetwork(
     contentScale: ContentScale = ContentScale.Crop,
     contentDescription: String? = null,
 ) {
-    val context = LocalContext.current
-    val imageUrl = remember(imageSize, imagePath) {
-        BuildConfig.BASE_URL + "/${imageSize.name.lowercase(Locale.getDefault())}/" + imagePath
+    if (imagePath.isEmpty()) {
+        return Box(
+            modifier = modifier.background(Color.LightGray)
+        )
+    } else {
+        val context = LocalContext.current
+        val imageUrl = remember(imageSize, imagePath) {
+            BuildConfig.BASE_URL + "/${imageSize.name.lowercase(Locale.getDefault())}/" + imagePath
+        }
+
+        val requestBuilder = remember(context, imageUrl) {
+            ImageRequest.Builder(context)
+                .data(imageUrl)
+                .crossfade(300)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(imageUrl)
+                .diskCacheKey(imageUrl)
+                .crossfade(300)
+        }
+
+        AsyncImage(
+            model = requestBuilder.build(),
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier,
+            placeholder = ColorPainter(Color.LightGray),
+            error = ColorPainter(Color.Red),
+        )
     }
 
-    val requestBuilder = remember(context, imageUrl) {
-        ImageRequest.Builder(context)
-            .data(imageUrl)
-            .crossfade(300)
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .memoryCacheKey(imageUrl)
-            .diskCacheKey(imageUrl)
-            .crossfade(300)
-    }
 
-    AsyncImage(
-        model = requestBuilder.build(),
-        contentDescription = contentDescription,
-        contentScale = contentScale,
-        modifier = modifier,
-        placeholder = ColorPainter(Color.LightGray),
-        error = ColorPainter(Color.Red),
-    )
 }
 
 
