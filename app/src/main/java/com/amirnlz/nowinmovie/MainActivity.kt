@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.nowinmovie.navigation.AppNavHost
-import com.amirnlz.nowinmovie.ui.theme.NowinmovieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

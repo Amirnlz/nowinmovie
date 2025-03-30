@@ -29,6 +29,7 @@
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/data/auth" />
             <option value="$PROJECT_DIR$/core/data/movie" />
+            <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/domain/auth" />
             <option value="$PROJECT_DIR$/core/domain/movie" />
