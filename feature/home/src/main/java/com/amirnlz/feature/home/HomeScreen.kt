@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
+import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.ui.ErrorComponent
 import com.amirnlz.core.ui.LoadingComponent
 
@@ -34,13 +41,13 @@ fun HomeRoute(
     onMovieClicked: (Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.state.collectAsState()
-    val movieType by viewModel.movieTypeState.collectAsState()
+    val lazyPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
+    val currentMovieType by viewModel.currentMovieType.collectAsState()
 
     HomeScreen(
         modifier = modifier,
-        movieType = movieType,
-        uiState = uiState,
+        currentMovieType = currentMovieType,
+        lazyPagingItems = lazyPagingItems,
         onMovieClicked = { onMovieClicked(it) },
         onTabChanged = {
             viewModel.onIntent(it.toIntent())
@@ -51,9 +58,9 @@ fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    movieType: MovieType,
+    currentMovieType: MovieType,
     onTabChanged: (MovieType) -> Unit,
-    uiState: HomeUiState,
+    lazyPagingItems: LazyPagingItems<Movie>,
     onMovieClicked: (Long) -> Unit,
 ) {
     Surface(
@@ -65,17 +72,28 @@ internal fun HomeScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
         ) {
-            HomeMovieTypeTabs(selectedMovieType = movieType) { onTabChanged(it) }
-            when (uiState) {
-                HomeUiState.Loading -> LoadingComponent()
-                is HomeUiState.Error -> ErrorComponent(
-                    message = uiState.error.message ?: "Error",
-                    onRetry = { onTabChanged(movieType) })
+            HomeMovieTypeTabs(currentMovieType = currentMovieType) { onTabChanged(it) }
+            MovieComponent(
+                lazyPagingItems = lazyPagingItems,
+                onMovieClicked = { onMovieClicked(it) }
+            )
+            lazyPagingItems.loadState.refresh.let { loadState ->
+                when (loadState) {
+                    is LoadState.Error -> ErrorComponent(
+                        message = loadState.error.localizedMessage
+                            ?: stringResource(R.string.an_error_occurred),
+                        onRetry = { onTabChanged(currentMovieType) }
+                    )
 
-                is HomeUiState.Success -> MovieComponent(
-                    movieList = uiState.movies,
-                    onMovieClicked = { onMovieClicked(it) }
-                )
+                    LoadState.Loading -> LoadingComponent()
+                    is LoadState.NotLoading -> {
+                        if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.append.endOfPaginationReached) {
+                            Box(modifier = modifier, contentAlignment = Alignment.Center) {
+                                Text(stringResource(R.string.no_items_found))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -84,7 +102,7 @@ internal fun HomeScreen(
 @Composable
 private fun HomeMovieTypeTabs(
     modifier: Modifier = Modifier,
-    selectedMovieType: MovieType,
+    currentMovieType: MovieType,
     onTabChanged: (MovieType) -> Unit,
 ) {
     val list = MovieType.entries.map { it.name }
@@ -96,7 +114,7 @@ private fun HomeMovieTypeTabs(
         horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small),
     ) {
         list.forEachIndexed { index, movieType ->
-            val isSelected = index == selectedMovieType.ordinal
+            val isSelected = index == currentMovieType.ordinal
             val animatedColor by animateColorAsState(
                 targetValue = if (isSelected) MaterialTheme.colorScheme.onSurfaceVariant
                 else MaterialTheme.colorScheme.outline,

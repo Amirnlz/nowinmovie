@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(projects.core.network)
     implementation(projects.core.domain.movie)
+    implementation(libs.androidx.paging.runtime.ktx)
 }

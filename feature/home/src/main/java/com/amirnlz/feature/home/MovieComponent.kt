@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -29,16 +28,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
-import com.amirnlz.core.domain.movie.model.MovieList
+import com.amirnlz.core.ui.ErrorComponent
 import com.amirnlz.core.ui.ImageNetwork
+import com.amirnlz.core.ui.LoadingComponent
 import java.util.Locale
 
 @Composable
 internal fun MovieComponent(
     modifier: Modifier = Modifier,
-    movieList: MovieList,
+    lazyPagingItems: LazyPagingItems<Movie>,
     onMovieClicked: (Long) -> Unit,
 ) {
     LazyVerticalGrid(
@@ -48,8 +52,34 @@ internal fun MovieComponent(
         verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
     ) {
-        items(movieList.results, key = { it.id }) { movie ->
-            MovieItem(movie = movie, onMovieClicked = onMovieClicked)
+        items(
+            count = lazyPagingItems.itemCount,
+            key = lazyPagingItems.itemKey { it.id },
+            contentType = lazyPagingItems.itemContentType { "itemType" }
+        ) { index ->
+            val movie = lazyPagingItems[index]
+            if (movie != null) {
+                MovieItem(movie = movie) { onMovieClicked(it) }
+            } else {
+                // PlaceholderItem()
+            }
+        }
+
+        lazyPagingItems.loadState.append.let { loadState ->
+            when (loadState) {
+                is LoadState.Error -> item {
+                    ErrorComponent(
+                        message = loadState.error.localizedMessage ?: "Could not load more items",
+                        onRetry = {}
+                    )
+                }
+
+                LoadState.Loading -> item {
+                    LoadingComponent()
+                }
+
+                is LoadState.NotLoading -> item {}
+            }
         }
     }
 }

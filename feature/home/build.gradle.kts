@@ -11,4 +11,5 @@ android {
 dependencies {
     implementation(projects.core.domain.movie)
     implementation(projects.core.navigation)
+    implementation(libs.androidx.paging.compose)
 }

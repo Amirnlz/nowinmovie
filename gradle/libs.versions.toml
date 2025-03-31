@@ -7,12 +7,17 @@ androidxTracing = "1.3.0-beta01"
 androidxEspressoCore = "3.6.1"
 androidxJunit = "1.2.1"
 androidxLifecycle = "2.8.7"
+securityCrypto = "1.1.0-alpha06"
 
+paging = "3.3.6"
 
 # Compose
 androidxComposeBom = "2025.03.00"
 androidxNavigation = "2.8.9"
 composeActivity = "1.10.1"
+
+coil = "3.1.0"
+
 
 # Firebase
 converterGson = "2.9.0"
@@ -40,14 +45,13 @@ room = "2.6.1"
 hilt = "2.55"
 hiltNavigationCompose = "1.2.0"
 
-coil = "3.1.0"
-
-securityCrypto = "1.1.0-alpha06"
 
 
 [libraries]
 # AndroidX Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
 
 
