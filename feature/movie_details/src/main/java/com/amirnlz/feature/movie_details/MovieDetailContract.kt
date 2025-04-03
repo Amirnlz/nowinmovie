@@ -1,13 +1,17 @@
 package com.amirnlz.feature.movie_details
 
+import com.amirnlz.core.domain.movie.model.MovieCredits
 import com.amirnlz.core.domain.movie.model.MovieDetails
 
-sealed interface MovieDetailUiState {
-    data object Loading : MovieDetailUiState
-    data class Error(val error: Throwable) : MovieDetailUiState
-    data class Success(val movieDetails: MovieDetails) : MovieDetailUiState
-}
+
+data class MovieDetailsUiState(
+    val movieDetails: MovieDetails? = null,
+    val movieCredits: MovieCredits? = null,
+    val favoriteState: Boolean = false,
+    val loading: Boolean = false,
+    val error: Throwable? = null
+)
 
 sealed interface MovieDetailIntent {
-    data class GetMovieDetails(val movieId: Long) : MovieDetailIntent
+    data class ChangeMovieFavorite(val movieDetails: MovieDetails) : MovieDetailIntent
 }

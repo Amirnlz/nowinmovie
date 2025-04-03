@@ -1,80 +1,77 @@
 package com.amirnlz.core.data.movie.mapper
 
+import com.amirnlz.core.database.entity.MovieEntity
 import com.amirnlz.core.domain.movie.model.Genre
 import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.domain.movie.model.MovieDetails
-import com.amirnlz.core.domain.movie.model.MovieList
 import com.amirnlz.core.domain.movie.model.ProductionCompany
 import com.amirnlz.core.domain.movie.model.ProductionCountry
 import com.amirnlz.core.domain.movie.model.SpokenLanguage
 import com.amirnlz.core.network.dto.GenreDto
 import com.amirnlz.core.network.dto.MovieDetailsDto
 import com.amirnlz.core.network.dto.MovieDto
-import com.amirnlz.core.network.dto.MovieListDto
 import com.amirnlz.core.network.dto.ProductionCompanyDto
 import com.amirnlz.core.network.dto.ProductionCountryDto
 import com.amirnlz.core.network.dto.SpokenLanguageDto
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
-fun MovieListDto.mapToMovieList(): MovieList {
-    return MovieList(
-        page,
-        totalResults = totalResults,
-        totalPages = totalPages,
-        results = results.map { it.mapToMovie() }
-    )
-
-}
-
 fun MovieDto.mapToMovie(): Movie {
     return Movie(
-        adult,
-        backdropPath,
-        genreIDS,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate?.toLocalDate(),
-        title,
-        video,
-        voteAverage,
-        voteCount,
+        backdropPath = backdropPath,
+        genreIDS = genreIDS,
+        id = id,
+        originalTitle = originalTitle,
+        overview = overview,
+        posterPath = posterPath,
+        releaseDate = releaseDate?.toLocalDate(),
+        title = title,
+        voteAverage = voteAverage
+    )
+}
+
+fun MovieEntity.mapToMovie(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        voteAverage = voteAverage,
+        genreIDS = null,
+        backdropPath = "",
+        originalTitle = "",
+        overview = "",
     )
 }
 
 fun MovieDetailsDto.mapToMovieDetails(): MovieDetails {
     return MovieDetails(
-        adult,
-        backdropPath,
-        belongsToCollection,
-        budget,
-        genres.map { it.mapToGenres() },
-        homepage,
-        id,
-        imdbID,
-        originCountry,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        productionCompanies?.map { it.mapToProductionCompanies() },
-        productionCountries?.map { it.mapToProductionCountries() },
-        releaseDate,
-        revenue,
-        runtime,
-        spokenLanguages.map { it.mapToSpokenLanguage() },
-        status,
-        tagline,
-        title,
-        video,
-        voteAverage,
-        voteCount,
+        backdropPath = backdropPath,
+        genres = genres.map { it.mapToGenres() },
+        id = id,
+        imdbID = imdbID,
+        originCountry = originCountry,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        posterPath = posterPath,
+        productionCompanies = productionCompanies?.map { it.mapToProductionCompanies() },
+        productionCountries = productionCountries?.map { it.mapToProductionCountries() },
+        releaseDate = releaseDate.toLocalDate() ?: LocalDate.now(),
+        runtime = runtime,
+        spokenLanguages = spokenLanguages.map { it.mapToSpokenLanguage() },
+        title = title,
+        voteAverage = voteAverage
+    )
+}
+
+fun MovieDetails.mapToMovieEntity(): MovieEntity {
+    return MovieEntity(
+        id = id,
+        title = title,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        voteAverage = voteAverage,
     )
 }
 

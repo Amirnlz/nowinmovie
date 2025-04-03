@@ -12,6 +12,7 @@ android {
 
 dependencies {
     implementation(projects.core.navigation)
+    implementation(projects.core.designsystem) //TODO: I think it is better to import with plugins
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
