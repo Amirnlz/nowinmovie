@@ -34,7 +34,7 @@ import com.amirnlz.core.ui.ImageNetwork
 import com.amirnlz.feature.movie_detail.R
 
 @Composable
-internal fun MovieCreditsComponent(modifier: Modifier = Modifier, movieCredits: MovieCredits) {
+internal fun MovieCreditsComponent(modifier: Modifier = Modifier, movieCredits: MovieCredits?) {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val list = listOf(stringResource(R.string.cast), stringResource(R.string.director_crew))
 
@@ -43,15 +43,16 @@ internal fun MovieCreditsComponent(modifier: Modifier = Modifier, movieCredits: 
         verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small)
     ) {
         TabsComponent(selectedIndex = selectedIndex, list = list) { selectedIndex = it }
-        Crossfade(
-            targetState = selectedIndex,
-            animationSpec = tween(300)
-        ) { screen ->
-            when (screen) {
-                0 -> CastComponent(casts = movieCredits.cast)
-                else -> CastComponent(casts = movieCredits.crew)
+        if (movieCredits != null)
+            Crossfade(
+                targetState = selectedIndex,
+                animationSpec = tween(300)
+            ) { screen ->
+                when (screen) {
+                    0 -> CastComponent(casts = movieCredits.cast)
+                    else -> CastComponent(casts = movieCredits.crew)
+                }
             }
-        }
     }
 }
 

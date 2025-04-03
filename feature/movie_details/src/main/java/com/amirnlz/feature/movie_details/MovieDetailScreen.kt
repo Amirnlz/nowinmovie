@@ -18,7 +18,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -26,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
-import com.amirnlz.core.ui.ErrorComponent
+import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.ui.LoadingComponent
 import com.amirnlz.feature.movie_detail.R
 import com.amirnlz.feature.movie_details.component.MovieCreditsComponent
@@ -40,23 +39,15 @@ fun MovieDetailRoute(
     viewModel: MovieDetailViewModel = hiltViewModel(),
     onBackButtonPressed: () -> Unit,
 ) {
-    val movieDetailsUiState by viewModel.movieDetailsState.collectAsStateWithLifecycle()
-    val movieCreditsUiState by viewModel.movieCreditsState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(movieId) {
-        viewModel.onIntent(MovieDetailIntent.GetMovieDetails(movieId))
-        viewModel.onIntent(MovieDetailIntent.GetMovieCredits(movieId))
-    }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     MovieDetailScreen(
         modifier = modifier,
-        movieDetails = movieDetailsUiState,
-        movieCredits = movieCreditsUiState,
+        uiState = uiState,
         onRetry = {
-            viewModel.onIntent(MovieDetailIntent.GetMovieDetails(movieId))
-            viewModel.onIntent(MovieDetailIntent.GetMovieCredits(movieId))
         },
-        onBackButtonPressed = onBackButtonPressed
+        onBackButtonPressed = onBackButtonPressed,
+        onMovieFavoriteChanged = { viewModel.onIntent(MovieDetailIntent.ChangeMovieFavorite(it)) }
     )
 }
 
@@ -64,10 +55,10 @@ fun MovieDetailRoute(
 @Composable
 internal fun MovieDetailScreen(
     modifier: Modifier = Modifier,
-    movieDetails: MovieDetailsUiState,
-    movieCredits: MovieCreditsUiState,
+    uiState: MovieDetailsUiState,
     onRetry: () -> Unit,
     onBackButtonPressed: () -> Unit,
+    onMovieFavoriteChanged: (MovieDetails) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
@@ -90,7 +81,7 @@ internal fun MovieDetailScreen(
                 }, title = { Box {} })
         },
         content = { paddingValues ->
-            Column(
+            if (uiState.loading) LoadingComponent() else Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .padding(horizontal = NowinmovieTheme.dimens.paddingExtraMedium)
@@ -99,29 +90,16 @@ internal fun MovieDetailScreen(
                     .background(MaterialTheme.colorScheme.background)
             ) {
 //                Movie Details
-                when (movieDetails) {
-                    is MovieDetailsUiState.Error -> ErrorComponent(
-                        message = movieDetails.error.message ?: "Error",
-                        onRetry = onRetry,
-                    )
+                MovieDetailsComponent(
+                    movieDetails = uiState.movieDetails,
+                    isMovieFavorite = uiState.favoriteState,
+                    onMovieFavoriteChanged = onMovieFavoriteChanged,
+                )
 
-                    MovieDetailsUiState.Loading -> LoadingComponent()
-                    is MovieDetailsUiState.Success -> MovieDetailsComponent(
-                        movieDetails = movieDetails.data
-                    )
-                }
 //                Movie Credits
-                when (movieCredits) {
-                    is MovieCreditsUiState.Error -> ErrorComponent(
-                        message = movieCredits.error.message ?: "Error",
-                        onRetry = onRetry,
-                    )
-
-                    MovieCreditsUiState.Loading -> LoadingComponent()
-                    is MovieCreditsUiState.Success -> MovieCreditsComponent(
-                        movieCredits = movieCredits.data
-                    )
-                }
+                MovieCreditsComponent(
+                    movieCredits = uiState.movieCredits
+                )
             }
         }
     )
