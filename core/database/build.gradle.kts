@@ -10,6 +10,6 @@ android {
 
 dependencies {
     implementation(libs.converter.gson)
-    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.room.paging)
 
 }

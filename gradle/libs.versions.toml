@@ -54,6 +54,7 @@ material = "1.12.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
 
 
