@@ -5,7 +5,9 @@ import com.amirnlz.core.network.dto.MovieCreditsDto
 import com.amirnlz.core.network.dto.MovieDetailsDto
 import com.amirnlz.core.network.dto.MovieListDto
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MovieRemoteDataSource @Inject constructor(private val movieApiService: MovieApiService) {
 
     suspend fun getPopularMovies(page: Int = 1): MovieListDto {
@@ -43,15 +45,6 @@ class MovieRemoteDataSource @Inject constructor(private val movieApiService: Mov
         }
     }
 
-    suspend fun getFavoriteMovies(accountId: Long, page: Int = 1): MovieListDto {
-        return try {
-            movieApiService.getFavoriteMovies(accountId = accountId, page = page)
-        } catch (e: Exception) {
-            throw e
-
-        }
-    }
-
     suspend fun getMovieDetails(movieId: Long): MovieDetailsDto {
         return try {
             movieApiService.getMovieDetails(movieId = movieId)
@@ -63,15 +56,6 @@ class MovieRemoteDataSource @Inject constructor(private val movieApiService: Mov
     suspend fun getMovieCredits(movieId: Long): MovieCreditsDto {
         return try {
             movieApiService.getMovieCredits(movieId = movieId)
-        } catch (e: Exception) {
-            throw e
-        }
-    }
-
-
-    suspend fun addFavoriteMovie(accountId: Long, movieId: Long): Unit {
-        return try {
-            movieApiService.addFavoriteMovie(accountId, movieId)
         } catch (e: Exception) {
             throw e
         }

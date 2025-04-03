@@ -3,16 +3,22 @@ package com.amirnlz.core.data.movie.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
+import com.amirnlz.core.data.movie.data_source.local.MovieLocalDataSource
 import com.amirnlz.core.data.movie.data_source.remote.MoviePagingSource
 import com.amirnlz.core.data.movie.data_source.remote.MovieRemoteDataSource
+import com.amirnlz.core.data.movie.mapper.mapToMovie
 import com.amirnlz.core.data.movie.mapper.mapToMovieCredits
 import com.amirnlz.core.data.movie.mapper.mapToMovieDetails
+import com.amirnlz.core.data.movie.mapper.mapToMovieEntity
+import com.amirnlz.core.database.entity.MovieEntity
 import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.domain.movie.model.MovieCredits
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -20,7 +26,8 @@ import javax.inject.Inject
 private const val DEFAULT_PAGE_SIZE = 20
 
 class MovieRepositoryImpl @Inject constructor(
-    private val remoteDataSource: MovieRemoteDataSource
+    private val remoteDataSource: MovieRemoteDataSource,
+    private val localDataSource: MovieLocalDataSource,
 ) : MovieRepository {
 
     override suspend fun getTrendingMovies(): Flow<PagingData<Movie>> {
@@ -78,15 +85,11 @@ class MovieRepositoryImpl @Inject constructor(
                 pageSize = DEFAULT_PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {
-                MoviePagingSource { page ->
-                    remoteDataSource.getFavoriteMovies(
-                        accountId = 1,
-                        page = page
-                    )
-                }
-            }
+            pagingSourceFactory = { localDataSource.getFavoriteMovies() }
         ).flow
+            .map { value: PagingData<MovieEntity> ->
+                value.map { entity -> entity.mapToMovie() }
+            }
     }
 
     override suspend fun getMovieDetails(movieId: Long): Result<MovieDetails> {
@@ -111,16 +114,31 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun toggleFavoriteMovie(movieId: Long): Result<Unit> {
+    override suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = remoteDataSource.addFavoriteMovie(
-                    accountId = 1,
-                    movieId = movieId
-                )
-                Result.success(response)
+                var latestFavoriteState: Boolean? = null
+                localDataSource.getMovieFavoriteState(movieDetails.id).map { isFavorite ->
+                    if (isFavorite) {
+                        localDataSource.deleteMovie(movieDetails.id)
+                    } else {
+                        localDataSource.insertMovie(movieDetails.mapToMovieEntity())
+                    }
+                    latestFavoriteState = !isFavorite
+                }
+                Result.success(latestFavoriteState ?: false)
             } catch (e: Exception) {
                 Result.failure(e)
+            }
+        }
+    }
+
+    override suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                localDataSource.getMovieFavoriteState(movieId)
+            } catch (e: Exception) {
+                throw e
             }
         }
     }
