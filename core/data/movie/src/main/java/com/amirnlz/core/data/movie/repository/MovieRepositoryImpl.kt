@@ -18,6 +18,7 @@ import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -117,21 +118,24 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                var latestFavoriteState: Boolean? = null
-                localDataSource.getMovieFavoriteState(movieDetails.id).map { isFavorite ->
-                    if (isFavorite) {
-                        localDataSource.deleteMovie(movieDetails.id)
-                    } else {
-                        localDataSource.insertMovie(movieDetails.mapToMovieEntity())
-                    }
-                    latestFavoriteState = !isFavorite
+                val isFavorite = localDataSource.getMovieFavoriteState(movieDetails.id)
+                    .first()
+
+                val newFavoriteState = if (isFavorite) {
+                    localDataSource.deleteMovie(movieDetails.id)
+                    false
+                } else {
+                    localDataSource.insertMovie(movieDetails.mapToMovieEntity())
+                    true
                 }
-                Result.success(latestFavoriteState ?: false)
+
+                Result.success(newFavoriteState)
             } catch (e: Exception) {
                 Result.failure(e)
             }
         }
     }
+
 
     override suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean> {
         return withContext(Dispatchers.IO) {
