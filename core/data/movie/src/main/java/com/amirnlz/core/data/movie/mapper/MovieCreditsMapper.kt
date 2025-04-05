@@ -2,8 +2,8 @@ package com.amirnlz.core.data.movie.mapper
 
 import com.amirnlz.core.domain.movie.model.MovieCast
 import com.amirnlz.core.domain.movie.model.MovieCredits
-import com.amirnlz.core.network.dto.MovieCastDto
-import com.amirnlz.core.network.dto.MovieCreditsDto
+import com.amirnlz.core.network.dto.movie.MovieCastDto
+import com.amirnlz.core.network.dto.movie.MovieCreditsDto
 
 fun MovieCreditsDto.mapToMovieCredits(): MovieCredits {
     return MovieCredits(

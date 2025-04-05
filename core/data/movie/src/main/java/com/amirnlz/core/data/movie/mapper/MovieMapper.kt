@@ -7,12 +7,12 @@ import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.ProductionCompany
 import com.amirnlz.core.domain.movie.model.ProductionCountry
 import com.amirnlz.core.domain.movie.model.SpokenLanguage
-import com.amirnlz.core.network.dto.GenreDto
-import com.amirnlz.core.network.dto.MovieDetailsDto
-import com.amirnlz.core.network.dto.MovieDto
-import com.amirnlz.core.network.dto.ProductionCompanyDto
-import com.amirnlz.core.network.dto.ProductionCountryDto
-import com.amirnlz.core.network.dto.SpokenLanguageDto
+import com.amirnlz.core.network.dto.movie.GenreDto
+import com.amirnlz.core.network.dto.movie.MovieDetailsDto
+import com.amirnlz.core.network.dto.movie.MovieDto
+import com.amirnlz.core.network.dto.movie.ProductionCompanyDto
+import com.amirnlz.core.network.dto.movie.ProductionCountryDto
+import com.amirnlz.core.network.dto.movie.SpokenLanguageDto
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

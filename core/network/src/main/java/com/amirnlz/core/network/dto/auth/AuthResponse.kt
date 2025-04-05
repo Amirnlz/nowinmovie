@@ -1,4 +1,4 @@
-package com.amirnlz.core.network.dto
+package com.amirnlz.core.network.dto.auth
 
 
 data class AuthResponse(

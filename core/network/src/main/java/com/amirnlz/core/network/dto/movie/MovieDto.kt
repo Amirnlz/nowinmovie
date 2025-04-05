@@ -1,4 +1,4 @@
-package com.amirnlz.core.network.dto
+package com.amirnlz.core.network.dto.movie
 
 data class MovieListDto(
     val page: Long,

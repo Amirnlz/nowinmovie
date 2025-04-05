@@ -1,4 +1,4 @@
-package com.amirnlz.core.network.dto
+package com.amirnlz.core.network.dto.movie
 
 import com.google.gson.annotations.SerializedName
 
