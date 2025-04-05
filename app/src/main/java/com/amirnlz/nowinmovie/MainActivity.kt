@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
+import com.amirnlz.nowinmovie.navigation.AppBottomNavigation
 import com.amirnlz.nowinmovie.navigation.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             NowinmovieTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        AppBottomNavigation(
+                            navController = navController
+                        )
+                    }
+                ) { innerPadding ->
                     AppNavHost(Modifier.padding(innerPadding), navController)
                 }
             }
