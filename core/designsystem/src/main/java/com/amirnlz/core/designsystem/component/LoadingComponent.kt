@@ -1,4 +1,4 @@
-package com.amirnlz.core.ui
+package com.amirnlz.core.designsystem.component
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

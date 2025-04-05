@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieDetails
-import com.amirnlz.core.ui.LoadingComponent
+import com.amirnlz.core.designsystem.component.LoadingComponent
 import com.amirnlz.feature.movie_detail.R
 import com.amirnlz.feature.movie_details.component.MovieCreditsComponent
 import com.amirnlz.feature.movie_details.component.MovieDetailsComponent

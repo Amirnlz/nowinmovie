@@ -32,8 +32,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
-import com.amirnlz.core.ui.ErrorComponent
-import com.amirnlz.core.ui.LoadingComponent
+import com.amirnlz.core.designsystem.component.ErrorComponent
+import com.amirnlz.core.designsystem.component.LoadingComponent
 
 @Composable
 fun HomeRoute(

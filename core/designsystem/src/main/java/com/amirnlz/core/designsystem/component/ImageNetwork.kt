@@ -1,4 +1,4 @@
-package com.amirnlz.core.ui
+package com.amirnlz.core.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,6 +13,7 @@ import coil3.compose.AsyncImage
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.amirnlz.core.designsystem.BuildConfig
 import java.util.Locale
 
 
