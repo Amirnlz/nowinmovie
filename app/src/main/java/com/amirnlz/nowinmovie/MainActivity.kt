@@ -10,8 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
-import com.amirnlz.nowinmovie.navigation.AppBottomNavigation
 import com.amirnlz.nowinmovie.navigation.AppNavHost
+import com.amirnlz.nowinmovie.navigation.BottomNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,8 +25,8 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        AppBottomNavigation(
-                            navController = navController
+                        BottomNavigationBar(
+                            navController = navController,
                         )
                     }
                 ) { innerPadding ->

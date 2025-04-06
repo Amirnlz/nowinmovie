@@ -12,7 +12,7 @@ securityCrypto = "1.1.0-alpha06"
 paging = "3.3.6"
 
 # Compose
-androidxComposeBom = "2025.03.00"
+androidxComposeBom = "2025.03.01"
 androidxNavigation = "2.8.9"
 composeActivity = "1.10.1"
 
