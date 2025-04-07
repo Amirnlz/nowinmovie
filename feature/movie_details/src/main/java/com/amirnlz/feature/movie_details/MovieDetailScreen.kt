@@ -1,7 +1,6 @@
 package com.amirnlz.feature.movie_details
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,12 +8,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -24,9 +24,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.amirnlz.core.designsystem.component.LoadingComponent
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieDetails
-import com.amirnlz.core.designsystem.component.LoadingComponent
 import com.amirnlz.feature.movie_detail.R
 import com.amirnlz.feature.movie_details.component.MovieCreditsComponent
 import com.amirnlz.feature.movie_details.component.MovieDetailsComponent
@@ -66,8 +66,16 @@ internal fun MovieDetailScreen(
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 scrollBehavior = scrollBehavior,
+                title = {
+                    Text(
+                        stringResource(R.string.movie_details),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = onBackButtonPressed,
@@ -78,7 +86,8 @@ internal fun MovieDetailScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                }, title = { Box {} })
+                },
+            )
         },
         content = { paddingValues ->
             if (uiState.loading) LoadingComponent() else Column(
