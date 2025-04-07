@@ -47,4 +47,11 @@ interface MovieApiService {
         @Path("movie_id")
         movieId: Long,
     ): MovieCreditsDto
+
+    @GET("/3/search/movie")
+    @Authenticated
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+    ): MovieListDto
 }

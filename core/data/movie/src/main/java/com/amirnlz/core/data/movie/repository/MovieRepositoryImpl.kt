@@ -146,4 +146,16 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getSearchMovie(query: String): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = DEFAULT_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MoviePagingSource { page -> remoteDataSource.searchMovie(query, page) }
+            }
+        ).flow
+    }
 }
