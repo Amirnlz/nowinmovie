@@ -47,6 +47,8 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
         movieDetailsScreen(
             onBackButtonPressed = { navController.popBackStack() }
         )
-        searchScreen()
+        searchScreen(
+            onMovieClicked = { navController.navigateToMovieDetails(it) }
+        )
     }
 }

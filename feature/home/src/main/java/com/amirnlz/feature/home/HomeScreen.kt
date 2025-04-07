@@ -30,10 +30,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.amirnlz.core.designsystem.theme.NowinmovieTheme
-import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.designsystem.component.ErrorComponent
 import com.amirnlz.core.designsystem.component.LoadingComponent
+import com.amirnlz.core.designsystem.component.movie.MovieGridList
+import com.amirnlz.core.designsystem.theme.NowinmovieTheme
+import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
 fun HomeRoute(
@@ -73,7 +74,7 @@ internal fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
         ) {
             HomeMovieTypeTabs(currentMovieType = currentMovieType) { onTabChanged(it) }
-            MovieComponent(
+            MovieGridList(
                 lazyPagingItems = lazyPagingItems,
                 onMovieClicked = { onMovieClicked(it) }
             )

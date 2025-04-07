@@ -1,4 +1,4 @@
-package com.amirnlz.feature.home
+package com.amirnlz.core.designsystem.component.movie
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,15 +32,16 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
-import com.amirnlz.core.designsystem.theme.NowinmovieTheme
-import com.amirnlz.core.domain.movie.model.Movie
 import com.amirnlz.core.designsystem.component.ErrorComponent
 import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.core.designsystem.component.LoadingComponent
+import com.amirnlz.core.designsystem.theme.NowinmovieTheme
+import com.amirnlz.core.domain.movie.model.Movie
 import java.util.Locale
 
+
 @Composable
-internal fun MovieComponent(
+fun MovieGridList(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<Movie>,
     onMovieClicked: (Long) -> Unit,
