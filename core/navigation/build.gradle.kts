@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.nowinmovie.android.feature)
+    alias(libs.plugins.nowinmovie.android.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,5 +10,6 @@ android {
 dependencies {
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.material3.android)
+    implementation(libs.kotlinx.serialization.json)
 }
 
