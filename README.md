@@ -61,6 +61,3 @@ This project is licensed under the **MIT License**.
 ---
 
 **Made with ❤️, Compose, and way too much coffee ☕**  
-```
-
-This README keeps it fun, informative, and professional while showcasing your tech stack and inspiration. Let me know if you want any modifications! 🚀
