@@ -22,6 +22,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -120,6 +123,7 @@ private fun SearchTextField(
     onQueryChange: (String) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val isClearIconVisible by remember { derivedStateOf { query.isNotEmpty() } }
     TextField(
         value = query,
         onValueChange = onQueryChange,
@@ -133,7 +137,7 @@ private fun SearchTextField(
             )
         },
         suffix = {
-            if (query.isNotEmpty())
+            if (isClearIconVisible)
                 Icon(
                     Icons.Rounded.Clear,
                     contentDescription = stringResource(R.string.clear),
