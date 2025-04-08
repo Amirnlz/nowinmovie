@@ -35,7 +35,6 @@ import com.amirnlz.feature.movie_details.component.MovieDetailsComponent
 @Composable
 fun MovieDetailRoute(
     modifier: Modifier = Modifier,
-    movieId: Long,
     viewModel: MovieDetailViewModel = hiltViewModel(),
     onBackButtonPressed: () -> Unit,
 ) {

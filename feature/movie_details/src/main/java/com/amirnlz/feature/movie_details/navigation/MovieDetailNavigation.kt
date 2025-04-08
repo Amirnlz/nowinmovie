@@ -4,7 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.amirnlz.core.navigation.AppRoutes
 import com.amirnlz.feature.movie_details.MovieDetailRoute
 
@@ -16,10 +15,8 @@ fun NavController.navigateToMovieDetails(movieId: Long, navOptions: NavOptions? 
 fun NavGraphBuilder.movieDetailsScreen(
     onBackButtonPressed: () -> Unit,
 ) {
-    composable<AppRoutes.MovieDetailsRoute> { navBackStackEntry ->
-        val movieDetailsRoute: AppRoutes.MovieDetailsRoute = navBackStackEntry.toRoute()
+    composable<AppRoutes.MovieDetailsRoute> {
         MovieDetailRoute(
-            movieId = movieDetailsRoute.movieId,
             onBackButtonPressed = onBackButtonPressed
         )
     }
