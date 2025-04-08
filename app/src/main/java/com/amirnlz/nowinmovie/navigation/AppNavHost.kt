@@ -8,17 +8,20 @@ import androidx.navigation.navOptions
 import com.amirnlz.core.navigation.AppRoutes
 import com.amirnlz.feature.auth.navigation.authScreen
 import com.amirnlz.feature.auth.navigation.navigateToAuth
+import com.amirnlz.feature.favorites.navigation.favoritesScreen
 import com.amirnlz.feature.home.navigation.homeScreen
 import com.amirnlz.feature.home.navigation.navigateToHome
 import com.amirnlz.feature.movie_details.navigation.movieDetailsScreen
 import com.amirnlz.feature.movie_details.navigation.navigateToMovieDetails
+import com.amirnlz.feature.search.navigation.searchScreen
 import com.amirnlz.feature.splash.navigation.splashScreen
 
 @Composable
 fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = AppRoutes.SplashRoute, modifier = modifier
+        startDestination = AppRoutes.SplashRoute,
+        modifier = modifier
     ) {
         splashScreen(
             onNavigateToAuth = {
@@ -44,6 +47,12 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
         )
         movieDetailsScreen(
             onBackButtonPressed = { navController.popBackStack() }
+        )
+        searchScreen(
+            onMovieClicked = { navController.navigateToMovieDetails(it) }
+        )
+        favoritesScreen(
+            onMovieClicked = { navController.navigateToMovieDetails(it) }
         )
     }
 }

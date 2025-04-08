@@ -1,7 +1,7 @@
 package com.amirnlz.core.data.auth.data_source
 
 import com.amirnlz.core.network.api.AuthApiService
-import com.amirnlz.core.network.dto.AuthResponse
+import com.amirnlz.core.network.dto.auth.AuthResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 

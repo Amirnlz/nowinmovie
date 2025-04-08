@@ -35,7 +35,6 @@ class HomeViewModel @Inject constructor(
                 MovieType.Popular -> getPopularMoviesUseCase()
                 MovieType.TopRated -> getTopRatedMoviesUseCase()
                 MovieType.Upcoming -> getUpcomingMoviesUseCase()
-                MovieType.Favorite -> getFavoriteMoviesUseCase()
             }
         }
         .cachedIn(viewModelScope)

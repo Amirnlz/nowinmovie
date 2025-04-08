@@ -16,4 +16,5 @@ interface MovieRepository {
     suspend fun getMovieCredits(movieId: Long): Result<MovieCredits>
     suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean>
     suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean>
+    suspend fun getSearchMovie(query: String): Flow<PagingData<Movie>>
 }

@@ -1,9 +1,9 @@
 package com.amirnlz.core.network.api
 
 import com.amirnlz.core.network.Authenticated
-import com.amirnlz.core.network.dto.MovieCreditsDto
-import com.amirnlz.core.network.dto.MovieDetailsDto
-import com.amirnlz.core.network.dto.MovieListDto
+import com.amirnlz.core.network.dto.movie.MovieCreditsDto
+import com.amirnlz.core.network.dto.movie.MovieDetailsDto
+import com.amirnlz.core.network.dto.movie.MovieListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -47,4 +47,11 @@ interface MovieApiService {
         @Path("movie_id")
         movieId: Long,
     ): MovieCreditsDto
+
+    @GET("/3/search/movie")
+    @Authenticated
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+    ): MovieListDto
 }

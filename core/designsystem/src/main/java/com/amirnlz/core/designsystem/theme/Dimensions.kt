@@ -21,6 +21,7 @@ object Dimens {
     val iconSizeSmall: Dp = 16.dp
     val iconSizeMedium: Dp = 24.dp
     val iconSizeLarge: Dp = 32.dp
+    val iconSizeExtraLarge: Dp = 54.dp
 
     val posterAspectRatio = 2f / 3f
     val backdropAspectRatio = 16f / 9f

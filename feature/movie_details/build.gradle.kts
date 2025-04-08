@@ -11,5 +11,4 @@ android {
 
 dependencies {
     implementation(projects.core.domain.movie)
-    implementation(projects.core.navigation)
 }

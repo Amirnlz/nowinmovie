@@ -7,7 +7,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.amirnlz.core.data.movie.mapper.mapToMovie
 import com.amirnlz.core.domain.movie.model.Movie
-import com.amirnlz.core.network.dto.MovieListDto
+import com.amirnlz.core.network.dto.movie.MovieListDto
 import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1

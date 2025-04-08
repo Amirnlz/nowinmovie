@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieCast
 import com.amirnlz.core.domain.movie.model.MovieCredits
-import com.amirnlz.core.ui.ImageNetwork
+import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.feature.movie_detail.R
 
 @Composable

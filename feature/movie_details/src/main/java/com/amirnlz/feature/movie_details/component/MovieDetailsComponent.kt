@@ -43,7 +43,7 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.ProductionCompany
 import com.amirnlz.core.domain.movie.model.toMovieTime
-import com.amirnlz.core.ui.ImageNetwork
+import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.feature.movie_detail.R
 
 @Composable

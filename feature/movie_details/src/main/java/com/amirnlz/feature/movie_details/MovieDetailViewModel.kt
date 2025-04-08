@@ -24,7 +24,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
     private val getMovieFavoriteStateUseCase: GetMovieFavoriteStateUseCase,
     private val toggleFavoriteMovieUseCase: ToggleFavoriteMovieUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) :
     ViewModel() {
     private val movieId: Long = checkNotNull(savedStateHandle["movieId"]) {
