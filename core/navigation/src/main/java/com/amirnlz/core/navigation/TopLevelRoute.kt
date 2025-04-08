@@ -18,6 +18,6 @@ data class TopLevelRoute<T : Any>(
 val topLevelRoutes = listOf(
     TopLevelRoute("Home", AppRoutes.HomeRoute, Icons.Rounded.Home),
     TopLevelRoute("Search", AppRoutes.SearchRoute, Icons.Rounded.Search),
-    TopLevelRoute("Favorites", AppRoutes.FavoritesRoute, Icons.Rounded.Favorite, enabled = false),
+    TopLevelRoute("Favorites", AppRoutes.FavoritesRoute, Icons.Rounded.Favorite),
     TopLevelRoute("Settings", AppRoutes.SettingRoute, Icons.Rounded.Settings, enabled = false)
 )

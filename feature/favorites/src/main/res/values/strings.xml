@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="no_favorite_movies_found">No favorite movies found. \n</string>
+    <string name="please_add_some_movies_to_your_favorites">Please add some movies to your favorites.</string>
+</resources>

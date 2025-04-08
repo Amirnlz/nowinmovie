@@ -8,6 +8,7 @@ import androidx.navigation.navOptions
 import com.amirnlz.core.navigation.AppRoutes
 import com.amirnlz.feature.auth.navigation.authScreen
 import com.amirnlz.feature.auth.navigation.navigateToAuth
+import com.amirnlz.feature.favorites.navigation.favoritesScreen
 import com.amirnlz.feature.home.navigation.homeScreen
 import com.amirnlz.feature.home.navigation.navigateToHome
 import com.amirnlz.feature.movie_details.navigation.movieDetailsScreen
@@ -48,6 +49,9 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
             onBackButtonPressed = { navController.popBackStack() }
         )
         searchScreen(
+            onMovieClicked = { navController.navigateToMovieDetails(it) }
+        )
+        favoritesScreen(
             onMovieClicked = { navController.navigateToMovieDetails(it) }
         )
     }
