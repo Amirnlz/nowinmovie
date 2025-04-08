@@ -1,13 +1,12 @@
 package com.amirnlz.feature.home
 
-enum class MovieType { Trending, Popular, TopRated, Upcoming, Favorite }
+enum class MovieType { Trending, Popular, TopRated, Upcoming }
 
 sealed interface HomeIntent {
     data object TrendingMovies : HomeIntent
     data object PopularMovies : HomeIntent
     data object TopRatedMovies : HomeIntent
     data object UpcomingMovies : HomeIntent
-    data object FavoriteMovies : HomeIntent
 }
 
 internal fun MovieType.toIntent(): HomeIntent = when (this) {
@@ -15,7 +14,6 @@ internal fun MovieType.toIntent(): HomeIntent = when (this) {
     MovieType.Popular -> HomeIntent.PopularMovies
     MovieType.TopRated -> HomeIntent.TopRatedMovies
     MovieType.Upcoming -> HomeIntent.UpcomingMovies
-    MovieType.Favorite -> HomeIntent.FavoriteMovies
 }
 
 internal fun HomeIntent.toMovieType(): MovieType = when (this) {
@@ -23,5 +21,4 @@ internal fun HomeIntent.toMovieType(): MovieType = when (this) {
     HomeIntent.PopularMovies -> MovieType.Popular
     HomeIntent.TopRatedMovies -> MovieType.TopRated
     HomeIntent.UpcomingMovies -> MovieType.Upcoming
-    HomeIntent.FavoriteMovies -> MovieType.Favorite
 }
