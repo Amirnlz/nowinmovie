@@ -31,13 +31,20 @@
 
 ## 📱 Screenshots
 
+<details>
+  <summary>Click to expand screenshots</summary>
+
+  <br/>
+
 | Home                                 | Search                                   | Favorites                                      |
-|--------------------------------------|------------------------------------------|------------------------------------------------|
+  |--------------------------------------|------------------------------------------|------------------------------------------------|
 | ![Home](/images/home-screenshot.png) | ![Search](/images/search-screenshot.png) | ![Favorites](/images/favorites-screenshot.png) |
 
 | Movie Details                                      | Cast & Info                                         |
-|----------------------------------------------------|-----------------------------------------------------|
+  |----------------------------------------------------|-----------------------------------------------------|
 | ![Details 1](/images/movie-details-screenshot.png) | ![Details 2](/images/movie-details-screenshot2.png) |
+
+</details>
 
 ---
 
