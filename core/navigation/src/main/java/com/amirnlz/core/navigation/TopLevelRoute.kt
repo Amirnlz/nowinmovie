@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class TopLevelRoute<T : Any>(
@@ -18,6 +17,5 @@ data class TopLevelRoute<T : Any>(
 val topLevelRoutes = listOf(
     TopLevelRoute("Home", AppRoutes.HomeRoute, Icons.Rounded.Home),
     TopLevelRoute("Search", AppRoutes.SearchRoute, Icons.Rounded.Search),
-    TopLevelRoute("Favorites", AppRoutes.FavoritesRoute, Icons.Rounded.Favorite),
-    TopLevelRoute("Settings", AppRoutes.SettingRoute, Icons.Rounded.Settings, enabled = false)
+    TopLevelRoute("Favorites", AppRoutes.FavoritesRoute, Icons.Rounded.Favorite)
 )
