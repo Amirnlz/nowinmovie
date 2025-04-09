@@ -47,6 +47,7 @@ nowinmovie/
 │  │  ├─ :auth            # Authentication data sources and repositories
 │  │  └─ :movie           # Movie data sources and repositories
 │  ├─ :database           # Local database implementation
+│  ├─ :designsystem       # UI components, themes, and styling
 │  ├─ :domain             # Business logic and use cases
 │  │  ├─ :auth            # Authentication domain models and use cases
 │  │  └─ :movie           # Movie domain models and use cases
@@ -54,12 +55,12 @@ nowinmovie/
 │  ├─ :network            # Network communication
 │  └─ :secure-storage     # Secure data storage for API keys
 └─ :feature/              # Feature modules
-├─ :auth               # Authentication feature
-├─ :favorites          # User favorites management
-├─ :home               # Home screen
-├─ :movie-details      # Movie detail pages
-├─ :search             # Search functionality
-└─ :splash             # Splash screen
+   ├─ :auth               # Authentication feature
+   ├─ :favorites          # User favorites management
+   ├─ :home               # Home screen
+   ├─ :movie-details      # Movie detail pages
+   ├─ :search             # Search functionality
+   └─ :splash             # Splash screen
 ```
 
 ### 🔄 Patterns
@@ -99,29 +100,120 @@ nowinmovie/
 
 ```mermaid
 graph TD
-    app[":app"] --> feature_home[":feature:home"]
-    app --> feature_search[":feature:search"]
-    app --> feature_favorites[":feature:favorites"]
-    app --> feature_movie_details[":feature:movie-details"]
-    app --> feature_auth[":feature:auth"]
-    app --> feature_splash[":feature:splash"]
-    app --> core_navigation[":core:navigation"]
-    feature_home --> core_domain_movie[":core:domain:movie"]
-    feature_home --> core_navigation
-    feature_search --> core_domain_movie
-    feature_search --> core_navigation
-    feature_favorites --> core_domain_movie
-    feature_favorites --> core_navigation
-    feature_movie_details --> core_domain_movie
-    feature_movie_details --> core_navigation
-    feature_auth --> core_domain_auth[":core:domain:auth"]
-    feature_auth --> core_navigation
-    feature_splash --> core_navigation
-    core_domain_movie --> core_data_movie[":core:data:movie"]
-    core_domain_auth --> core_data_auth[":core:data:auth"]
-    core_data_movie --> core_network[":core:network"]
-    core_data_movie --> core_database[":core:database"]
-    core_data_auth --> core_network
-    core_data_auth --> core_secure_storage[":core:secure-storage"]
-    core_network --> core_secure_storage
+  app[":app"] --> feature_home[":feature:home"]
+  app --> feature_search[":feature:search"]
+  app --> feature_favorites[":feature:favorites"]
+  app --> feature_movie_details[":feature:movie-details"]
+  app --> feature_auth[":feature:auth"]
+  app --> feature_splash[":feature:splash"]
+  app --> core_navigation[":core:navigation"]
+  feature_home --> core_domain_movie[":core:domain:movie"]
+  feature_home --> core_navigation
+  feature_home --> core_designsystem[":core:designsystem"]
+  feature_search --> core_domain_movie
+  feature_search --> core_navigation
+  feature_search --> core_designsystem
+  feature_favorites --> core_domain_movie
+  feature_favorites --> core_navigation
+  feature_favorites --> core_designsystem
+  feature_movie_details --> core_domain_movie
+  feature_movie_details --> core_navigation
+  feature_movie_details --> core_designsystem
+  feature_auth --> core_domain_auth[":core:domain:auth"]
+  feature_auth --> core_navigation
+  feature_auth --> core_designsystem
+  feature_splash --> core_navigation
+  feature_splash --> core_designsystem
+  core_domain_movie --> core_data_movie[":core:data:movie"]
+  core_domain_auth --> core_data_auth[":core:data:auth"]
+  core_data_movie --> core_network[":core:network"]
+  core_data_movie --> core_database[":core:database"]
+  core_data_auth --> core_network
+  core_data_auth --> core_secure_storage[":core:secure-storage"]
+  core_network --> core_secure_storage
 ```
+
+### Setup
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/amirnlz/nowinmovie.git
+```
+
+2. Open the project in Android Studio
+
+3. Add your TMDB API key
+
+- Register at [TMDB](https://www.themoviedb.org/) to get your API key
+- Enter your API key in the authentication screen
+
+4. Build and run the app
+
+## 🧩 Why This Project?
+
+NowInMovie was developed to demonstrate modern Android development practices and architectural
+patterns. The project showcases:
+
+- **Modular Architecture**: Separation of concerns for better maintainability and scalability
+- **Clean Architecture**: Clear boundaries between layers for testability and flexibility
+- **Modern UI**: Fluid and responsive user interface built with Jetpack Compose
+- **Best Practices**: Following industry standards and Google-recommended patterns
+
+## 🤝 Contributing
+
+I'd love to have your contributions to make NowInMovie even better! Here's how you can help:
+
+### Ways to Contribute
+
+- **🐛 Found a bug?** - Open an issue describing the bug and how to reproduce it
+- **🎨 Have a feature idea?** - Suggest new features or improvements through issues
+- **👨‍💻 Want to code?** - Fork the repo and submit a pull request with your improvements
+
+### Contribution Process
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Coding Standards
+
+- Follow Kotlin coding conventions
+- Keep code clean and well-documented
+
+Your contributions, big or small, are greatly appreciated and will help make this project better for
+everyone!
+
+## 📄 License
+
+```
+MIT License
+
+Copyright (c) 2023 Amir Norozpour
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## 🙏 Acknowledgments
+
+- Inspired by Google's [NowInAndroid](https://github.com/android/nowinandroid) project
+- Thanks to [TMDB](https://www.themoviedb.org/) for the movie database API
+- All the awesome open-source libraries that made this project possible
