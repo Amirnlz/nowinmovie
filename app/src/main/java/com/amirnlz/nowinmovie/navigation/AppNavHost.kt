@@ -18,46 +18,46 @@ import com.amirnlz.feature.splash.navigation.splashScreen
 
 @Composable
 fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = AppRoutes.SplashRoute,
-        modifier = modifier,
-    ) {
-        splashScreen(
-            onNavigateToAuth = {
-                navController.navigateToAuth(
-                    navOptions {
-                        popUpTo(AppRoutes.AuthRoute) { inclusive = true }
-                    },
-                )
-            },
-            onNavigateToHome = {
-                navController.navigateToHome(
-                    navOptions { popUpTo(AppRoutes.HomeRoute) { inclusive = true } },
-                )
-            },
+  NavHost(
+    navController = navController,
+    startDestination = AppRoutes.SplashRoute,
+    modifier = modifier,
+  ) {
+    splashScreen(
+      onNavigateToAuth = {
+        navController.navigateToAuth(
+          navOptions {
+            popUpTo(AppRoutes.AuthRoute) { inclusive = true }
+          },
         )
-        authScreen(
-            onNavigateToHome = {
-                navController.navigateToHome(
-                    navOptions = navOptions {
-                        popUpTo(AppRoutes.AuthRoute) { inclusive = true }
-                    },
-                )
-            },
+      },
+      onNavigateToHome = {
+        navController.navigateToHome(
+          navOptions { popUpTo(AppRoutes.HomeRoute) { inclusive = true } },
         )
-        homeScreen(
-            onMovieClicked = { navController.navigateToMovieDetails(it) },
+      },
+    )
+    authScreen(
+      onNavigateToHome = {
+        navController.navigateToHome(
+          navOptions = navOptions {
+            popUpTo(AppRoutes.AuthRoute) { inclusive = true }
+          },
         )
-        movieDetailsScreen(
-            onBackButtonPressed = { navController.popBackStack() },
-            onMovieClicked = { navController.navigateToMovieDetails(it) },
-        )
-        searchScreen(
-            onMovieClicked = { navController.navigateToMovieDetails(it) },
-        )
-        favoritesScreen(
-            onMovieClicked = { navController.navigateToMovieDetails(it) },
-        )
-    }
+      },
+    )
+    homeScreen(
+      onMovieClicked = { navController.navigateToMovieDetails(it) },
+    )
+    movieDetailsScreen(
+      onBackButtonPressed = { navController.popBackStack() },
+      onMovieClicked = { navController.navigateToMovieDetails(it) },
+    )
+    searchScreen(
+      onMovieClicked = { navController.navigateToMovieDetails(it) },
+    )
+    favoritesScreen(
+      onMovieClicked = { navController.navigateToMovieDetails(it) },
+    )
+  }
 }

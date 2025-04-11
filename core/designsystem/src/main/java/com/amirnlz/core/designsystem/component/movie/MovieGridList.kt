@@ -17,46 +17,42 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
-fun MovieGridList(
-    modifier: Modifier = Modifier,
-    lazyPagingItems: LazyPagingItems<Movie>,
-    onMovieClicked: (Long) -> Unit,
-) {
-    LazyVerticalGrid(
-        state = rememberLazyGridState(),
-        columns = GridCells.Fixed(2),
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
-    ) {
-        items(
-            count = lazyPagingItems.itemCount,
-            key = lazyPagingItems.itemKey { it.id },
-            contentType = lazyPagingItems.itemContentType { "itemType" },
-        ) { index ->
-            val movie = lazyPagingItems[index]
-            if (movie != null) {
-                MovieItem(movie = movie) { onMovieClicked(it) }
-            } else {
-                // PlaceholderItem()
-            }
-        }
-
-        lazyPagingItems.loadState.append.let { loadState ->
-            when (loadState) {
-                is LoadState.Error -> item {
-                    ErrorComponent(
-                        message = loadState.error.localizedMessage ?: "Could not load more items",
-                        onRetry = {},
-                    )
-                }
-
-                LoadState.Loading -> item {
-                    LoadingComponent()
-                }
-
-                is LoadState.NotLoading -> item {}
-            }
-        }
+fun MovieGridList(modifier: Modifier = Modifier, lazyPagingItems: LazyPagingItems<Movie>, onMovieClicked: (Long) -> Unit) {
+  LazyVerticalGrid(
+    state = rememberLazyGridState(),
+    columns = GridCells.Fixed(2),
+    modifier = modifier.fillMaxWidth(),
+    verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
+    horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
+  ) {
+    items(
+      count = lazyPagingItems.itemCount,
+      key = lazyPagingItems.itemKey { it.id },
+      contentType = lazyPagingItems.itemContentType { "itemType" },
+    ) { index ->
+      val movie = lazyPagingItems[index]
+      if (movie != null) {
+        MovieItem(movie = movie) { onMovieClicked(it) }
+      } else {
+        // PlaceholderItem()
+      }
     }
+
+    lazyPagingItems.loadState.append.let { loadState ->
+      when (loadState) {
+        is LoadState.Error -> item {
+          ErrorComponent(
+            message = loadState.error.localizedMessage ?: "Could not load more items",
+            onRetry = {},
+          )
+        }
+
+        LoadState.Loading -> item {
+          LoadingComponent()
+        }
+
+        is LoadState.NotLoading -> item {}
+      }
+    }
+  }
 }

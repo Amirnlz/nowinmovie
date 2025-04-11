@@ -23,31 +23,20 @@ object NetworkModule {
 
   @Provides
   @Singleton
-  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-    return HttpLoggingInterceptor().apply {
-      level = HttpLoggingInterceptor.Level.BODY
-    }
+  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    level = HttpLoggingInterceptor.Level.BODY
   }
 
   @Provides
   @Singleton
-  fun provideAccessTokenProvider(
-    appSecureStorage: AppSecureStorage,
-  ): AccessTokenInterceptor {
-    return AccessTokenInterceptor(appSecureStorage)
-  }
+  fun provideAccessTokenProvider(appSecureStorage: AppSecureStorage): AccessTokenInterceptor = AccessTokenInterceptor(appSecureStorage)
 
   @Provides
   @Singleton
-  fun provideAuthenticatedOkHttpClient(
-    httpLoggingInterceptor: HttpLoggingInterceptor,
-    accessTokenInterceptor: AccessTokenInterceptor,
-  ): OkHttpClient {
-    return OkHttpClient.Builder()
-      .addInterceptor(httpLoggingInterceptor)
-      .addInterceptor(accessTokenInterceptor)
-      .build()
-  }
+  fun provideAuthenticatedOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, accessTokenInterceptor: AccessTokenInterceptor): OkHttpClient = OkHttpClient.Builder()
+    .addInterceptor(httpLoggingInterceptor)
+    .addInterceptor(accessTokenInterceptor)
+    .build()
 
   @Provides
   @Singleton
@@ -56,23 +45,15 @@ object NetworkModule {
 
   @Provides
   @Singleton
-  fun provideGson(): Gson {
-    return GsonBuilder()
-      .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-      .create()
-  }
+  fun provideGson(): Gson = GsonBuilder()
+    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    .create()
 
   @Provides
   @Singleton
-  fun provideAuthenticatedRetrofit(
-    okHttpClient: OkHttpClient,
-    gson: Gson,
-    @BaseUrl authenticatedBaseUrl: String,
-  ): Retrofit {
-    return Retrofit.Builder()
-      .baseUrl(authenticatedBaseUrl)
-      .client(okHttpClient)
-      .addConverterFactory(GsonConverterFactory.create(gson))
-      .build()
-  }
+  fun provideAuthenticatedRetrofit(okHttpClient: OkHttpClient, gson: Gson, @BaseUrl authenticatedBaseUrl: String): Retrofit = Retrofit.Builder()
+    .baseUrl(authenticatedBaseUrl)
+    .client(okHttpClient)
+    .addConverterFactory(GsonConverterFactory.create(gson))
+    .build()
 }

@@ -22,11 +22,7 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
-internal fun FavoritesRoute(
-  modifier: Modifier = Modifier,
-  onMovieClicked: (Long) -> Unit,
-  viewModel: FavoritesViewModel = hiltViewModel(),
-) {
+internal fun FavoritesRoute(modifier: Modifier = Modifier, onMovieClicked: (Long) -> Unit, viewModel: FavoritesViewModel = hiltViewModel()) {
   val lazyPagingItems = viewModel.uiState.collectAsLazyPagingItems()
 
   FavoritesScreen(
@@ -37,11 +33,7 @@ internal fun FavoritesRoute(
 }
 
 @Composable
-private fun FavoritesScreen(
-  modifier: Modifier = Modifier,
-  onMovieClicked: (Long) -> Unit,
-  lazyPagingItems: LazyPagingItems<Movie>,
-) {
+private fun FavoritesScreen(modifier: Modifier = Modifier, onMovieClicked: (Long) -> Unit, lazyPagingItems: LazyPagingItems<Movie>) {
   Scaffold(
     modifier = modifier
       .padding(NowinmovieTheme.dimens.screenPadding)

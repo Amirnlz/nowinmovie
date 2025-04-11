@@ -11,19 +11,13 @@ internal class Converters {
   private val gson = Gson()
 
   @TypeConverter
-  fun fromLocalDate(date: LocalDate?): String? {
-    return date?.format(formatter)
-  }
+  fun fromLocalDate(date: LocalDate?): String? = date?.format(formatter)
 
   @TypeConverter
-  fun toLocalDate(dateString: String?): LocalDate? {
-    return dateString?.let { LocalDate.parse(it, formatter) }
-  }
+  fun toLocalDate(dateString: String?): LocalDate? = dateString?.let { LocalDate.parse(it, formatter) }
 
   @TypeConverter
-  fun fromStringList(strings: List<String>?): String? {
-    return gson.toJson(strings)
-  }
+  fun fromStringList(strings: List<String>?): String? = gson.toJson(strings)
 
   @TypeConverter
   fun toStringList(string: String?): List<String>? {

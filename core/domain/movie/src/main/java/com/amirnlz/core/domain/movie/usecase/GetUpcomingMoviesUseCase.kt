@@ -8,7 +8,5 @@ import javax.inject.Inject
 
 class GetUpcomingMoviesUseCase @Inject constructor(private val repository: MovieRepository) {
 
-  suspend operator fun invoke(): Flow<PagingData<Movie>> {
-    return repository.getUpcomingMovies()
-  }
+  suspend operator fun invoke(): Flow<PagingData<Movie>> = repository.getUpcomingMovies()
 }

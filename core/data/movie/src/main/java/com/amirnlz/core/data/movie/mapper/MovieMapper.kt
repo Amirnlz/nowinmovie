@@ -16,99 +16,81 @@ import com.amirnlz.core.network.dto.movie.SpokenLanguageDto
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-fun MovieDto.mapToMovie(): Movie {
-  return Movie(
-    backdropPath = backdropPath,
-    genreIDS = genreIDS,
-    id = id,
-    originalTitle = originalTitle,
-    overview = overview,
-    posterPath = posterPath,
-    releaseDate = releaseDate?.toLocalDate(),
-    title = title,
-    voteAverage = voteAverage,
-  )
-}
+fun MovieDto.mapToMovie(): Movie = Movie(
+  backdropPath = backdropPath,
+  genreIDS = genreIDS,
+  id = id,
+  originalTitle = originalTitle,
+  overview = overview,
+  posterPath = posterPath,
+  releaseDate = releaseDate?.toLocalDate(),
+  title = title,
+  voteAverage = voteAverage,
+)
 
-fun MovieEntity.mapToMovie(): Movie {
-  return Movie(
-    id = id,
-    title = title,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    voteAverage = voteAverage,
-    genreIDS = null,
-    backdropPath = "",
-    originalTitle = "",
-    overview = "",
-  )
-}
+fun MovieEntity.mapToMovie(): Movie = Movie(
+  id = id,
+  title = title,
+  posterPath = posterPath,
+  releaseDate = releaseDate,
+  voteAverage = voteAverage,
+  genreIDS = null,
+  backdropPath = "",
+  originalTitle = "",
+  overview = "",
+)
 
-fun MovieDetailsDto.mapToMovieDetails(): MovieDetails {
-  return MovieDetails(
-    backdropPath = backdropPath,
-    genres = genres.map { it.mapToGenres() },
-    id = id,
-    imdbID = imdbID,
-    originCountry = originCountry,
-    originalLanguage = originalLanguage,
-    originalTitle = originalTitle,
-    overview = overview,
-    posterPath = posterPath,
-    productionCompanies = productionCompanies?.map { it.mapToProductionCompanies() },
-    productionCountries = productionCountries?.map { it.mapToProductionCountries() },
-    releaseDate = releaseDate.toLocalDate() ?: LocalDate.now(),
-    runtime = runtime,
-    spokenLanguages = spokenLanguages.map { it.mapToSpokenLanguage() },
-    title = title,
-    voteAverage = voteAverage,
-  )
-}
+fun MovieDetailsDto.mapToMovieDetails(): MovieDetails = MovieDetails(
+  backdropPath = backdropPath,
+  genres = genres.map { it.mapToGenres() },
+  id = id,
+  imdbID = imdbID,
+  originCountry = originCountry,
+  originalLanguage = originalLanguage,
+  originalTitle = originalTitle,
+  overview = overview,
+  posterPath = posterPath,
+  productionCompanies = productionCompanies?.map { it.mapToProductionCompanies() },
+  productionCountries = productionCountries?.map { it.mapToProductionCountries() },
+  releaseDate = releaseDate.toLocalDate() ?: LocalDate.now(),
+  runtime = runtime,
+  spokenLanguages = spokenLanguages.map { it.mapToSpokenLanguage() },
+  title = title,
+  voteAverage = voteAverage,
+)
 
-fun MovieDetails.mapToMovieEntity(): MovieEntity {
-  return MovieEntity(
-    id = id,
-    title = title,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    voteAverage = voteAverage,
-  )
-}
+fun MovieDetails.mapToMovieEntity(): MovieEntity = MovieEntity(
+  id = id,
+  title = title,
+  posterPath = posterPath,
+  releaseDate = releaseDate,
+  voteAverage = voteAverage,
+)
 
-fun GenreDto.mapToGenres(): Genre {
-  return Genre(
-    id,
-    name,
-  )
-}
+fun GenreDto.mapToGenres(): Genre = Genre(
+  id,
+  name,
+)
 
-fun ProductionCompanyDto.mapToProductionCompanies(): ProductionCompany {
-  return ProductionCompany(
-    id = id,
-    logoPath = logoPath,
-    name = name,
-    originCountry = originCountry,
-  )
-}
+fun ProductionCompanyDto.mapToProductionCompanies(): ProductionCompany = ProductionCompany(
+  id = id,
+  logoPath = logoPath,
+  name = name,
+  originCountry = originCountry,
+)
 
-fun ProductionCountryDto.mapToProductionCountries(): ProductionCountry {
-  return ProductionCountry(iso3166_1, name)
-}
+fun ProductionCountryDto.mapToProductionCountries(): ProductionCountry = ProductionCountry(iso3166_1, name)
 
-fun SpokenLanguageDto.mapToSpokenLanguage(): SpokenLanguage {
-  return SpokenLanguage(
-    englishName,
-    iso639_1,
-    name,
-  )
-}
+fun SpokenLanguageDto.mapToSpokenLanguage(): SpokenLanguage = SpokenLanguage(
+  englishName,
+  iso639_1,
+  name,
+)
 
-private fun String.toLocalDate(pattern: String = "yyyy-MM-dd"): LocalDate? {
-  return try {
-    val formatter = DateTimeFormatter.ofPattern(pattern)
-    LocalDate.parse(this, formatter)
-  } catch (e: Exception) {
-    println("Error parsing date string: $e")
-    null
-  }
+private fun String.toLocalDate(pattern: String = "yyyy-MM-dd"): LocalDate? = try {
+  val formatter = DateTimeFormatter.ofPattern(pattern)
+  LocalDate.parse(this, formatter)
+} catch (e: Exception) {
+  println("Error parsing date string: $e")
+  null
 }

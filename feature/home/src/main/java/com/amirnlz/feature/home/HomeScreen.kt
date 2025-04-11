@@ -37,11 +37,7 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
-fun HomeRoute(
-  modifier: Modifier = Modifier,
-  onMovieClicked: (Long) -> Unit,
-  viewModel: HomeViewModel = hiltViewModel(),
-) {
+fun HomeRoute(modifier: Modifier = Modifier, onMovieClicked: (Long) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
   val lazyPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
   val currentMovieType by viewModel.currentMovieType.collectAsState()
 
@@ -57,13 +53,7 @@ fun HomeRoute(
 }
 
 @Composable
-internal fun HomeScreen(
-  modifier: Modifier = Modifier,
-  currentMovieType: MovieType,
-  onTabChanged: (MovieType) -> Unit,
-  lazyPagingItems: LazyPagingItems<Movie>,
-  onMovieClicked: (Long) -> Unit,
-) {
+internal fun HomeScreen(modifier: Modifier = Modifier, currentMovieType: MovieType, onTabChanged: (MovieType) -> Unit, lazyPagingItems: LazyPagingItems<Movie>, onMovieClicked: (Long) -> Unit) {
   Surface(
     modifier = modifier
       .padding(NowinmovieTheme.dimens.screenPadding)
@@ -101,11 +91,7 @@ internal fun HomeScreen(
 }
 
 @Composable
-private fun HomeMovieTypeTabs(
-  modifier: Modifier = Modifier,
-  currentMovieType: MovieType,
-  onTabChanged: (MovieType) -> Unit,
-) {
+private fun HomeMovieTypeTabs(modifier: Modifier = Modifier, currentMovieType: MovieType, onTabChanged: (MovieType) -> Unit) {
   val list = MovieType.entries.map { it.name }
 
   Row(

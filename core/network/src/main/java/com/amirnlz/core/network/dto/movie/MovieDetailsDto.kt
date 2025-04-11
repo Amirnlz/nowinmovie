@@ -31,25 +31,10 @@ data class MovieDetailsDto(
   val voteCount: Long,
 )
 
-data class GenreDto(
-  val id: Long,
-  val name: String,
-)
+data class GenreDto(val id: Long, val name: String)
 
-data class ProductionCompanyDto(
-  val id: Long,
-  val logoPath: String?,
-  val name: String,
-  val originCountry: String,
-)
+data class ProductionCompanyDto(val id: Long, val logoPath: String?, val name: String, val originCountry: String)
 
-data class ProductionCountryDto(
-  @SerializedName("iso_3166_1") val iso3166_1: String?,
-  val name: String,
-)
+data class ProductionCountryDto(@SerializedName("iso_3166_1") val iso3166_1: String?, val name: String)
 
-data class SpokenLanguageDto(
-  val englishName: String,
-  @SerializedName("iso_639_1") val iso639_1: String?,
-  val name: String,
-)
+data class SpokenLanguageDto(val englishName: String, @SerializedName("iso_639_1") val iso639_1: String?, val name: String)

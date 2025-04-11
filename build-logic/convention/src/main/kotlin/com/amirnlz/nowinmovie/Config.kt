@@ -21,19 +21,6 @@ object Config {
   )
 }
 
-data class AndroidConfig(
-  val minSdk: Int,
-  val targetSdk: Int,
-  val compileSdk: Int,
-  val applicationId: String,
-  val versionCode: Int,
-  val versionName: String,
-  val dimension: String,
-)
+data class AndroidConfig(val minSdk: Int, val targetSdk: Int, val compileSdk: Int, val applicationId: String, val versionCode: Int, val versionName: String, val dimension: String)
 
-data class JvmConfig(
-  val javaVersion: JavaVersion,
-  val kotlinJvm: String,
-  val jvmTarget: JvmTarget,
-  val freeCompilerArgs: List<String>,
-)
+data class JvmConfig(val javaVersion: JavaVersion, val kotlinJvm: String, val jvmTarget: JvmTarget, val freeCompilerArgs: List<String>)

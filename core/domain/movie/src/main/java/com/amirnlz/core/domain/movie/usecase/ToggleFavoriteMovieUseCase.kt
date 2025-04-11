@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 class ToggleFavoriteMovieUseCase @Inject constructor(private val repository: MovieRepository) {
 
-  suspend operator fun invoke(movieDetails: MovieDetails): Result<Boolean> {
-    return repository.toggleFavoriteMovie(movieDetails)
-  }
+  suspend operator fun invoke(movieDetails: MovieDetails): Result<Boolean> = repository.toggleFavoriteMovie(movieDetails)
 }

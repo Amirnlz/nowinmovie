@@ -23,11 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ErrorComponent(
-  message: String,
-  onRetry: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
+fun ErrorComponent(message: String, onRetry: () -> Unit, modifier: Modifier = Modifier) {
   Column(
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,

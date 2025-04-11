@@ -13,9 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(
-  private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
-) : ViewModel() {
+class FavoritesViewModel @Inject constructor(private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase) : ViewModel() {
   private val _uiState = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
   val uiState: Flow<PagingData<Movie>> = _uiState.cachedIn(viewModelScope)
 

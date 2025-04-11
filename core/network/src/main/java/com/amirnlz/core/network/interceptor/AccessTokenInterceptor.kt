@@ -9,9 +9,7 @@ import okhttp3.Response
 import retrofit2.Invocation
 import javax.inject.Inject
 
-class AccessTokenInterceptor @Inject constructor(
-  private val secureStorage: AppSecureStorage,
-) : Interceptor {
+class AccessTokenInterceptor @Inject constructor(private val secureStorage: AppSecureStorage) : Interceptor {
 
   private val authorizationHeaderName = "Authorization"
   private val bearerTokenPrefix = "Bearer "
@@ -27,15 +25,11 @@ class AccessTokenInterceptor @Inject constructor(
     }
   }
 
-  private fun isRequestAuthenticated(request: Request): Boolean {
-    return request.tag(Invocation::class.java)
-      ?.method()
-      ?.getAnnotation(Authenticated::class.java) != null
-  }
+  private fun isRequestAuthenticated(request: Request): Boolean = request.tag(Invocation::class.java)
+    ?.method()
+    ?.getAnnotation(Authenticated::class.java) != null
 
-  private fun hasApiKeyInQuery(request: Request): Boolean {
-    return request.url.queryParameter(apiKeyQueryParameterName) != null
-  }
+  private fun hasApiKeyInQuery(request: Request): Boolean = request.url.queryParameter(apiKeyQueryParameterName) != null
 
   private fun proceedWithApiKey(chain: Interceptor.Chain, request: Request): Response {
     val apiKey = requireNotNull(request.url.queryParameter(apiKeyQueryParameterName))

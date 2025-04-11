@@ -10,7 +10,5 @@ import javax.inject.Singleton
 @Singleton
 class GetSearchMovieUseCase @Inject constructor(private val repository: MovieRepository) {
 
-  suspend operator fun invoke(query: String): Flow<PagingData<Movie>> {
-    return repository.getSearchMovie(query)
-  }
+  suspend operator fun invoke(query: String): Flow<PagingData<Movie>> = repository.getSearchMovie(query)
 }

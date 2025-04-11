@@ -11,10 +11,7 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
   navigate(route = AppRoutes.SearchRoute, navOptions)
 }
 
-fun NavGraphBuilder.searchScreen(
-  onMovieClicked: (Long) -> Unit,
-
-  ) {
+fun NavGraphBuilder.searchScreen(onMovieClicked: (Long) -> Unit) {
   composable<AppRoutes.SearchRoute> {
     SearchRoute(
       onMovieClicked = onMovieClicked,

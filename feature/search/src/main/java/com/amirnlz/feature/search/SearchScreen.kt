@@ -44,10 +44,7 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
-internal fun SearchRoute(
-  viewModel: SearchViewModel = hiltViewModel(),
-  onMovieClicked: (Long) -> Unit,
-) {
+internal fun SearchRoute(viewModel: SearchViewModel = hiltViewModel(), onMovieClicked: (Long) -> Unit) {
   val query = viewModel.query.collectAsState()
   val lazyPagingItems = viewModel.searchMovies.collectAsLazyPagingItems()
 
@@ -60,12 +57,7 @@ internal fun SearchRoute(
 }
 
 @Composable
-private fun SearchScreen(
-  query: String,
-  onQueryChange: (String) -> Unit,
-  onMovieClicked: (Long) -> Unit,
-  lazyPagingItems: LazyPagingItems<Movie>,
-) {
+private fun SearchScreen(query: String, onQueryChange: (String) -> Unit, onMovieClicked: (Long) -> Unit, lazyPagingItems: LazyPagingItems<Movie>) {
   Scaffold(
     modifier = Modifier
       .padding(NowinmovieTheme.dimens.screenPadding)
@@ -115,11 +107,7 @@ private fun SearchScreen(
 }
 
 @Composable
-private fun SearchTextField(
-  modifier: Modifier = Modifier,
-  query: String,
-  onQueryChange: (String) -> Unit,
-) {
+private fun SearchTextField(modifier: Modifier = Modifier, query: String, onQueryChange: (String) -> Unit) {
   val keyboardController = LocalSoftwareKeyboardController.current
   val isClearIconVisible by remember { derivedStateOf { query.isNotEmpty() } }
   TextField(

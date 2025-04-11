@@ -15,8 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(private val secureStorage: AppSecureStorage) :
-  ViewModel() {
+class SplashViewModel @Inject constructor(private val secureStorage: AppSecureStorage) : ViewModel() {
 
   private val _uiState = MutableStateFlow<SplashContract.UiState>(SplashContract.UiState.Loading)
   val uiState: StateFlow<SplashContract.UiState> = _uiState.asStateFlow()

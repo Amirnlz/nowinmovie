@@ -28,11 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AuthScreenRoute(
-  modifier: Modifier = Modifier,
-  viewModel: AuthViewModel = hiltViewModel(),
-  onNavigateToHome: () -> Unit,
-) {
+fun AuthScreenRoute(modifier: Modifier = Modifier, viewModel: AuthViewModel = hiltViewModel(), onNavigateToHome: () -> Unit) {
   val state = viewModel.state.collectAsState().value
   val context = LocalContext.current
 
@@ -56,12 +52,7 @@ fun AuthScreenRoute(
 }
 
 @Composable
-private fun AuthScreen(
-  modifier: Modifier,
-  state: AuthState,
-  onTokenChanged: (String) -> Unit,
-  onSubmitClick: () -> Unit,
-) {
+private fun AuthScreen(modifier: Modifier, state: AuthState, onTokenChanged: (String) -> Unit, onSubmitClick: () -> Unit) {
   Column(
     modifier = modifier
       .fillMaxSize()
@@ -90,11 +81,7 @@ private fun AuthScreen(
 }
 
 @Composable
-private fun TokenInputField(
-  value: String,
-  onValueChange: (String) -> Unit,
-  errorMessage: String?,
-) {
+private fun TokenInputField(value: String, onValueChange: (String) -> Unit, errorMessage: String?) {
   OutlinedTextField(
     value = value,
     onValueChange = onValueChange,

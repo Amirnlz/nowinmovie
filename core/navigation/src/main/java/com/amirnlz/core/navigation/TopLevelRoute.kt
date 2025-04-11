@@ -6,12 +6,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 
-data class TopLevelRoute<T : Any>(
-  val name: String,
-  val route: T,
-  val icon: ImageVector,
-  val enabled: Boolean = true,
-)
+data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector, val enabled: Boolean = true)
 
 val topLevelRoutes = listOf(
   TopLevelRoute("Home", AppRoutes.HomeRoute, Icons.Rounded.Home),

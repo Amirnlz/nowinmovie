@@ -31,86 +31,79 @@ import com.amirnlz.core.domain.movie.model.Movie
 import java.util.Locale
 
 @Composable
-fun MovieItem(
-    modifier: Modifier = Modifier,
-    movie: Movie,
-    onMovieClicked: (Long) -> Unit,
-) {
-    Card(
-        onClick = { onMovieClicked(movie.id) },
-        shape = MaterialTheme.shapes.large,
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
-        modifier = modifier
-            .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+fun MovieItem(modifier: Modifier = Modifier, movie: Movie, onMovieClicked: (Long) -> Unit) {
+  Card(
+    onClick = { onMovieClicked(movie.id) },
+    shape = MaterialTheme.shapes.large,
+    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+    modifier = modifier
+      .clip(MaterialTheme.shapes.large)
+      .background(MaterialTheme.colorScheme.surfaceVariant),
+  ) {
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(NowinmovieTheme.dimens.paddingExtraMedium),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(NowinmovieTheme.dimens.paddingExtraMedium),
+      ImageNetwork(
+        imagePath = movie.posterPath ?: "",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+          .fillMaxWidth()
+          .aspectRatio(NowinmovieTheme.dimens.posterAspectRatio)
+          .clip(MaterialTheme.shapes.medium),
+      )
+      Spacer(modifier = Modifier.height(NowinmovieTheme.spacing.small))
+      Column(
+        verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small),
+      ) {
+        Text(
+          text = movie.title ?: "",
+          style = MaterialTheme.typography.bodyLarge.copy(
+            fontWeight = FontWeight.Medium,
+          ),
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
+        )
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.SpaceBetween,
+          modifier = Modifier.fillMaxWidth(),
         ) {
-            ImageNetwork(
-                imagePath = movie.posterPath ?: "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(NowinmovieTheme.dimens.posterAspectRatio)
-                    .clip(MaterialTheme.shapes.medium),
+          movie.releaseDate?.let { date ->
+            Text(
+              text = date.year.toString(),
+              style = MaterialTheme.typography.labelLarge.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+              ),
             )
-            Spacer(modifier = Modifier.height(NowinmovieTheme.spacing.small))
-            Column(
-                verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small),
-            ) {
-                Text(
-                    text = movie.title ?: "",
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Medium,
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    movie.releaseDate?.let { date ->
-                        Text(
-                            text = date.year.toString(),
-                            style = MaterialTheme.typography.labelLarge.copy(
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                            ),
-                        )
-                    }
-                    StarRating(rating = movie.voteAverage ?: 0.0)
-                }
-            }
+          }
+          StarRating(rating = movie.voteAverage ?: 0.0)
         }
+      }
     }
+  }
 }
 
 @Composable
-fun StarRating(
-    rating: Double,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Star,
-            contentDescription = "Rating Star",
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(18.dp),
-        )
+fun StarRating(rating: Double, modifier: Modifier = Modifier) {
+  Row(
+    modifier = modifier,
+    horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.extraSmall),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Filled.Star,
+      contentDescription = "Rating Star",
+      tint = MaterialTheme.colorScheme.primary,
+      modifier = Modifier.size(18.dp),
+    )
 
-        Text(
-            String.format(Locale.getDefault(), "%.1f", rating),
-            style = MaterialTheme.typography.labelLarge.copy(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-            ),
-        )
-    }
+    Text(
+      String.format(Locale.getDefault(), "%.1f", rating),
+      style = MaterialTheme.typography.labelLarge.copy(
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+      ),
+    )
+  }
 }

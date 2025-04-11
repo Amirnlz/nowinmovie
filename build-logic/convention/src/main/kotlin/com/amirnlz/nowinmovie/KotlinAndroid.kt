@@ -12,9 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 /**
  * Configure base Kotlin with Android options
  */
-internal fun Project.configureKotlinAndroid(
-  commonExtension: CommonExtension<*, *, *, *, *, *>,
-) {
+internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
   commonExtension.apply {
     compileSdk = Config.android.compileSdk
 
@@ -61,8 +59,8 @@ private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
     is KotlinJvmProjectExtension -> compilerOptions
     else -> TODO("Unsupported project extension $this ${T::class}")
   }.apply {
-    jvmTarget = Config.jvm.jvmTarget
-    allWarningsAsErrors = warningsAsErrors.toBoolean()
+    jvmTarget.set(Config.jvm.jvmTarget)
+    allWarningsAsErrors.set(warningsAsErrors.toBoolean())
     freeCompilerArgs.add(
       // Enable experimental coroutines APIs, including Flow
       "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",

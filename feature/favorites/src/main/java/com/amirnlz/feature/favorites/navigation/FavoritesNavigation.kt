@@ -11,10 +11,7 @@ fun NavController.navigateToFavorites(navOptions: NavOptions? = null) {
   navigate(route = AppRoutes.FavoritesRoute, navOptions)
 }
 
-fun NavGraphBuilder.favoritesScreen(
-  onMovieClicked: (Long) -> Unit,
-
-  ) {
+fun NavGraphBuilder.favoritesScreen(onMovieClicked: (Long) -> Unit) {
   composable<AppRoutes.FavoritesRoute> {
     FavoritesRoute(
       onMovieClicked = onMovieClicked,

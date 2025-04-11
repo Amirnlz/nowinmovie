@@ -25,145 +25,120 @@ import javax.inject.Inject
 
 private const val DEFAULT_PAGE_SIZE = 20
 
-class MovieRepositoryImpl @Inject constructor(
-    private val remoteDataSource: MovieRemoteDataSource,
-    private val localDataSource: MovieLocalDataSource,
-) : MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val remoteDataSource: MovieRemoteDataSource, private val localDataSource: MovieLocalDataSource) : MovieRepository {
 
-    override suspend fun getTrendingMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource { page -> remoteDataSource.getTrendingMovies(page) }
-            },
-        ).flow
+  override suspend fun getTrendingMovies(): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = {
+      MoviePagingSource { page -> remoteDataSource.getTrendingMovies(page) }
+    },
+  ).flow
+
+  override suspend fun getPopularMovies(): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = {
+      MoviePagingSource { page -> remoteDataSource.getPopularMovies(page) }
+    },
+  ).flow
+
+  override suspend fun getTopRatedMovies(): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = {
+      MoviePagingSource { page -> remoteDataSource.getTopRatedMovies(page) }
+    },
+  ).flow
+
+  override suspend fun getUpcomingMovies(): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = {
+      MoviePagingSource { page -> remoteDataSource.getUpcomingMovies(page) }
+    },
+  ).flow
+
+  override suspend fun getFavoriteMovies(): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = { localDataSource.getFavoriteMovies() },
+  ).flow
+    .map { value: PagingData<MovieEntity> ->
+      value.map { entity -> entity.mapToMovie() }
     }
 
-    override suspend fun getPopularMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource { page -> remoteDataSource.getPopularMovies(page) }
-            },
-        ).flow
+  override suspend fun getMovieDetails(movieId: Long): Result<MovieDetails> = withContext(Dispatchers.IO) {
+    try {
+      val response = remoteDataSource.getMovieDetails(movieId = movieId)
+      Result.success(response.mapToMovieDetails())
+    } catch (e: Exception) {
+      Result.failure(e)
     }
+  }
 
-    override suspend fun getTopRatedMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource { page -> remoteDataSource.getTopRatedMovies(page) }
-            },
-        ).flow
+  override suspend fun getMovieCredits(movieId: Long): Result<MovieCredits> = withContext(Dispatchers.IO) {
+    try {
+      val response = remoteDataSource.getMovieCredits(movieId = movieId)
+      Result.success(response.mapToMovieCredits())
+    } catch (e: Exception) {
+      Result.failure(e)
     }
+  }
 
-    override suspend fun getUpcomingMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource { page -> remoteDataSource.getUpcomingMovies(page) }
-            },
-        ).flow
+  override suspend fun getMovieRecommendations(movieId: Long): Result<List<Movie>> = withContext(Dispatchers.IO) {
+    try {
+      val response = remoteDataSource.getMovieRecommendations(movieId = movieId)
+      Result.success(response.results.map { it.mapToMovie() })
+    } catch (e: Exception) {
+      Result.failure(e)
     }
+  }
 
-    override suspend fun getFavoriteMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = { localDataSource.getFavoriteMovies() },
-        ).flow
-            .map { value: PagingData<MovieEntity> ->
-                value.map { entity -> entity.mapToMovie() }
-            }
+  override suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean> = withContext(Dispatchers.IO) {
+    try {
+      val isFavorite = localDataSource.getMovieFavoriteState(movieDetails.id)
+        .first()
+
+      val newFavoriteState = if (isFavorite) {
+        localDataSource.deleteMovie(movieDetails.id)
+        false
+      } else {
+        localDataSource.insertMovie(movieDetails.mapToMovieEntity())
+        true
+      }
+
+      Result.success(newFavoriteState)
+    } catch (e: Exception) {
+      Result.failure(e)
     }
+  }
 
-    override suspend fun getMovieDetails(movieId: Long): Result<MovieDetails> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = remoteDataSource.getMovieDetails(movieId = movieId)
-                Result.success(response.mapToMovieDetails())
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
+  override suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean> = withContext(Dispatchers.IO) {
+    try {
+      localDataSource.getMovieFavoriteState(movieId)
+    } catch (e: Exception) {
+      throw e
     }
+  }
 
-    override suspend fun getMovieCredits(movieId: Long): Result<MovieCredits> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = remoteDataSource.getMovieCredits(movieId = movieId)
-                Result.success(response.mapToMovieCredits())
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
-    }
-
-    override suspend fun getMovieRecommendations(movieId: Long): Result<List<Movie>> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = remoteDataSource.getMovieRecommendations(movieId = movieId)
-                Result.success(response.results.map { it.mapToMovie() })
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
-    }
-
-    override suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val isFavorite = localDataSource.getMovieFavoriteState(movieDetails.id)
-                    .first()
-
-                val newFavoriteState = if (isFavorite) {
-                    localDataSource.deleteMovie(movieDetails.id)
-                    false
-                } else {
-                    localDataSource.insertMovie(movieDetails.mapToMovieEntity())
-                    true
-                }
-
-                Result.success(newFavoriteState)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
-    }
-
-    override suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean> {
-        return withContext(Dispatchers.IO) {
-            try {
-                localDataSource.getMovieFavoriteState(movieId)
-            } catch (e: Exception) {
-                throw e
-            }
-        }
-    }
-
-    override suspend fun getSearchMovie(query: String): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource { page -> remoteDataSource.searchMovie(query, page) }
-            },
-        ).flow
-    }
+  override suspend fun getSearchMovie(query: String): Flow<PagingData<Movie>> = Pager(
+    config = PagingConfig(
+      pageSize = DEFAULT_PAGE_SIZE,
+      enablePlaceholders = false,
+    ),
+    pagingSourceFactory = {
+      MoviePagingSource { page -> remoteDataSource.searchMovie(query, page) }
+    },
+  ).flow
 }

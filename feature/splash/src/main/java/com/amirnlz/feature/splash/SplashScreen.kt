@@ -27,12 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun SplashScreenRoute(
-  modifier: Modifier = Modifier,
-  viewModel: SplashViewModel = hiltViewModel(),
-  onNavigateToHome: () -> Unit,
-  onNavigateToAuth: () -> Unit,
-) {
+fun SplashScreenRoute(modifier: Modifier = Modifier, viewModel: SplashViewModel = hiltViewModel(), onNavigateToHome: () -> Unit, onNavigateToAuth: () -> Unit) {
   val uiState = viewModel.uiState.collectAsState().value
   LaunchedEffect(key1 = viewModel.effect) {
     viewModel.effect.collectLatest { effect ->

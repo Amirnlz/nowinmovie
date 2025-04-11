@@ -17,13 +17,7 @@ import com.amirnlz.core.designsystem.BuildConfig
 import java.util.Locale
 
 @Composable
-fun ImageNetwork(
-  modifier: Modifier = Modifier,
-  imageSize: ImageSize = ImageSize.W500,
-  imagePath: String,
-  contentScale: ContentScale = ContentScale.Crop,
-  contentDescription: String? = null,
-) {
+fun ImageNetwork(modifier: Modifier = Modifier, imageSize: ImageSize = ImageSize.W500, imagePath: String, contentScale: ContentScale = ContentScale.Crop, contentDescription: String? = null) {
   if (imagePath.isEmpty()) {
     return Box(
       modifier = modifier.background(Color.LightGray),

@@ -19,10 +19,7 @@ enum class NimFlavor(val dimension: FlavorDimension, val applicationIdSuffix: St
   prod(FlavorDimension.contentType),
 }
 
-fun configureFlavors(
-  commonExtension: CommonExtension<*, *, *, *, *, *>,
-  flavorConfigurationBlock: ProductFlavor.(flavor: NimFlavor) -> Unit = {},
-) {
+fun configureFlavors(commonExtension: CommonExtension<*, *, *, *, *, *>, flavorConfigurationBlock: ProductFlavor.(flavor: NimFlavor) -> Unit = {}) {
   commonExtension.apply {
     FlavorDimension.values().forEach { flavorDimension ->
       flavorDimensions += flavorDimension.name

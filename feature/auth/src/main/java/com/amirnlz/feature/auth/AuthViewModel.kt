@@ -13,9 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
-  private val authenticateApiKeyUseCase: AuthenticateApiKeyUseCase,
-) : ViewModel() {
+class AuthViewModel @Inject constructor(private val authenticateApiKeyUseCase: AuthenticateApiKeyUseCase) : ViewModel() {
 
   private val _state = MutableStateFlow(AuthState())
   val state: StateFlow<AuthState> = _state

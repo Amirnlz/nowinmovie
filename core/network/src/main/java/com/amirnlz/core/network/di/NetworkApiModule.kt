@@ -15,13 +15,9 @@ object NetworkApiModule {
 
   @Provides
   @Singleton
-  fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
-    return retrofit.create(MovieApiService::class.java)
-  }
+  fun provideMovieApiService(retrofit: Retrofit): MovieApiService = retrofit.create(MovieApiService::class.java)
 
   @Provides
   @Singleton
-  fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
-    return retrofit.create(AuthApiService::class.java)
-  }
+  fun provideAuthApiService(retrofit: Retrofit): AuthApiService = retrofit.create(AuthApiService::class.java)
 }
