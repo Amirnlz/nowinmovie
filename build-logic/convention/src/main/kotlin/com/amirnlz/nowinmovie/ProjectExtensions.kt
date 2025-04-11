@@ -10,23 +10,22 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 
 val Project.libs
-    get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
+  get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 inline fun Project.androidGradle(crossinline configure: LibraryExtension.() -> Unit) =
-    extensions.configure<LibraryExtension> {
-        configure()
-    }
+  extensions.configure<LibraryExtension> {
+    configure()
+  }
 
 inline fun Project.applicationGradle(crossinline configure: ApplicationExtension.() -> Unit) =
-    extensions.configure<ApplicationExtension> {
-        configure()
-    }
+  extensions.configure<ApplicationExtension> {
+    configure()
+  }
 
 inline fun Project.applyPlugins(crossinline plugin: () -> List<String>) {
-    pluginManager.apply {
-        plugin().forEach {
-            apply(plugin = it)
-        }
+  pluginManager.apply {
+    plugin().forEach {
+      apply(plugin = it)
     }
+  }
 }

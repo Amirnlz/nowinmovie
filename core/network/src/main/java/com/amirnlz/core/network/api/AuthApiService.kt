@@ -6,9 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface AuthApiService {
-    @GET("/3/authentication")
-    @Authenticated
-    suspend fun authenticateApiKey(
-        @Query("api_key") apiKey: String
-    ): AuthResponse
+  @GET("/3/authentication")
+  @Authenticated
+  suspend fun authenticateApiKey(
+    @Query("api_key") apiKey: String,
+  ): AuthResponse
 }

@@ -13,25 +13,25 @@ interface MovieApiService {
     @GET("/3/movie/popular")
     @Authenticated
     suspend fun getPopularMovies(
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): MovieListDto
 
     @GET("/3/movie/now_playing")
     @Authenticated
     suspend fun getTrendingMovies(
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): MovieListDto
 
     @GET("/3/movie/top_rated")
     @Authenticated
     suspend fun getTopRatedMovies(
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): MovieListDto
 
     @GET("/3/movie/upcoming")
     @Authenticated
     suspend fun getUpcomingMovies(
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): MovieListDto
 
     @GET("/3/movie/{movie_id}")

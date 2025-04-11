@@ -14,11 +14,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class BindsRepo {
 
-    @Binds
-    @Singleton
-    abstract fun provideMovieRepository(movieRepositoryImpl: MovieRepositoryImpl): MovieRepository
+  @Binds
+  @Singleton
+  abstract fun provideMovieRepository(movieRepositoryImpl: MovieRepositoryImpl): MovieRepository
 
-    @Binds
-    @Singleton
-    abstract fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+  @Binds
+  @Singleton
+  abstract fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 }

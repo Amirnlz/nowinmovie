@@ -6,10 +6,9 @@ import java.time.LocalDate
 
 @Entity(tableName = "movie")
 data class MovieEntity(
-    @PrimaryKey val id: Long,
-    val title: String,
-    val voteAverage: Double,
-    val releaseDate: LocalDate?,
-    val posterPath: String,
+  @PrimaryKey val id: Long,
+  val title: String,
+  val voteAverage: Double,
+  val releaseDate: LocalDate?,
+  val posterPath: String,
 )
-

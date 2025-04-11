@@ -16,23 +16,23 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            val navController = rememberNavController()
-            NowinmovieTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        BottomNavigationBar(
-                            navController = navController,
-                        )
-                    }
-                ) { innerPadding ->
-                    AppNavHost(Modifier.padding(innerPadding), navController)
-                }
-            }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContent {
+      val navController = rememberNavController()
+      NowinmovieTheme {
+        Scaffold(
+          modifier = Modifier.fillMaxSize(),
+          bottomBar = {
+            BottomNavigationBar(
+              navController = navController,
+            )
+          },
+        ) { innerPadding ->
+          AppNavHost(Modifier.padding(innerPadding), navController)
         }
+      }
     }
+  }
 }

@@ -16,27 +16,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(private val secureStorage: AppSecureStorage) :
-    ViewModel() {
+  ViewModel() {
 
-    private val _uiState = MutableStateFlow<SplashContract.UiState>(SplashContract.UiState.Loading)
-    val uiState: StateFlow<SplashContract.UiState> = _uiState.asStateFlow()
+  private val _uiState = MutableStateFlow<SplashContract.UiState>(SplashContract.UiState.Loading)
+  val uiState: StateFlow<SplashContract.UiState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<SplashContract.Effect>()
-    val effect: SharedFlow<SplashContract.Effect> = _effect.asSharedFlow()
+  private val _effect = MutableSharedFlow<SplashContract.Effect>()
+  val effect: SharedFlow<SplashContract.Effect> = _effect.asSharedFlow()
 
-    init {
-        checkToken()
+  init {
+    checkToken()
+  }
+
+  private fun checkToken() {
+    viewModelScope.launch {
+      val hasToken = secureStorage.hasToken()
+      delay(2_000)
+      val emitValue = when (hasToken) {
+        true -> SplashContract.Effect.NavigateToHome
+        false -> SplashContract.Effect.NavigateToAuth
+      }
+      _effect.emit(emitValue)
     }
-
-    private fun checkToken() {
-        viewModelScope.launch {
-            val hasToken = secureStorage.hasToken()
-            delay(2_000)
-            val emitValue = when (hasToken) {
-                true -> SplashContract.Effect.NavigateToHome
-                false -> SplashContract.Effect.NavigateToAuth
-            }
-            _effect.emit(emitValue)
-        }
-    }
+  }
 }

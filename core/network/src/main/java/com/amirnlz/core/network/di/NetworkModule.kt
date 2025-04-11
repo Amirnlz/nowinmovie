@@ -21,61 +21,58 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
-    @Singleton
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+  @Provides
+  @Singleton
+  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor().apply {
+      level = HttpLoggingInterceptor.Level.BODY
     }
+  }
 
-    @Provides
-    @Singleton
-    fun provideAccessTokenProvider(
-        appSecureStorage: AppSecureStorage
-    ): AccessTokenInterceptor {
-        return AccessTokenInterceptor(appSecureStorage)
-    }
+  @Provides
+  @Singleton
+  fun provideAccessTokenProvider(
+    appSecureStorage: AppSecureStorage,
+  ): AccessTokenInterceptor {
+    return AccessTokenInterceptor(appSecureStorage)
+  }
 
+  @Provides
+  @Singleton
+  fun provideAuthenticatedOkHttpClient(
+    httpLoggingInterceptor: HttpLoggingInterceptor,
+    accessTokenInterceptor: AccessTokenInterceptor,
+  ): OkHttpClient {
+    return OkHttpClient.Builder()
+      .addInterceptor(httpLoggingInterceptor)
+      .addInterceptor(accessTokenInterceptor)
+      .build()
+  }
 
-    @Provides
-    @Singleton
-    fun provideAuthenticatedOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        accessTokenInterceptor: AccessTokenInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(accessTokenInterceptor)
-            .build()
-    }
+  @Provides
+  @Singleton
+  @BaseUrl
+  fun provideBaseUrl(): String = BuildConfig.BASE_URL
 
-    @Provides
-    @Singleton
-    @BaseUrl
-    fun provideBaseUrl(): String = BuildConfig.BASE_URL
+  @Provides
+  @Singleton
+  fun provideGson(): Gson {
+    return GsonBuilder()
+      .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+      .create()
+  }
 
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create()
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideAuthenticatedRetrofit(
-        okHttpClient: OkHttpClient,
-        gson: Gson,
-        @BaseUrl authenticatedBaseUrl: String
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(authenticatedBaseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-    }
-
+  @Provides
+  @Singleton
+  fun provideAuthenticatedRetrofit(
+    okHttpClient: OkHttpClient,
+    gson: Gson,
+    @BaseUrl authenticatedBaseUrl: String,
+  ): Retrofit {
+    return Retrofit.Builder()
+      .baseUrl(authenticatedBaseUrl)
+      .client(okHttpClient)
+      .addConverterFactory(GsonConverterFactory.create(gson))
+      .build()
+  }
 }

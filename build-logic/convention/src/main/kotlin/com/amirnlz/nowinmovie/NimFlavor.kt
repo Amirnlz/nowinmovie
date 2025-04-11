@@ -1,6 +1,5 @@
 package com.amirnlz.nowinmovie
 
-
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.ApplicationProductFlavor
 import com.android.build.api.dsl.CommonExtension
@@ -8,7 +7,7 @@ import com.android.build.api.dsl.ProductFlavor
 
 @Suppress("EnumEntryName")
 enum class FlavorDimension {
-    contentType
+  contentType,
 }
 
 // The content for the app can either come from local static data which is useful for demo
@@ -16,31 +15,31 @@ enum class FlavorDimension {
 // These two product flavors reflect this behaviour.
 @Suppress("EnumEntryName")
 enum class NimFlavor(val dimension: FlavorDimension, val applicationIdSuffix: String? = null) {
-    demo(FlavorDimension.contentType, applicationIdSuffix = ".demo"),
-    prod(FlavorDimension.contentType),
+  demo(FlavorDimension.contentType, applicationIdSuffix = ".demo"),
+  prod(FlavorDimension.contentType),
 }
 
 fun configureFlavors(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
-    flavorConfigurationBlock: ProductFlavor.(flavor: NimFlavor) -> Unit = {},
+  commonExtension: CommonExtension<*, *, *, *, *, *>,
+  flavorConfigurationBlock: ProductFlavor.(flavor: NimFlavor) -> Unit = {},
 ) {
-    commonExtension.apply {
-        FlavorDimension.values().forEach { flavorDimension ->
-            flavorDimensions += flavorDimension.name
-        }
-
-        productFlavors {
-            NimFlavor.values().forEach { niaFlavor ->
-                register(niaFlavor.name) {
-                    dimension = niaFlavor.dimension.name
-                    flavorConfigurationBlock(this, niaFlavor)
-                    if (this@apply is ApplicationExtension && this is ApplicationProductFlavor) {
-                        if (niaFlavor.applicationIdSuffix != null) {
-                            applicationIdSuffix = niaFlavor.applicationIdSuffix
-                        }
-                    }
-                }
-            }
-        }
+  commonExtension.apply {
+    FlavorDimension.values().forEach { flavorDimension ->
+      flavorDimensions += flavorDimension.name
     }
+
+    productFlavors {
+      NimFlavor.values().forEach { niaFlavor ->
+        register(niaFlavor.name) {
+          dimension = niaFlavor.dimension.name
+          flavorConfigurationBlock(this, niaFlavor)
+          if (this@apply is ApplicationExtension && this is ApplicationProductFlavor) {
+            if (niaFlavor.applicationIdSuffix != null) {
+              applicationIdSuffix = niaFlavor.applicationIdSuffix
+            }
+          }
+        }
+      }
+    }
+  }
 }

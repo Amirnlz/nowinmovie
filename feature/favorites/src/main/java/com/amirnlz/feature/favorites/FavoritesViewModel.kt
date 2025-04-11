@@ -14,20 +14,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+  private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
-    val uiState: Flow<PagingData<Movie>> = _uiState.cachedIn(viewModelScope)
+  private val _uiState = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+  val uiState: Flow<PagingData<Movie>> = _uiState.cachedIn(viewModelScope)
 
-    init {
-        getFavoriteMovies()
-    }
+  init {
+    getFavoriteMovies()
+  }
 
-    private fun getFavoriteMovies() {
-        viewModelScope.launch {
-            getFavoriteMoviesUseCase().collect { pagingData ->
-                _uiState.value = pagingData
-            }
-        }
+  private fun getFavoriteMovies() {
+    viewModelScope.launch {
+      getFavoriteMoviesUseCase().collect { pagingData ->
+        _uiState.value = pagingData
+      }
     }
+  }
 }

@@ -19,4 +19,5 @@ dependencies {
     implementation(libs.coil.kt.svg)
     implementation(projects.core.domain.movie)
     implementation(libs.androidx.paging.compose)
+  implementation(libs.android.youtube.player)
 }

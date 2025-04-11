@@ -15,19 +15,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoadingComponent(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .alpha(
-                animateFloatAsState(
-                    targetValue = 1f,
-                    animationSpec = tween(500),
-                    label = "LoadingAlpha"
-                ).value
-            )
-    ) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-    }
+  Box(
+    contentAlignment = Alignment.Center,
+    modifier = modifier
+      .fillMaxSize()
+      .padding(16.dp)
+      .alpha(
+        animateFloatAsState(
+          targetValue = 1f,
+          animationSpec = tween(500),
+          label = "LoadingAlpha",
+        ).value,
+      ),
+  ) {
+    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+  }
 }

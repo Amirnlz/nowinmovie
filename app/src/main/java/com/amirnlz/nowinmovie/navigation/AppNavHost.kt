@@ -21,25 +21,29 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
     NavHost(
         navController = navController,
         startDestination = AppRoutes.SplashRoute,
-        modifier = modifier
+        modifier = modifier,
     ) {
         splashScreen(
             onNavigateToAuth = {
-                navController.navigateToAuth(navOptions {
-                    popUpTo(AppRoutes.AuthRoute) { inclusive = true }
-                })
+                navController.navigateToAuth(
+                    navOptions {
+                        popUpTo(AppRoutes.AuthRoute) { inclusive = true }
+                    },
+                )
             },
             onNavigateToHome = {
                 navController.navigateToHome(
-                    navOptions { popUpTo(AppRoutes.HomeRoute) { inclusive = true } }
+                    navOptions { popUpTo(AppRoutes.HomeRoute) { inclusive = true } },
                 )
-            }
+            },
         )
         authScreen(
             onNavigateToHome = {
-                navController.navigateToHome(navOptions = navOptions {
-                    popUpTo(AppRoutes.AuthRoute) { inclusive = true }
-                })
+                navController.navigateToHome(
+                    navOptions = navOptions {
+                        popUpTo(AppRoutes.AuthRoute) { inclusive = true }
+                    },
+                )
             },
         )
         homeScreen(
@@ -50,10 +54,10 @@ fun AppNavHost(modifier: Modifier = Modifier, navController: NavHostController) 
             onMovieClicked = { navController.navigateToMovieDetails(it) },
         )
         searchScreen(
-            onMovieClicked = { navController.navigateToMovieDetails(it) }
+            onMovieClicked = { navController.navigateToMovieDetails(it) },
         )
         favoritesScreen(
-            onMovieClicked = { navController.navigateToMovieDetails(it) }
+            onMovieClicked = { navController.navigateToMovieDetails(it) },
         )
     }
 }

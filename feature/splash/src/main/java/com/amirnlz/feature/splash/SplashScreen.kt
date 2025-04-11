@@ -28,62 +28,62 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SplashScreenRoute(
-    modifier: Modifier = Modifier,
-    viewModel: SplashViewModel = hiltViewModel(),
-    onNavigateToHome: () -> Unit,
-    onNavigateToAuth: () -> Unit,
+  modifier: Modifier = Modifier,
+  viewModel: SplashViewModel = hiltViewModel(),
+  onNavigateToHome: () -> Unit,
+  onNavigateToAuth: () -> Unit,
 ) {
-    val uiState = viewModel.uiState.collectAsState().value
-    LaunchedEffect(key1 = viewModel.effect) {
-        viewModel.effect.collectLatest { effect ->
-            when (effect) {
-                is SplashContract.Effect.NavigateToHome -> onNavigateToHome()
-                is SplashContract.Effect.NavigateToAuth -> onNavigateToAuth()
-            }
-        }
+  val uiState = viewModel.uiState.collectAsState().value
+  LaunchedEffect(key1 = viewModel.effect) {
+    viewModel.effect.collectLatest { effect ->
+      when (effect) {
+        is SplashContract.Effect.NavigateToHome -> onNavigateToHome()
+        is SplashContract.Effect.NavigateToAuth -> onNavigateToAuth()
+      }
     }
-    SplashScreen(modifier = modifier, uiState = uiState)
+  }
+  SplashScreen(modifier = modifier, uiState = uiState)
 }
 
 @Composable
 internal fun SplashScreen(modifier: Modifier = Modifier, uiState: SplashContract.UiState) {
-    val scale = remember { Animatable(0f) }
-    val alpha = remember { Animatable(0f) }
+  val scale = remember { Animatable(0f) }
+  val alpha = remember { Animatable(0f) }
 
-    LaunchedEffect(key1 = true) {
-        scale.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(durationMillis = 800, easing = EaseInOutCubic)
-        )
-        alpha.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(durationMillis = 1200)
-        )
-    }
+  LaunchedEffect(key1 = true) {
+    scale.animateTo(
+      targetValue = 1f,
+      animationSpec = tween(durationMillis = 800, easing = EaseInOutCubic),
+    )
+    alpha.animateTo(
+      targetValue = 1f,
+      animationSpec = tween(durationMillis = 1200),
+    )
+  }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "NowInMovie",
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 48.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                modifier = Modifier.alpha(alpha.value)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            if (uiState is SplashContract.UiState.Loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp),
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-        }
+  Box(
+    modifier = modifier
+      .fillMaxSize()
+      .background(MaterialTheme.colorScheme.primaryContainer),
+    contentAlignment = Alignment.Center,
+  ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+      Text(
+        text = "NowInMovie",
+        style = MaterialTheme.typography.headlineLarge.copy(
+          fontWeight = FontWeight.Bold,
+          fontSize = 48.sp,
+          color = MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+        modifier = Modifier.alpha(alpha.value),
+      )
+      Spacer(modifier = Modifier.height(16.dp))
+      if (uiState is SplashContract.UiState.Loading) {
+        CircularProgressIndicator(
+          modifier = Modifier.size(48.dp),
+          color = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+      }
     }
+  }
 }

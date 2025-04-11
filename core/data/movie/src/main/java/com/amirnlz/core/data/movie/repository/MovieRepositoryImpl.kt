@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 private const val DEFAULT_PAGE_SIZE = 20
 
 class MovieRepositoryImpl @Inject constructor(
@@ -35,11 +34,11 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 MoviePagingSource { page -> remoteDataSource.getTrendingMovies(page) }
-            }
+            },
         ).flow
     }
 
@@ -47,24 +46,23 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 MoviePagingSource { page -> remoteDataSource.getPopularMovies(page) }
-            }
+            },
         ).flow
     }
-
 
     override suspend fun getTopRatedMovies(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 MoviePagingSource { page -> remoteDataSource.getTopRatedMovies(page) }
-            }
+            },
         ).flow
     }
 
@@ -72,11 +70,11 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 MoviePagingSource { page -> remoteDataSource.getUpcomingMovies(page) }
-            }
+            },
         ).flow
     }
 
@@ -84,9 +82,9 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
-            pagingSourceFactory = { localDataSource.getFavoriteMovies() }
+            pagingSourceFactory = { localDataSource.getFavoriteMovies() },
         ).flow
             .map { value: PagingData<MovieEntity> ->
                 value.map { entity -> entity.mapToMovie() }
@@ -147,7 +145,6 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getMovieFavoriteState(movieId: Long): Flow<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
@@ -162,11 +159,11 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 MoviePagingSource { page -> remoteDataSource.searchMovie(query, page) }
-            }
+            },
         ).flow
     }
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetTopRatedMoviesUseCase @Inject constructor(private val repository: MovieRepository) {
 
-    suspend operator fun invoke(): Flow<PagingData<Movie>> {
-        return repository.getTopRatedMovies()
-    }
+  suspend operator fun invoke(): Flow<PagingData<Movie>> {
+    return repository.getTopRatedMovies()
+  }
 }

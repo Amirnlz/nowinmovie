@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetMovieFavoriteStateUseCase @Inject constructor(private val repository: MovieRepository) {
 
-    suspend operator fun invoke(movieId: Long): Flow<Boolean> {
-        return repository.getMovieFavoriteState(movieId)
-    }
+  suspend operator fun invoke(movieId: Long): Flow<Boolean> {
+    return repository.getMovieFavoriteState(movieId)
+  }
 }

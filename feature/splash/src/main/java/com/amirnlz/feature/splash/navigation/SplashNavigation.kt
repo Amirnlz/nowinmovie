@@ -8,13 +8,13 @@ import com.amirnlz.core.navigation.AppRoutes
 import com.amirnlz.feature.splash.SplashScreenRoute
 
 fun NavController.navigateToSplash(navOptions: NavOptions) =
-    navigate(route = AppRoutes.SplashRoute, navOptions)
+  navigate(route = AppRoutes.SplashRoute, navOptions)
 
 fun NavGraphBuilder.splashScreen(onNavigateToHome: () -> Unit, onNavigateToAuth: () -> Unit) {
-    composable<AppRoutes.SplashRoute> {
-        SplashScreenRoute(
-            onNavigateToHome = { onNavigateToHome() },
-            onNavigateToAuth = { onNavigateToAuth() }
-        )
-    }
+  composable<AppRoutes.SplashRoute> {
+    SplashScreenRoute(
+      onNavigateToHome = { onNavigateToHome() },
+      onNavigateToAuth = { onNavigateToAuth() },
+    )
+  }
 }

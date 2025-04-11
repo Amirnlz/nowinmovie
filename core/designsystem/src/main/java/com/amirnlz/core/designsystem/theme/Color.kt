@@ -3,15 +3,15 @@ package com.amirnlz.core.designsystem.theme
 import androidx.compose.ui.graphics.Color
 
 // Light theme color tokens
-val Red80 = Color(0xFFE50914)     // Primary brand color
-val Gold80 = Color(0xFFFFD700)    // Secondary color
-val Teal80 = Color(0xFF03DAC6)    // Tertiary color
+val Red80 = Color(0xFFE50914) // Primary brand color
+val Gold80 = Color(0xFFFFD700) // Secondary color
+val Teal80 = Color(0xFF03DAC6) // Tertiary color
 val Neutral90 = Color(0xFF1A1A1A)
 val Neutral10 = Color(0xFFFFFFFF)
 val NeutralVariant90 = Color(0xFF444444)
 val Error80 = Color(0xFFB3261E)
 
-//light
+// light
 val primaryContainerLightColor = Color(0xFFFFDAD6)
 val onPrimaryContainerLightColor = Color(0xFF410002)
 val secondaryContainerLightColor = Color(0xFFFFE08C)
@@ -35,7 +35,7 @@ val Neutral90Dark = Color(0xFFE6E1E5)
 val NeutralVariant30 = Color(0xFF444444)
 val Error40 = Color(0xFFF2B8B5)
 
-//dark
+// dark
 val primaryContainerDarkColor = Color(0xFF920006)
 val onPrimaryContainerDarkColor = Color(0xFFFFDAD6)
 val secondaryContainerDarkColor = Color(0xFF665400)

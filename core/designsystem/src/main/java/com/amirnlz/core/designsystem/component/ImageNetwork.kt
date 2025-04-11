@@ -16,52 +16,48 @@ import coil3.request.crossfade
 import com.amirnlz.core.designsystem.BuildConfig
 import java.util.Locale
 
-
 @Composable
 fun ImageNetwork(
-    modifier: Modifier = Modifier,
-    imageSize: ImageSize = ImageSize.W500,
-    imagePath: String,
-    contentScale: ContentScale = ContentScale.Crop,
-    contentDescription: String? = null,
+  modifier: Modifier = Modifier,
+  imageSize: ImageSize = ImageSize.W500,
+  imagePath: String,
+  contentScale: ContentScale = ContentScale.Crop,
+  contentDescription: String? = null,
 ) {
-    if (imagePath.isEmpty()) {
-        return Box(
-            modifier = modifier.background(Color.LightGray)
-        )
-    } else {
-        val context = LocalContext.current
-        val imageUrl = remember(imageSize, imagePath) {
-            BuildConfig.BASE_URL + "/${imageSize.name.lowercase(Locale.getDefault())}/" + imagePath
-        }
-
-        val requestBuilder = remember(context, imageUrl) {
-            ImageRequest.Builder(context)
-                .data(imageUrl)
-                .crossfade(300)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(imageUrl)
-                .diskCacheKey(imageUrl)
-                .crossfade(300)
-        }
-
-        AsyncImage(
-            model = requestBuilder.build(),
-            contentDescription = contentDescription,
-            contentScale = contentScale,
-            modifier = modifier,
-            placeholder = ColorPainter(Color.LightGray),
-            error = ColorPainter(Color.Red),
-        )
+  if (imagePath.isEmpty()) {
+    return Box(
+      modifier = modifier.background(Color.LightGray),
+    )
+  } else {
+    val context = LocalContext.current
+    val imageUrl = remember(imageSize, imagePath) {
+      BuildConfig.BASE_URL + "/${imageSize.name.lowercase(Locale.getDefault())}/" + imagePath
     }
 
+    val requestBuilder = remember(context, imageUrl) {
+      ImageRequest.Builder(context)
+        .data(imageUrl)
+        .crossfade(300)
+        .diskCachePolicy(CachePolicy.ENABLED)
+        .memoryCacheKey(imageUrl)
+        .diskCacheKey(imageUrl)
+        .crossfade(300)
+    }
 
+    AsyncImage(
+      model = requestBuilder.build(),
+      contentDescription = contentDescription,
+      contentScale = contentScale,
+      modifier = modifier,
+      placeholder = ColorPainter(Color.LightGray),
+      error = ColorPainter(Color.Red),
+    )
+  }
 }
 
-
 enum class ImageSize {
-    Original,
-    W500,
-    W400,
-    W300,
+  Original,
+  W500,
+  W400,
+  W300,
 }

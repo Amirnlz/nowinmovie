@@ -8,19 +8,18 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authLocalDataSource: AuthLocalDataSource,
-    private val authRemoteDataSource: AuthRemoteDataSource,
+  private val authLocalDataSource: AuthLocalDataSource,
+  private val authRemoteDataSource: AuthRemoteDataSource,
 ) : AuthRepository {
-    override suspend fun authenticateApiKey(apiKey: String): Result<String?> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = authRemoteDataSource.authenticateApiKey(apiKey)
-                authLocalDataSource.saveApiKey(apiKey)
-                Result.success(response.statusMessage)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
-
+  override suspend fun authenticateApiKey(apiKey: String): Result<String?> {
+    return withContext(Dispatchers.IO) {
+      try {
+        val response = authRemoteDataSource.authenticateApiKey(apiKey)
+        authLocalDataSource.saveApiKey(apiKey)
+        Result.success(response.statusMessage)
+      } catch (e: Exception) {
+        Result.failure(e)
+      }
     }
+  }
 }

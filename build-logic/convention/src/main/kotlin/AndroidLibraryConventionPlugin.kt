@@ -9,19 +9,19 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            apply(plugin = "com.android.library")
-            apply(plugin = "org.jetbrains.kotlin.android")
+  override fun apply(target: Project) {
+    with(target) {
+      apply(plugin = "com.android.library")
+      apply(plugin = "org.jetbrains.kotlin.android")
 
-            extensions.configure<LibraryAndroidComponentsExtension> {
-                disableUnnecessaryAndroidTests(target)
-            }
+      extensions.configure<LibraryAndroidComponentsExtension> {
+        disableUnnecessaryAndroidTests(target)
+      }
 
-            androidGradle {
-                configureKotlinAndroid(this)
-                configureFlavors(this)
-            }
-        }
+      androidGradle {
+        configureKotlinAndroid(this)
+        configureFlavors(this)
+      }
     }
+  }
 }

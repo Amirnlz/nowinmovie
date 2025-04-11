@@ -11,8 +11,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object DaosModule {
 
-    @Provides
-    fun providesFavoriteMovieDao(
-        database: AppDatabase
-    ): FavoriteMovieDao = database.favoriteMovieDao()
+  @Provides
+  fun providesFavoriteMovieDao(
+    database: AppDatabase,
+  ): FavoriteMovieDao = database.favoriteMovieDao()
 }

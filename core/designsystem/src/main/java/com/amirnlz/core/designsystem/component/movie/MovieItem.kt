@@ -30,7 +30,6 @@ import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 import java.util.Locale
 
-
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
@@ -48,7 +47,7 @@ fun MovieItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(NowinmovieTheme.dimens.paddingExtraMedium)
+                .padding(NowinmovieTheme.dimens.paddingExtraMedium),
         ) {
             ImageNetwork(
                 imagePath = movie.posterPath ?: "",
@@ -56,35 +55,34 @@ fun MovieItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(NowinmovieTheme.dimens.posterAspectRatio)
-                    .clip(MaterialTheme.shapes.medium)
+                    .clip(MaterialTheme.shapes.medium),
             )
             Spacer(modifier = Modifier.height(NowinmovieTheme.spacing.small))
             Column(
-                verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small)
+                verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small),
             ) {
                 Text(
                     text = movie.title ?: "",
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     ),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     movie.releaseDate?.let { date ->
                         Text(
                             text = date.year.toString(),
                             style = MaterialTheme.typography.labelLarge.copy(
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                            )
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            ),
                         )
                     }
                     StarRating(rating = movie.voteAverage ?: 0.0)
-
                 }
             }
         }
@@ -99,21 +97,20 @@ fun StarRating(
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = Icons.Filled.Star,
             contentDescription = "Rating Star",
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(18.dp)
+            modifier = Modifier.size(18.dp),
         )
 
         Text(
             String.format(Locale.getDefault(), "%.1f", rating),
             style = MaterialTheme.typography.labelLarge.copy(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-            )
+            ),
         )
     }
 }
-

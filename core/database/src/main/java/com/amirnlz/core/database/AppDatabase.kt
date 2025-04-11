@@ -8,11 +8,11 @@ import com.amirnlz.core.database.entity.MovieEntity
 import com.amirnlz.core.database.util.Converters
 
 @Database(
-    entities = [MovieEntity::class],
-    version = 1,
-    exportSchema = true,
+  entities = [MovieEntity::class],
+  version = 1,
+  exportSchema = true,
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun favoriteMovieDao(): FavoriteMovieDao
+  abstract fun favoriteMovieDao(): FavoriteMovieDao
 }

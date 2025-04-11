@@ -45,145 +45,144 @@ import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
 internal fun SearchRoute(
-    viewModel: SearchViewModel = hiltViewModel(),
-    onMovieClicked: (Long) -> Unit,
+  viewModel: SearchViewModel = hiltViewModel(),
+  onMovieClicked: (Long) -> Unit,
 ) {
-    val query = viewModel.query.collectAsState()
-    val lazyPagingItems = viewModel.searchMovies.collectAsLazyPagingItems()
+  val query = viewModel.query.collectAsState()
+  val lazyPagingItems = viewModel.searchMovies.collectAsLazyPagingItems()
 
-
-    SearchScreen(
-        query = query.value,
-        onQueryChange = { viewModel.onIntent(SearchIntent.ChangeQuery(it)) },
-        lazyPagingItems = lazyPagingItems,
-        onMovieClicked = onMovieClicked,
-    )
+  SearchScreen(
+    query = query.value,
+    onQueryChange = { viewModel.onIntent(SearchIntent.ChangeQuery(it)) },
+    lazyPagingItems = lazyPagingItems,
+    onMovieClicked = onMovieClicked,
+  )
 }
 
 @Composable
 private fun SearchScreen(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    onMovieClicked: (Long) -> Unit,
-    lazyPagingItems: LazyPagingItems<Movie>,
+  query: String,
+  onQueryChange: (String) -> Unit,
+  onMovieClicked: (Long) -> Unit,
+  lazyPagingItems: LazyPagingItems<Movie>,
 ) {
-    Scaffold(
-        modifier = Modifier
-            .padding(NowinmovieTheme.dimens.screenPadding)
-            .fillMaxSize(),
-        topBar = {
-            SearchTextField(
-                query = query,
-                onQueryChange = onQueryChange,
+  Scaffold(
+    modifier = Modifier
+      .padding(NowinmovieTheme.dimens.screenPadding)
+      .fillMaxSize(),
+    topBar = {
+      SearchTextField(
+        query = query,
+        onQueryChange = onQueryChange,
+      )
+    },
+  ) { innerPadding ->
+    Column(
+      Modifier.padding(innerPadding),
+      verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.large),
+    ) {
+      if (query.isNotEmpty()) {
+        Spacer(modifier = Modifier.size(NowinmovieTheme.dimens.paddingMedium))
+        MovieGridList(
+          lazyPagingItems = lazyPagingItems,
+          onMovieClicked = { onMovieClicked(it) },
+        )
+        lazyPagingItems.loadState.refresh.let { loadState ->
+          when (loadState) {
+            is LoadState.Error -> ErrorComponent(
+              message = loadState.error.localizedMessage
+                ?: stringResource(R.string.an_error_occurred),
+              onRetry = { onQueryChange(query) },
             )
-        },
-    ) { innerPadding ->
-        Column(
-            Modifier.padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.large)
-        ) {
-            if (query.isNotEmpty()) {
-                Spacer(modifier = Modifier.size(NowinmovieTheme.dimens.paddingMedium))
-                MovieGridList(
-                    lazyPagingItems = lazyPagingItems,
-                    onMovieClicked = { onMovieClicked(it) }
-                )
-                lazyPagingItems.loadState.refresh.let { loadState ->
-                    when (loadState) {
-                        is LoadState.Error -> ErrorComponent(
-                            message = loadState.error.localizedMessage
-                                ?: stringResource(R.string.an_error_occurred),
-                            onRetry = { onQueryChange(query) }
-                        )
 
-                        LoadState.Loading -> LoadingComponent()
-                        is LoadState.NotLoading -> {
-                            if (lazyPagingItems.itemCount == 0 &&
-                                lazyPagingItems.loadState.append.endOfPaginationReached
-                            ) {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Text(stringResource(R.string.no_items_found))
-                                }
-                            }
-                        }
-                    }
+            LoadState.Loading -> LoadingComponent()
+            is LoadState.NotLoading -> {
+              if (lazyPagingItems.itemCount == 0 &&
+                lazyPagingItems.loadState.append.endOfPaginationReached
+              ) {
+                Box(contentAlignment = Alignment.Center) {
+                  Text(stringResource(R.string.no_items_found))
                 }
-            } else {
-                EmptyView()
+              }
             }
-
+          }
         }
+      } else {
+        EmptyView()
+      }
     }
+  }
 }
 
 @Composable
 private fun SearchTextField(
-    modifier: Modifier = Modifier,
-    query: String,
-    onQueryChange: (String) -> Unit,
+  modifier: Modifier = Modifier,
+  query: String,
+  onQueryChange: (String) -> Unit,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val isClearIconVisible by remember { derivedStateOf { query.isNotEmpty() } }
-    TextField(
-        value = query,
-        onValueChange = onQueryChange,
-        modifier = modifier.fillMaxWidth(),
-        placeholder = { Text(stringResource(R.string.search)) },
-        shape = NowinmovieTheme.shapes.large,
-        leadingIcon = {
-            Icon(
-                Icons.Rounded.Search,
-                contentDescription = stringResource(R.string.search)
-            )
-        },
-        suffix = {
-            if (isClearIconVisible)
-                Icon(
-                    Icons.Rounded.Clear,
-                    contentDescription = stringResource(R.string.clear),
-                    modifier = Modifier.clickable {
-                        onQueryChange("")
-                    }
-                )
-        },
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Search,
-            autoCorrectEnabled = false,
-        ),
-        keyboardActions = KeyboardActions { keyboardController?.hide() },
-        singleLine = true,
-    )
+  val keyboardController = LocalSoftwareKeyboardController.current
+  val isClearIconVisible by remember { derivedStateOf { query.isNotEmpty() } }
+  TextField(
+    value = query,
+    onValueChange = onQueryChange,
+    modifier = modifier.fillMaxWidth(),
+    placeholder = { Text(stringResource(R.string.search)) },
+    shape = NowinmovieTheme.shapes.large,
+    leadingIcon = {
+      Icon(
+        Icons.Rounded.Search,
+        contentDescription = stringResource(R.string.search),
+      )
+    },
+    suffix = {
+      if (isClearIconVisible) {
+        Icon(
+          Icons.Rounded.Clear,
+          contentDescription = stringResource(R.string.clear),
+          modifier = Modifier.clickable {
+            onQueryChange("")
+          },
+        )
+      }
+    },
+    colors = TextFieldDefaults.colors(
+      focusedIndicatorColor = Color.Transparent,
+      unfocusedIndicatorColor = Color.Transparent,
+      disabledIndicatorColor = Color.Transparent,
+    ),
+    keyboardOptions = KeyboardOptions(
+      keyboardType = KeyboardType.Text,
+      imeAction = ImeAction.Search,
+      autoCorrectEnabled = false,
+    ),
+    keyboardActions = KeyboardActions { keyboardController?.hide() },
+    singleLine = true,
+  )
 }
 
 @Composable
 fun EmptyView(modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(NowinmovieTheme.spacing.large)
-    ) {
-        Icon(
-            imageVector = Icons.Rounded.Search,
-            contentDescription = "Search",
-            modifier = Modifier
-                .padding(NowinmovieTheme.spacing.large)
-                .size(NowinmovieTheme.dimens.iconSizeExtraLarge),
-            tint = MaterialTheme.colorScheme.primary
-        )
-        Text(
-            text = "Search for movies",
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        )
-    }
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center,
+    modifier = modifier
+      .fillMaxSize()
+      .padding(NowinmovieTheme.spacing.large),
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.Search,
+      contentDescription = "Search",
+      modifier = Modifier
+        .padding(NowinmovieTheme.spacing.large)
+        .size(NowinmovieTheme.dimens.iconSizeExtraLarge),
+      tint = MaterialTheme.colorScheme.primary,
+    )
+    Text(
+      text = "Search for movies",
+      style = MaterialTheme.typography.titleLarge.copy(
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      ),
+    )
+  }
 }

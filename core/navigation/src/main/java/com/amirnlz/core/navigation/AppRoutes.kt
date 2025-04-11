@@ -2,7 +2,6 @@ package com.amirnlz.core.navigation
 
 import kotlinx.serialization.Serializable
 
-
 sealed interface AppRoutes {
     @Serializable
     data object SplashRoute : AppRoutes

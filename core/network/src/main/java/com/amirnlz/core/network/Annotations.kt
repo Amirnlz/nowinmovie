@@ -6,7 +6,6 @@ import javax.inject.Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Authenticated
 
-
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class BaseUrl

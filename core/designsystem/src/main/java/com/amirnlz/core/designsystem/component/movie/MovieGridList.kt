@@ -16,7 +16,6 @@ import com.amirnlz.core.designsystem.component.LoadingComponent
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.Movie
 
-
 @Composable
 fun MovieGridList(
     modifier: Modifier = Modifier,
@@ -28,12 +27,12 @@ fun MovieGridList(
         columns = GridCells.Fixed(2),
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
+        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
     ) {
         items(
             count = lazyPagingItems.itemCount,
             key = lazyPagingItems.itemKey { it.id },
-            contentType = lazyPagingItems.itemContentType { "itemType" }
+            contentType = lazyPagingItems.itemContentType { "itemType" },
         ) { index ->
             val movie = lazyPagingItems[index]
             if (movie != null) {
@@ -48,7 +47,7 @@ fun MovieGridList(
                 is LoadState.Error -> item {
                     ErrorComponent(
                         message = loadState.error.localizedMessage ?: "Could not load more items",
-                        onRetry = {}
+                        onRetry = {},
                     )
                 }
 

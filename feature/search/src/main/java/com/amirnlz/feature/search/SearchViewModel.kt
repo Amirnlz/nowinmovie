@@ -18,32 +18,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val getSearchMovieUseCase: GetSearchMovieUseCase
+  private val getSearchMovieUseCase: GetSearchMovieUseCase,
 ) : ViewModel() {
 
-    private val _searchQuery = MutableStateFlow("")
-    val query: StateFlow<String> = _searchQuery.asStateFlow()
+  private val _searchQuery = MutableStateFlow("")
+  val query: StateFlow<String> = _searchQuery.asStateFlow()
 
-    val searchMovies: Flow<PagingData<Movie>> = _searchQuery
-        .flatMapLatest { query ->
-            delay(3000)
-            if (query.isEmpty()) {
-                emptyFlow()
-            } else {
-                getSearchMovieUseCase(query)
-            }
-        }.cachedIn(viewModelScope)
+  val searchMovies: Flow<PagingData<Movie>> = _searchQuery
+    .flatMapLatest { query ->
+      delay(3000)
+      if (query.isEmpty()) {
+        emptyFlow()
+      } else {
+        getSearchMovieUseCase(query)
+      }
+    }.cachedIn(viewModelScope)
 
-
-    fun onIntent(intent: SearchIntent) {
-        when (intent) {
-            is SearchIntent.ChangeQuery -> onQueryChange(intent.query)
-
-        }
+  fun onIntent(intent: SearchIntent) {
+    when (intent) {
+      is SearchIntent.ChangeQuery -> onQueryChange(intent.query)
     }
+  }
 
-    private fun onQueryChange(query: String) {
-        _searchQuery.value = query
-    }
-
+  private fun onQueryChange(query: String) {
+    _searchQuery.value = query
+  }
 }

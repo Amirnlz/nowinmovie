@@ -13,15 +13,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkApiModule {
 
-    @Provides
-    @Singleton
-    fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
-        return retrofit.create(MovieApiService::class.java)
-    }
+  @Provides
+  @Singleton
+  fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
+    return retrofit.create(MovieApiService::class.java)
+  }
 
-    @Provides
-    @Singleton
-    fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
-        return retrofit.create(AuthApiService::class.java)
-    }
+  @Provides
+  @Singleton
+  fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
+    return retrofit.create(AuthApiService::class.java)
+  }
 }

@@ -23,66 +23,62 @@ import com.amirnlz.core.domain.movie.model.Movie
 
 @Composable
 internal fun FavoritesRoute(
-    modifier: Modifier = Modifier,
-    onMovieClicked: (Long) -> Unit,
-    viewModel: FavoritesViewModel = hiltViewModel()
+  modifier: Modifier = Modifier,
+  onMovieClicked: (Long) -> Unit,
+  viewModel: FavoritesViewModel = hiltViewModel(),
 ) {
-    val lazyPagingItems = viewModel.uiState.collectAsLazyPagingItems()
+  val lazyPagingItems = viewModel.uiState.collectAsLazyPagingItems()
 
-    FavoritesScreen(
-        modifier = modifier,
-        onMovieClicked = onMovieClicked,
-        lazyPagingItems = lazyPagingItems,
-    )
-
+  FavoritesScreen(
+    modifier = modifier,
+    onMovieClicked = onMovieClicked,
+    lazyPagingItems = lazyPagingItems,
+  )
 }
-
 
 @Composable
 private fun FavoritesScreen(
-    modifier: Modifier = Modifier,
-    onMovieClicked: (Long) -> Unit,
-    lazyPagingItems: LazyPagingItems<Movie>,
+  modifier: Modifier = Modifier,
+  onMovieClicked: (Long) -> Unit,
+  lazyPagingItems: LazyPagingItems<Movie>,
 ) {
-    Scaffold(
-        modifier = modifier
-            .padding(NowinmovieTheme.dimens.screenPadding)
-            .fillMaxSize(),
-    ) { innerPadding ->
-        Column(
-            Modifier.padding(innerPadding),
-        ) {
-            MovieGridList(
-                lazyPagingItems = lazyPagingItems,
-                onMovieClicked = onMovieClicked
-            )
-            lazyPagingItems.loadState.refresh.let { loadState ->
-                when (loadState) {
-                    is LoadState.Error -> ErrorComponent(
-                        message = loadState.error.localizedMessage
-                            ?: stringResource(R.string.an_error_occurred),
-                        onRetry = { }
-                    )
+  Scaffold(
+    modifier = modifier
+      .padding(NowinmovieTheme.dimens.screenPadding)
+      .fillMaxSize(),
+  ) { innerPadding ->
+    Column(
+      Modifier.padding(innerPadding),
+    ) {
+      MovieGridList(
+        lazyPagingItems = lazyPagingItems,
+        onMovieClicked = onMovieClicked,
+      )
+      lazyPagingItems.loadState.refresh.let { loadState ->
+        when (loadState) {
+          is LoadState.Error -> ErrorComponent(
+            message = loadState.error.localizedMessage
+              ?: stringResource(R.string.an_error_occurred),
+            onRetry = { },
+          )
 
-                    LoadState.Loading -> LoadingComponent()
-                    is LoadState.NotLoading -> {
-                        if (lazyPagingItems.itemCount == 0 &&
-                            lazyPagingItems.loadState.append.endOfPaginationReached
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Text(
-                                    stringResource(R.string.no_favorite_movies_found) +
-                                            stringResource(R.string.please_add_some_movies_to_your_favorites),
-                                    style = MaterialTheme.typography.titleLarge,
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                )
-                            }
-                        }
-                    }
-                }
+          LoadState.Loading -> LoadingComponent()
+          is LoadState.NotLoading -> {
+            if (lazyPagingItems.itemCount == 0 &&
+              lazyPagingItems.loadState.append.endOfPaginationReached
+            ) {
+              Box(contentAlignment = Alignment.Center) {
+                Text(
+                  stringResource(R.string.no_favorite_movies_found) +
+                    stringResource(R.string.please_add_some_movies_to_your_favorites),
+                  style = MaterialTheme.typography.titleLarge,
+                  color = MaterialTheme.colorScheme.onBackground,
+                )
+              }
             }
-
-
+          }
         }
+      }
     }
+  }
 }
