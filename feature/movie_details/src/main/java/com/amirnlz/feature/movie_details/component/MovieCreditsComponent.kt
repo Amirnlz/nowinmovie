@@ -27,10 +27,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieCast
 import com.amirnlz.core.domain.movie.model.MovieCredits
-import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.feature.movie_detail.R
 
 @Composable
@@ -110,7 +110,7 @@ private fun TabsComponent(
 @Composable
 private fun CastComponent(casts: List<MovieCast>) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium)
+        horizontalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.mediumSmall)
     ) {
         items(casts) {
             Column(

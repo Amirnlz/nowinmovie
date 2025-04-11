@@ -39,11 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.core.designsystem.theme.NowinmovieTheme
 import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.model.ProductionCompany
 import com.amirnlz.core.domain.movie.model.toMovieTime
-import com.amirnlz.core.designsystem.component.ImageNetwork
 import com.amirnlz.feature.movie_detail.R
 
 @Composable
@@ -53,11 +53,14 @@ internal fun MovieDetailsComponent(
     isMovieFavorite: Boolean,
     onMovieFavoriteChanged: (MovieDetails) -> Unit
 ) {
-    Column(modifier = modifier) {
-        if (movieDetails != null) {
-            MovieBackdropImage(movieDetails.backdropPath)
-            MovieContentSection(movieDetails, isMovieFavorite, onMovieFavoriteChanged)
-        }
+    if (movieDetails == null) return
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.small)
+    ) {
+        MovieBackdropImage(movieDetails.backdropPath)
+        MovieContentSection(movieDetails, isMovieFavorite, onMovieFavoriteChanged)
+
     }
 }
 
@@ -68,7 +71,6 @@ private fun MovieBackdropImage(backdropPath: String) {
         contentDescription = stringResource(R.string.backdrop_image_description),
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .padding(NowinmovieTheme.spacing.small)
             .clip(MaterialTheme.shapes.large)
             .fillMaxWidth()
             .aspectRatio(NowinmovieTheme.dimens.backdropAspectRatio)
@@ -88,8 +90,7 @@ private fun MovieContentSection(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(NowinmovieTheme.dimens.paddingMedium),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
     ) {
         MovieHeaderSection(movieDetails, isMovieFavorite, onMovieFavoriteChanged)

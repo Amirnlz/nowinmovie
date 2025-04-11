@@ -14,10 +14,12 @@ fun NavController.navigateToMovieDetails(movieId: Long, navOptions: NavOptions? 
 
 fun NavGraphBuilder.movieDetailsScreen(
     onBackButtonPressed: () -> Unit,
+    onMovieClicked: (Long) -> Unit,
 ) {
     composable<AppRoutes.MovieDetailsRoute> {
         MovieDetailRoute(
-            onBackButtonPressed = onBackButtonPressed
+            onBackButtonPressed = onBackButtonPressed,
+            onMovieClicked = onMovieClicked,
         )
     }
 }

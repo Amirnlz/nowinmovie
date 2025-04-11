@@ -8,6 +8,7 @@ import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.core.domain.movie.usecase.GetMovieCreditsUseCase
 import com.amirnlz.core.domain.movie.usecase.GetMovieDetailsUseCase
 import com.amirnlz.core.domain.movie.usecase.GetMovieFavoriteStateUseCase
+import com.amirnlz.core.domain.movie.usecase.GetMovieRecomUseCase
 import com.amirnlz.core.domain.movie.usecase.ToggleFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -23,6 +24,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
     private val getMovieFavoriteStateUseCase: GetMovieFavoriteStateUseCase,
+    private val getMovieRecomUseCase: GetMovieRecomUseCase,
     private val toggleFavoriteMovieUseCase: ToggleFavoriteMovieUseCase,
     savedStateHandle: SavedStateHandle
 ) :
@@ -53,14 +55,17 @@ class MovieDetailViewModel @Inject constructor(
 
             val movieDetailsDeferred = async { getMovieDetailsUseCase(movieId) }
             val movieCreditsDeferred = async { getMovieCreditsUseCase(movieId) }
+            val movieRecommendationsDeferred = async { getMovieRecomUseCase(movieId) }
 
             val movieDetailsResult = movieDetailsDeferred.await()
             val movieCreditsResult = movieCreditsDeferred.await()
+            val movieRecommendationsResult = movieRecommendationsDeferred.await()
 
             _uiState.update {
                 it.copy(
                     movieDetails = movieDetailsResult.getOrNull(),
                     movieCredits = movieCreditsResult.getOrNull(),
+                    movieRecommendations = movieRecommendationsResult.getOrDefault(emptyList()),
                     loading = false,
                     error = movieDetailsResult.exceptionOrNull()
                         ?: movieCreditsResult.exceptionOrNull()

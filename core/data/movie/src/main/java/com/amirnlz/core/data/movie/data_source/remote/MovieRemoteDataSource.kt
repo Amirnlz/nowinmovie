@@ -61,6 +61,14 @@ class MovieRemoteDataSource @Inject constructor(private val movieApiService: Mov
         }
     }
 
+    suspend fun getMovieRecommendations(movieId: Long): MovieListDto {
+        return try {
+            movieApiService.getMovieRecommendations(movieId = movieId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     suspend fun searchMovie(query: String, page: Int): MovieListDto {
         try {
             return movieApiService.searchMovies(query = query, page = page)

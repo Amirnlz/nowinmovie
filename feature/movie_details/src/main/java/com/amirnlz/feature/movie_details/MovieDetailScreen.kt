@@ -1,6 +1,7 @@
 package com.amirnlz.feature.movie_details
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,6 +31,7 @@ import com.amirnlz.core.domain.movie.model.MovieDetails
 import com.amirnlz.feature.movie_detail.R
 import com.amirnlz.feature.movie_details.component.MovieCreditsComponent
 import com.amirnlz.feature.movie_details.component.MovieDetailsComponent
+import com.amirnlz.feature.movie_details.component.MovieRecommendationsComponent
 
 
 @Composable
@@ -37,6 +39,7 @@ fun MovieDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: MovieDetailViewModel = hiltViewModel(),
     onBackButtonPressed: () -> Unit,
+    onMovieClicked: (Long) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -46,7 +49,8 @@ fun MovieDetailRoute(
         onRetry = {
         },
         onBackButtonPressed = onBackButtonPressed,
-        onMovieFavoriteChanged = { viewModel.onIntent(MovieDetailIntent.ChangeMovieFavorite(it)) }
+        onMovieFavoriteChanged = { viewModel.onIntent(MovieDetailIntent.ChangeMovieFavorite(it)) },
+        onMovieClicked = onMovieClicked,
     )
 }
 
@@ -57,6 +61,7 @@ internal fun MovieDetailScreen(
     uiState: MovieDetailsUiState,
     onRetry: () -> Unit,
     onBackButtonPressed: () -> Unit,
+    onMovieClicked: (Long) -> Unit,
     onMovieFavoriteChanged: (MovieDetails) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -92,10 +97,11 @@ internal fun MovieDetailScreen(
             if (uiState.loading) LoadingComponent() else Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(horizontal = NowinmovieTheme.dimens.paddingExtraMedium)
+                    .padding(horizontal = NowinmovieTheme.spacing.medium)
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.background),
+                verticalArrangement = Arrangement.spacedBy(NowinmovieTheme.spacing.medium),
             ) {
 //                Movie Details
                 MovieDetailsComponent(
@@ -103,10 +109,14 @@ internal fun MovieDetailScreen(
                     isMovieFavorite = uiState.favoriteState,
                     onMovieFavoriteChanged = onMovieFavoriteChanged,
                 )
-
 //                Movie Credits
                 MovieCreditsComponent(
                     movieCredits = uiState.movieCredits
+                )
+//                Movie Recommendations
+                MovieRecommendationsComponent(
+                    movieList = uiState.movieRecommendations,
+                    onMovieClicked = onMovieClicked,
                 )
             }
         }

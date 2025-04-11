@@ -54,4 +54,12 @@ interface MovieApiService {
         @Query("query") query: String,
         @Query("page") page: Int,
     ): MovieListDto
+
+    @GET("/3/movie/{movie_id}/recommendations")
+    @Authenticated
+    suspend fun getMovieRecommendations(
+        @Path("movie_id")
+        movieId: Long,
+//        @Query("page") page: Int, // Uncomment if pagination is needed
+    ): MovieListDto
 }

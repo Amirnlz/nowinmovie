@@ -115,6 +115,17 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMovieRecommendations(movieId: Long): Result<List<Movie>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = remoteDataSource.getMovieRecommendations(movieId = movieId)
+                Result.success(response.results.map { it.mapToMovie() })
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
     override suspend fun toggleFavoriteMovie(movieDetails: MovieDetails): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
