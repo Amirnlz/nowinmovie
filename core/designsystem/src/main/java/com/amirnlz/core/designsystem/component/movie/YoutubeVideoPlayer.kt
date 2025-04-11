@@ -13,31 +13,33 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 @Composable
 fun YoutubeVideoPlayer(videoId: String, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    val youTubePlayerView = remember {
-        YouTubePlayerView(context).apply {
-            layoutParams = android.widget.FrameLayout.LayoutParams(
-                MATCH_PARENT,
-                MATCH_PARENT
-            )
-        }
+  val context = LocalContext.current
+  val youTubePlayerView = remember {
+    YouTubePlayerView(context).apply {
+      layoutParams = android.widget.FrameLayout.LayoutParams(
+        MATCH_PARENT,
+        MATCH_PARENT,
+      )
     }
+  }
 
-    AndroidView(
-        factory = { youTubePlayerView },
-        update = { view ->
-            view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.cueVideo(videoId, 0f)
-                }
-            })
+  AndroidView(
+    factory = { youTubePlayerView },
+    update = { view ->
+      view.addYouTubePlayerListener(
+        object : AbstractYouTubePlayerListener() {
+          override fun onReady(youTubePlayer: YouTubePlayer) {
+            youTubePlayer.cueVideo(videoId, 0f)
+          }
         },
-        modifier = modifier
-    )
+      )
+    },
+    modifier = modifier,
+  )
 
-    DisposableEffect(youTubePlayerView) {
-        onDispose {
-            youTubePlayerView.release()
-        }
+  DisposableEffect(youTubePlayerView) {
+    onDispose {
+      youTubePlayerView.release()
     }
+  }
 }
